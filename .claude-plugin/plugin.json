@@ -6,8 +6,8 @@
     "name": "Damion Rashford",
     "url": "https://github.com/damionrashford"
   },
-  "homepage": "https://github.com/damionrashford/ml_paper_skill",
-  "repository": "https://github.com/damionrashford/ml_paper_skill",
+  "homepage": "https://github.com/damionrashford/mlx",
+  "repository": "https://github.com/damionrashford/mlx",
   "license": "MIT",
   "keywords": [
     "machine-learning",
@@ -70,6 +70,5 @@
   ],
   "skills": "./skills/",
   "agents": "./agents/",
-  "hooks": "./hooks/hooks.json",
-  "settings": "./settings.json"
+  "hooks": "./hooks/hooks.json"
 }

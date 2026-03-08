@@ -1,5 +1,5 @@
 <p align="center">
-  <strong>mlx</strong>
+  <strong>MLX</strong>
 </p>
 
 <p align="center">
@@ -25,21 +25,21 @@
 
 ---
 
-**mlx** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 12 skills, zero API keys required.
+**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 12 skills, zero API keys required.
 
 ## Quick Start
 
 ```bash
 # Add the marketplace, then install the plugin
-/plugin marketplace add damionrashford/ml_paper_skill
-/plugin install mlx@damionrashford-ml_paper_skill
+/plugin marketplace add damionrashford/mlx
+/plugin install mlx@damionrashford-mlx
 ```
 
 Or install manually:
 
 ```bash
-git clone https://github.com/damionrashford/ml_paper_skill.git
-claude --plugin-dir ./ml_paper_skill
+git clone https://github.com/damionrashford/mlx.git
+claude --plugin-dir ./mlx
 ```
 
 ### Prerequisites
