@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "If this file is a training script or ML pipeline, verify: (1) no training data is used in evaluation, (2) random seeds are set, (3) no hardcoded file paths that won't work on other machines. Only flag actual issues, say nothing if the code is fine."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "If the command output shows a model training result (loss, accuracy, metrics), note the key metrics briefly. If it shows an error related to missing packages or CUDA issues, suggest the fix. Say nothing if the output is routine."
+          }
+        ]
+      }
+    ]
+  }
+}
