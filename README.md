@@ -25,7 +25,7 @@
 
 ---
 
-**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 12 skills, zero API keys required.
+**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 13 skills, zero API keys required.
 
 ## Quick Start
 
@@ -71,7 +71,7 @@ Plugin settings cannot auto-configure permissions. For the smoothest experience,
 
 ## Skills
 
-mlx ships 12 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
+mlx ships 13 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
@@ -82,6 +82,7 @@ mlx ships 12 skills that cover the full ML and data lifecycle. Each is invocable
 | **prepare** | `/prepare data/raw.csv` | Clean data: duplicates, nulls, outliers, type fixes, validation report |
 | **analyze** | `/analyze data/sales.csv` | Statistical tests, A/B testing, cohort analysis, segmentation, KPIs |
 | **visualize** | `/visualize data/metrics.csv` | Charts, dashboards, and reports with matplotlib, seaborn, or plotly |
+| **validate** | `/validate analysis.py` | QA checklist: join explosions, survivorship bias, sanity checks, documentation |
 | **engineer** | `/engineer data/clean.csv` | Feature engineering: transforms, encodings, interactions, aggregations |
 | **train** | `/train data/features.csv` | Train and evaluate models with sklearn, XGBoost, LightGBM, or PyTorch |
 | **experiment** | `/experiment results.tsv` | Systematic hyperparameter search with keep/discard tracking |
@@ -99,7 +100,7 @@ research → prototype → explore → prepare → engineer → train → experi
 
 Agent coverage:
   ml-researcher ── find papers, datasets, review, prototype
-  data-analyst ─── explore, analyze, visualize, report
+  data-analyst ─── explore, analyze, visualize, validate, report
   data-scientist ─ full pipeline: data → trained model
   ml-engineer ──── optimize: features, tuning, ablations
   ai-engineer ──── LLM apps: RAG, prompts, agents
@@ -170,7 +171,7 @@ mlx includes 6 specialized agents that orchestrate skills for complex workflows.
 | Agent | Skills Used | When to Use |
 |-------|-------------|-------------|
 | **ml-researcher** | research, review, prototype | Find papers, discover datasets, review methodology, prototype algorithms |
-| **data-analyst** | explore, prepare, analyze, visualize, evaluate, notebook | Answer business questions: statistics, A/B tests, dashboards, KPIs, reports |
+| **data-analyst** | explore, prepare, analyze, visualize, validate, evaluate, notebook | Answer business questions: statistics, A/B tests, dashboards, KPIs, reports |
 | **data-scientist** | research, explore, prepare, engineer, train, experiment, evaluate, notebook | Full ML pipeline: find data, explore, clean, model, evaluate |
 | **ml-engineer** | engineer, train, experiment, evaluate, notebook | Focused iteration: feature tuning, hyperparameter sweeps, ablations |
 | **ai-engineer** | research, prototype, evaluate, notebook | Build AI apps: LLM integration, RAG pipelines, prompt engineering, agent architectures |
@@ -193,7 +194,7 @@ mlx includes 6 specialized agents that orchestrate skills for complex workflows.
 Each agent follows a strict protocol:
 
 - **ml-researcher**: Scope → Search → Filter → Deep analysis → Review → Dataset discovery → Synthesis → Prototype
-- **data-analyst**: Question → Explore → Clean → Analyze → Visualize → Report
+- **data-analyst**: Question → Explore → Clean → Analyze → Visualize → Validate → Report
 - **data-scientist**: Find data → Understand → Explore → Clean → Engineer → Train → Iterate → Report
 - **ml-engineer**: Baseline → Features → Model selection → Tuning → Ablation → Final eval → Document
 - **ai-engineer**: Requirements → Model selection → Prompt engineering → RAG/embeddings → Eval → Integration → Document
@@ -221,12 +222,31 @@ mlx/
 │   │       └── api-reference.md # Full API documentation
 │   ├── prototype/               # Paper → code conversion
 │   ├── explore/                 # Exploratory data analysis
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       └── eda.py           # Full EDA pipeline
 │   ├── prepare/                 # Data cleaning & preprocessing
 │   ├── engineer/                # Feature engineering
 │   ├── analyze/                 # Statistical & business analysis
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       ├── descriptive_stats.py
+│   │       ├── hypothesis_test.py
+│   │       ├── ab_test.py
+│   │       ├── cohort_analysis.py
+│   │       ├── rfm_segmentation.py
+│   │       └── trend_analysis.py
 │   ├── visualize/               # Charts, dashboards, data reports
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       ├── chart_templates.py
+│   │       └── format_number.py
 │   ├── train/                   # Model training & evaluation
 │   ├── experiment/              # Experiment tracking & iteration
+│   ├── validate/                # QA checklist & sanity checking
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       └── validate.py      # Automated pitfall detection
 │   ├── evaluate/                # Multi-dimensional model evaluation
 │   ├── review/                  # Structured paper review
 │   └── notebook/                # Jupyter notebook management
@@ -239,7 +259,6 @@ mlx/
 │   └── mlops.md                 # Deployment & operations agent
 ├── hooks/
 │   └── hooks.json               # ML-aware pre/post tool hooks
-├── settings.json                # Plugin settings (see Recommended Permissions)
 ├── LICENSE                      # MIT License
 └── .gitignore
 ```

@@ -154,7 +154,7 @@ You cannot invoke other agents. When done, recommend next steps:
 - Train a custom model for the task → suggest ml-engineer agent
 - Full data pipeline (EDA, cleaning, features) → suggest data-scientist agent
 - Find research papers on a technique → suggest ml-researcher agent
-- Review a paper's methodology → suggest paper-reviewer agent
+- Review a paper's methodology → suggest ml-researcher agent
 - Deploy and serve the application → suggest mlops agent
 
 ## Memory

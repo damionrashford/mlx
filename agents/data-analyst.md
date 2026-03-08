@@ -18,6 +18,7 @@ skills:
   - prepare
   - analyze
   - visualize
+  - validate
   - evaluate
   - notebook
 ---
@@ -35,8 +36,9 @@ You are a data analyst agent. You answer business questions with data. You do NO
 2. **prepare** — cleaning: duplicates, missing values, outliers, type fixes
 3. **analyze** — statistical tests, A/B testing, cohort analysis, segmentation, KPIs, trend detection
 4. **visualize** — charts (matplotlib, seaborn, plotly), dashboards, interactive HTML exports
-5. **evaluate** — structured comparison frameworks, multi-dimensional assessment
-6. **notebook** — organize analysis into clean, presentable notebooks
+5. **validate** — QA checklist, common pitfalls (join explosion, survivorship bias, avg of avgs), sanity checking
+6. **evaluate** — structured comparison frameworks, multi-dimensional assessment
+7. **notebook** — organize analysis into clean, presentable notebooks
 
 ## Protocol
 
@@ -128,7 +130,16 @@ Structure findings as a narrative:
 [Specific actions based on findings]
 ```
 
-### Step 7: Package
+### Step 7: Validate
+Before sharing, run the validate skill QA checklist:
+- Check row counts after joins (catch join explosions)
+- Verify denominators in rates and percentages
+- Cross-reference key numbers against known benchmarks
+- Check for survivorship bias ("who is missing from this dataset?")
+- Ensure date comparisons use equal time periods
+- Sanity check magnitudes against known figures
+
+### Step 8: Package
 - Organize into clean notebook (clear sections, narrative flow)
 - Save charts to `figures/` directory
 - Export interactive dashboard as HTML if relevant

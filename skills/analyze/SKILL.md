@@ -15,93 +15,54 @@ argument-hint: path to dataset or description of analysis (e.g. "data/sales.csv"
 
 Frameworks for answering business questions with data: descriptive statistics, hypothesis testing, cohort analysis, segmentation, trend detection, and KPI calculation.
 
+## Scripts
+
+| Script | Usage |
+|--------|-------|
+| [descriptive_stats.py](scripts/descriptive_stats.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/descriptive_stats.py data.csv --group segment --value revenue` |
+| [hypothesis_test.py](scripts/hypothesis_test.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/hypothesis_test.py data.csv --col value --group segment --a control --b treatment` |
+| [ab_test.py](scripts/ab_test.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/ab_test.py data.csv --col converted --group variant --control A --treatment B` |
+| [cohort_analysis.py](scripts/cohort_analysis.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/cohort_analysis.py data.csv --user user_id --date order_date` |
+| [rfm_segmentation.py](scripts/rfm_segmentation.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/rfm_segmentation.py data.csv --customer customer_id --date order_date --value revenue` |
+| [trend_analysis.py](scripts/trend_analysis.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/trend_analysis.py data.csv --date date --value revenue --window 30` |
+
 ## Analysis type selection
 
-| Question | Analysis type |
-|----------|--------------|
-| What happened? | Descriptive statistics, aggregations |
-| Why did it happen? | Diagnostic analysis, drill-downs, segmentation |
-| Is this difference real? | Hypothesis testing (t-test, chi-square) |
-| Did the change work? | A/B test analysis |
-| How do groups behave over time? | Cohort analysis |
-| What are the natural groupings? | Segmentation / clustering |
-| What are the trends? | Time series decomposition, rolling averages |
-| What should we track? | KPI definition and dashboarding |
+| Question | Analysis type | Script |
+|----------|--------------|--------|
+| What happened? | Descriptive statistics, aggregations | descriptive_stats.py |
+| Why did it happen? | Diagnostic analysis, drill-downs, segmentation | rfm_segmentation.py |
+| Is this difference real? | Hypothesis testing (t-test, chi-square) | hypothesis_test.py |
+| Did the change work? | A/B test analysis | ab_test.py |
+| How do groups behave over time? | Cohort analysis | cohort_analysis.py |
+| What are the natural groupings? | Segmentation / clustering | rfm_segmentation.py |
+| What are the trends? | Time series decomposition, rolling averages | trend_analysis.py |
+| What should we track? | KPI definition and dashboarding | descriptive_stats.py |
 
-## Descriptive statistics
+## Choosing the right measure of center
 
-```python
-import pandas as pd
-import numpy as np
+| Situation | Use | Why |
+|---|---|---|
+| Symmetric distribution, no outliers | Mean | Most efficient estimator |
+| Skewed distribution (revenue, duration) | Median | Robust to outliers |
+| Categorical or ordinal data | Mode | Only option for non-numeric |
+| Highly skewed with outliers | Median + mean | The gap shows skew |
 
-df = pd.read_csv('data.csv')
+**Always report mean and median together for business metrics.** If they diverge significantly, the data is skewed and the mean alone is misleading.
 
-# Quick overview
-print(f"Shape: {df.shape}")
-print(f"\nNumeric summary:\n{df.describe()}")
-print(f"\nMissing values:\n{df.isnull().sum()}")
+## Choosing the right test
 
-# Aggregations by group
-summary = df.groupby('segment').agg(
-    count=('id', 'count'),
-    mean_value=('value', 'mean'),
-    median_value=('value', 'median'),
-    total_value=('value', 'sum'),
-    std_value=('value', 'std'),
-).round(2)
-print(summary)
+| Scenario | Test |
+|----------|------|
+| Compare 2 group means (normal) | Independent t-test |
+| Compare 2 group means (non-normal) | Mann-Whitney U |
+| Compare 2 paired measurements | Paired t-test |
+| Compare 3+ group means | One-way ANOVA |
+| Compare proportions | Chi-square test |
+| Test correlation | Pearson / Spearman |
+| Test normality | Shapiro-Wilk |
 
-# Percentiles
-percentiles = df['value'].quantile([0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99])
-print(f"\nPercentiles:\n{percentiles}")
-```
-
-## Hypothesis testing
-
-### Choosing the right test
-
-| Scenario | Test | Python |
-|----------|------|--------|
-| Compare 2 group means (normal) | Independent t-test | `scipy.stats.ttest_ind` |
-| Compare 2 group means (non-normal) | Mann-Whitney U | `scipy.stats.mannwhitneyu` |
-| Compare 2 paired measurements | Paired t-test | `scipy.stats.ttest_rel` |
-| Compare 3+ group means | One-way ANOVA | `scipy.stats.f_oneway` |
-| Compare proportions | Chi-square test | `scipy.stats.chi2_contingency` |
-| Test correlation | Pearson / Spearman | `scipy.stats.pearsonr` / `spearmanr` |
-| Test normality | Shapiro-Wilk | `scipy.stats.shapiro` |
-
-### Template
-
-```python
-from scipy import stats
-
-# 1. State hypotheses
-# H0: No difference between groups
-# H1: There is a difference
-
-# 2. Check assumptions
-stat, p_normal = stats.shapiro(group_a)  # normality
-stat, p_var = stats.levene(group_a, group_b)  # equal variance
-
-# 3. Run test
-if p_normal > 0.05:  # normal distribution
-    stat, p_value = stats.ttest_ind(group_a, group_b, equal_var=(p_var > 0.05))
-    test_name = "t-test"
-else:  # non-normal
-    stat, p_value = stats.mannwhitneyu(group_a, group_b, alternative='two-sided')
-    test_name = "Mann-Whitney U"
-
-# 4. Interpret
-alpha = 0.05
-effect_size = (group_a.mean() - group_b.mean()) / np.sqrt(
-    (group_a.std()**2 + group_b.std()**2) / 2
-)  # Cohen's d
-
-print(f"Test: {test_name}")
-print(f"Statistic: {stat:.4f}, p-value: {p_value:.4f}")
-print(f"Effect size (Cohen's d): {effect_size:.3f}")
-print(f"Result: {'Significant' if p_value < alpha else 'Not significant'} at alpha={alpha}")
-```
+The [hypothesis_test.py](scripts/hypothesis_test.py) script auto-selects the right test based on normality checks and reports p-value, effect size (Cohen's d), and confidence interval.
 
 ### Effect size interpretation
 
@@ -112,116 +73,7 @@ print(f"Result: {'Significant' if p_value < alpha else 'Not significant'} at alp
 | 0.5 - 0.8 | Medium |
 | > 0.8 | Large |
 
-## A/B test analysis
-
-```python
-def ab_test_analysis(control, treatment, metric='conversion', alpha=0.05):
-    """Complete A/B test analysis with sample size check."""
-    n_c, n_t = len(control), len(treatment)
-    mean_c, mean_t = control.mean(), treatment.mean()
-
-    # Relative lift
-    lift = (mean_t - mean_c) / mean_c * 100
-
-    # Statistical test
-    if metric == 'conversion':  # proportions
-        # Z-test for proportions
-        p_pool = (control.sum() + treatment.sum()) / (n_c + n_t)
-        se = np.sqrt(p_pool * (1 - p_pool) * (1/n_c + 1/n_t))
-        z = (mean_t - mean_c) / se
-        p_value = 2 * (1 - stats.norm.cdf(abs(z)))
-    else:  # continuous metric
-        stat, p_value = stats.ttest_ind(control, treatment)
-
-    # Confidence interval for difference
-    se_diff = np.sqrt(control.var()/n_c + treatment.var()/n_t)
-    ci_low = (mean_t - mean_c) - 1.96 * se_diff
-    ci_high = (mean_t - mean_c) + 1.96 * se_diff
-
-    print(f"Control: {mean_c:.4f} (n={n_c})")
-    print(f"Treatment: {mean_t:.4f} (n={n_t})")
-    print(f"Lift: {lift:+.2f}%")
-    print(f"p-value: {p_value:.4f}")
-    print(f"95% CI for difference: [{ci_low:.4f}, {ci_high:.4f}]")
-    print(f"Result: {'Significant' if p_value < alpha else 'Not significant'}")
-```
-
-## Cohort analysis
-
-```python
-def cohort_analysis(df, user_col, date_col, value_col, freq='M'):
-    """Retention-style cohort analysis."""
-    df = df.copy()
-    df[date_col] = pd.to_datetime(df[date_col])
-
-    # Assign cohort (first activity month)
-    df['cohort'] = df.groupby(user_col)[date_col].transform('min').dt.to_period(freq)
-    df['period'] = df[date_col].dt.to_period(freq)
-    df['cohort_age'] = (df['period'] - df['cohort']).apply(lambda x: x.n)
-
-    # Build cohort table
-    cohort_table = df.groupby(['cohort', 'cohort_age'])[user_col].nunique().reset_index()
-    cohort_table = cohort_table.pivot(index='cohort', columns='cohort_age', values=user_col)
-
-    # Retention rates
-    cohort_sizes = cohort_table[0]
-    retention = cohort_table.div(cohort_sizes, axis=0).round(3)
-
-    return retention
-```
-
-## Segmentation
-
-```python
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-
-def rfm_segmentation(df, customer_col, date_col, value_col, n_segments=4):
-    """RFM (Recency, Frequency, Monetary) segmentation."""
-    now = df[date_col].max() + pd.Timedelta(days=1)
-
-    rfm = df.groupby(customer_col).agg(
-        recency=(date_col, lambda x: (now - x.max()).days),
-        frequency=(date_col, 'count'),
-        monetary=(value_col, 'sum'),
-    )
-
-    # Score each dimension (1=worst, n_segments=best)
-    for col in ['frequency', 'monetary']:
-        rfm[f'{col}_score'] = pd.qcut(rfm[col], n_segments, labels=range(1, n_segments+1))
-    rfm['recency_score'] = pd.qcut(rfm['recency'], n_segments, labels=range(n_segments, 0, -1))
-
-    rfm['rfm_score'] = (rfm['recency_score'].astype(int) +
-                         rfm['frequency_score'].astype(int) +
-                         rfm['monetary_score'].astype(int))
-    return rfm
-```
-
-## Trend analysis
-
-```python
-def trend_analysis(series, window=7):
-    """Decompose time series into trend, seasonality, and residuals."""
-    from statsmodels.tsa.seasonal import seasonal_decompose
-
-    # Moving averages
-    ma = series.rolling(window=window, center=True).mean()
-
-    # Growth rates
-    pct_change = series.pct_change(periods=window) * 100
-
-    # Decomposition (if enough data)
-    if len(series) >= 2 * window:
-        decomp = seasonal_decompose(series, period=window, model='additive')
-        return {'trend': decomp.trend, 'seasonal': decomp.seasonal,
-                'residual': decomp.resid, 'ma': ma, 'growth': pct_change}
-
-    return {'ma': ma, 'growth': pct_change}
-```
-
 ## KPI framework
-
-### Common business KPIs
 
 | Category | KPI | Formula |
 |----------|-----|---------|
@@ -262,6 +114,45 @@ Caveats:
 Recommendation:
 [Actionable next step based on findings]
 ```
+
+## Simple forecasting (for analysts, not data scientists)
+
+| Method | How | When |
+|--------|-----|------|
+| Naive | Tomorrow = today | Baseline |
+| Seasonal naive | Tomorrow = same day last week/year | Seasonal data |
+| Linear trend | Fit a line to historical data | Clearly linear trends |
+| Moving average | Trailing average as forecast | Noisy data |
+
+**Always communicate uncertainty** — provide a range, not a point estimate:
+- "We expect 10K-12K signups next month based on the 3-month trend"
+- NOT "We will get exactly 11,234 signups next month"
+
+**When to escalate to a data scientist**: Non-linear trends, multiple seasonalities, external factors, or when forecast accuracy matters for resource allocation.
+
+## Statistical pitfalls to watch for
+
+### Simpson's Paradox
+A trend in aggregated data can reverse when segmented. Always check whether conclusions hold across key segments.
+
+### Multiple Comparisons Problem
+Testing 20 metrics at p=0.05 means ~1 will be falsely significant. Apply Bonferroni correction (alpha / number of tests) or report how many tests were run.
+
+### Ecological Fallacy
+Aggregate trends may not apply to individuals. "Countries with higher X have higher Y" does NOT mean individuals with higher X have higher Y.
+
+### Anchoring on False Precision
+- "Churn will be 4.73% next quarter" implies more certainty than warranted
+- Prefer ranges: "We expect churn between 4-6%"
+
+### Correlation vs Causation
+When you find a correlation, consider:
+- **Reverse causation**: Maybe B causes A, not A causes B
+- **Confounding**: Maybe C causes both A and B
+- **Coincidence**: With enough variables, spurious correlations are inevitable
+
+**What you can say**: "Users who use feature X have 30% higher retention"
+**What you cannot say**: "Feature X causes 30% higher retention"
 
 ## Rules
 
