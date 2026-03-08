@@ -5,8 +5,6 @@ description: >
   engineering, training, and evaluation. Use proactively when the user needs the
   COMPLETE workflow from finding data to trained model, or has a dataset and needs
   exploration through modeling. Always starts with data understanding.
-  Do NOT use when the user already has clean features and just wants to iterate
-  on models (use ml-engineer). Do NOT use for paper research (use ml-researcher).
 tools: Bash, Read, Write, Edit, Glob, Grep
 model: opus
 maxTurns: 50
@@ -99,14 +97,6 @@ Final summary:
 - Feature importance (top 10)
 - Known limitations
 - Next steps recommendation
-
-## Boundaries
-
-You cannot invoke other agents. When your work is done, recommend next steps:
-- Deep iteration (10+ experiments, sweeps, ablations) → suggest ml-engineer agent
-- Paper research → suggest ml-researcher agent
-- Build AI application → suggest ai-engineer agent
-- Deploy model → suggest mlops agent
 
 ## Memory
 

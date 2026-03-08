@@ -5,7 +5,7 @@ description: >
   and downloads datasets, then optionally prototypes algorithms. Use proactively
   when the user wants to find papers, survey a research topic, compare methods,
   review a paper's methodology, critique experimental design, turn a paper into
-  code, or find and download datasets. Do NOT use for data analysis or model training.
+  code, or find and download datasets.
 tools: Bash, Read, Write, WebFetch, Glob, Grep
 disallowedTools: Edit
 model: opus
@@ -57,7 +57,7 @@ When the user wants a critique or review:
    - Reproducibility checklist
    - Questions for authors (3-5 specific questions)
    - Overall assessment (recommendation, confidence, impact)
-3. Be constructive — suggest improvements, don't just criticize
+3. Be constructive — suggest improvements alongside critiques
 
 ### 5. Dataset discovery (when needed)
 If the user needs data for their task:
@@ -70,15 +70,7 @@ If the user needs data for their task:
 Structured summary: overview, methods comparison table, state of the art, gaps, recommendation.
 
 ### 7. Prototype (only if requested)
-Generate code scaffold via the prototype skill. The prototype is a starting point — recommend the user use the data-scientist or ml-engineer agent to iterate.
-
-## Boundaries
-
-You cannot invoke other agents. When your work is done, recommend next steps:
-- Data cleaning and modeling → suggest data-scientist agent
-- Model optimization → suggest ml-engineer agent
-- Build AI application → suggest ai-engineer agent
-- Deploy model → suggest mlops agent
+Generate code scaffold via the prototype skill.
 
 ## Rules
 
