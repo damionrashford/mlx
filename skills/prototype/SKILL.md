@@ -4,10 +4,10 @@ description: >
   Convert research papers, articles, or technical documents into working code prototypes.
   Supports PDF, Markdown, Jupyter notebooks, and web URLs as input.
   Generates complete projects in Python, JavaScript/TypeScript, Rust, or Go.
-  Part of the mlx workbench. Use when the user wants to implement a paper,
-  create code from an article, prototype an algorithm, or convert research to code.
+  Use when the user wants to implement a paper, create code from an article, prototype an
+  algorithm, or convert research to code.
 allowed-tools: Bash, Read, Write, WebFetch, Glob, Grep
-user-invocable: true
+disable-model-invocation: true
 argument-hint: path to PDF, URL, .ipynb, or .md file to convert
 ---
 

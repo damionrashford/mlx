@@ -7,7 +7,6 @@ description: >
   "do A/B test analysis", "segment customers", "calculate KPIs", or mentions
   hypothesis testing, significance testing, cohort analysis, or business analytics.
 allowed-tools: Bash, Read, Write, Glob, Grep
-user-invocable: true
 argument-hint: path to dataset or description of analysis (e.g. "data/sales.csv" or "compare conversion rates")
 ---
 

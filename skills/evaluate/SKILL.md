@@ -8,7 +8,6 @@ description: >
   "detect model bias", or mentions evaluation frameworks, LLM-as-judge,
   model comparison, or quality assessment.
 allowed-tools: Bash, Read, Write, Glob, Grep
-user-invocable: true
 argument-hint: path to predictions, results.tsv, or model outputs (e.g. "results.tsv" or "predictions.csv")
 ---
 
@@ -161,6 +160,61 @@ Explain your reasoning in 2-3 sentences.
 | Self-enhancement | Prefers own model's style | Use different judge model |
 | Verbosity | Equates detail with quality | Explicit rubric criteria |
 | Authority | Prefers confident tone | Focus on factual accuracy |
+
+### Evaluation taxonomy: when to use each approach
+
+| Approach | Best for | Limitation |
+|----------|----------|------------|
+| **Direct scoring** | Objective criteria — factual accuracy, instruction following, toxicity | Score calibration drift, inconsistent scale interpretation |
+| **Pairwise comparison** | Subjective preferences — tone, style, persuasiveness, overall quality | Position bias, length bias |
+| **Rubric-based** | Multi-dimensional quality with defined criteria | Requires upfront rubric design |
+
+Research (MT-Bench, Zheng et al. 2023): pairwise comparison achieves higher agreement with human judges than direct scoring for preference-based evaluation. Use direct scoring for objective criteria with clear ground truth; use pairwise for subjective quality comparisons.
+
+### Metric selection by evaluation task
+
+| Task type | Primary metrics | Secondary |
+|-----------|----------------|-----------|
+| Binary pass/fail | Recall, Precision, F1 | Cohen's κ |
+| Ordinal scale (1-5) | Spearman's ρ, Kendall's τ | Cohen's κ (weighted) |
+| Pairwise preference | Agreement rate, position consistency | Confidence calibration |
+| Multi-label | Macro-F1, Micro-F1 | Per-label precision/recall |
+
+### Production evaluation pipeline
+
+```python
+def evaluate_with_bias_mitigation(question, response_a, response_b, judge_model):
+    # Forward pass
+    result_1 = judge_model(PAIRWISE_PROMPT.format(
+        question=question, response_a=response_a, response_b=response_b
+    ))
+    # Swapped pass (position bias mitigation)
+    result_2 = judge_model(PAIRWISE_PROMPT.format(
+        question=question, response_a=response_b, response_b=response_a
+    ))
+    # Normalize result_2 (A/B labels are swapped)
+    if result_1 == result_2:
+        return result_1  # Consistent — high confidence
+    else:
+        return "tie"  # Inconsistent — call it a tie
+
+def build_rubric(criterion, weight, levels):
+    """
+    criterion: "Factual Accuracy"
+    weight: 0.40
+    levels: {5: "All claims verified", 3: "Mostly accurate", 1: "Multiple errors"}
+    """
+    return {"criterion": criterion, "weight": weight, "levels": levels}
+```
+
+### Performance driver — token budget matters
+
+Research (BrowseComp benchmark) shows three factors explain **95% of agent performance variance**:
+- **Token usage: 80% of variance** — more context/turns = better performance
+- Number of tool calls: ~10%
+- Model choice: ~5%
+
+Implication: **evaluate with realistic token budgets**, not unlimited resources. Upgrading from an older model to Claude Sonnet 4.5 or GPT-5.2 provides larger gains than doubling token budget on the same model.
 
 ## Test set design
 

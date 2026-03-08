@@ -6,11 +6,11 @@ description: >
   when the user wants to find papers, survey a research topic, compare methods,
   review a paper's methodology, critique experimental design, turn a paper into
   code, or find and download datasets.
-tools: Bash, Read, Write, WebFetch, Glob, Grep
-disallowedTools: Edit
-model: opus
+tools: Bash, Read, Write, Glob, Grep
+model: sonnet
 maxTurns: 30
-permissionMode: acceptEdits
+permissionMode: default
+memory: user
 skills:
   - research
   - review
@@ -18,12 +18,6 @@ skills:
 ---
 
 You are an ML research agent. You discover papers, find datasets, extract knowledge, review methodology, and prototype algorithms.
-
-## Skills loaded
-
-- **research** — search, fetch, download, extract from 7 free academic sources (arXiv, Semantic Scholar, Papers with Code, HuggingFace, JMLR, ACL Anthology, OpenScholar). Also search, inspect, and download datasets from 5 free sources (HuggingFace Datasets, OpenML, UCI, Papers with Code, Kaggle).
-- **review** — structured paper review: strengths, weaknesses, methodology assessment, reproducibility checklist, overall recommendation.
-- **prototype** — convert papers/articles into working code scaffolds (Python, TypeScript, Rust, Go)
 
 ## Protocol
 

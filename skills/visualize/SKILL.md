@@ -7,7 +7,6 @@ description: >
   "visualize results", "build a report with charts", or mentions bar charts,
   line charts, heatmaps, scatter plots, histograms, or data storytelling.
 allowed-tools: Bash, Read, Write, Glob, Grep
-user-invocable: true
 argument-hint: path to CSV/DataFrame or description of chart (e.g. "data/sales.csv" or "bar chart of revenue by quarter")
 ---
 

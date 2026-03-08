@@ -70,8 +70,5 @@
     "data-validation",
     "qa-checklist",
     "sanity-checking"
-  ],
-  "skills": "./skills/",
-  "agents": "./agents/",
-  "hooks": "./hooks/hooks.json"
+  ]
 }

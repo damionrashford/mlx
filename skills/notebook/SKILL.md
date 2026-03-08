@@ -3,16 +3,33 @@ name: notebook
 description: >
   Clean, organize, optimize, and convert Jupyter notebooks. Extract reusable functions,
   add documentation, generate requirements.txt, and convert to scripts.
-  Part of the mlx workbench. Use when the user wants to clean a notebook, organize cells,
-  extract functions, convert to script, or optimize a notebook for production.
+  Use when the user wants to clean a notebook, organize cells, extract functions, convert
+  to script, or optimize a notebook for production.
 allowed-tools: Bash, Read, Write, Glob, Grep
-user-invocable: true
 argument-hint: path to .ipynb file (e.g. "analysis.ipynb")
 ---
 
 # Jupyter Notebook Management
 
 Reference for cleaning, organizing, and converting Jupyter notebooks.
+
+## Available scripts
+
+| Script | Usage |
+|--------|-------|
+| [assess.py](scripts/assess.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/assess.py notebook.ipynb` |
+
+### Assess a notebook
+
+```bash
+# Text report
+python3 ${CLAUDE_SKILL_DIR}/scripts/assess.py $ARGUMENTS
+
+# JSON output
+python3 ${CLAUDE_SKILL_DIR}/scripts/assess.py notebook.ipynb --json
+```
+
+The [assess.py](scripts/assess.py) script analyzes notebook structure, detects issues (empty cells, scattered imports, missing documentation, hardcoded paths, missing seeds), and returns a quality score out of 10.
 
 ## Capabilities
 
@@ -42,20 +59,6 @@ Reference for cleaning, organizing, and converting Jupyter notebooks.
 11. Conclusions
 ```
 
-## Assess a notebook
-
-```python
-import json
-with open('$ARGUMENTS') as f:
-    nb = json.load(f)
-cells = nb.get('cells', [])
-code = [c for c in cells if c['cell_type'] == 'code']
-md = [c for c in cells if c['cell_type'] == 'markdown']
-empty = [c for c in code if not ''.join(c['source']).strip()]
-print(f"Total: {len(cells)} cells ({len(code)} code, {len(md)} markdown, {len(empty)} empty)")
-print(f"Has outputs: {sum(1 for c in code if c.get('outputs'))}")
-```
-
 ## Cleaning checklist
 
 1. Remove empty cells
@@ -78,20 +81,6 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df['age_binned'] = pd.cut(df['age'], bins=[0, 18, 35, 50, 65, 100])
     df['income_log'] = np.log1p(df['income'])
     return df
-```
-
-## Generate requirements.txt
-
-```python
-import re, json
-with open('notebook.ipynb') as f:
-    nb = json.load(f)
-imports = set()
-for cell in nb['cells']:
-    if cell['cell_type'] == 'code':
-        for line in cell['source']:
-            m = re.match(r'^(?:from|import)\s+(\w+)', line)
-            if m: imports.add(m.group(1))
 ```
 
 ## Convert to script

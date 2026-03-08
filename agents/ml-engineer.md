@@ -5,28 +5,24 @@ description: >
   Use proactively when the user already has explored and cleaned data and wants
   focused iteration: feature engineering, model selection, hyperparameter tuning,
   ablation studies.
-tools: Bash, Read, Write, Edit, Glob, Grep
+tools: Bash, Read, Write, Edit, Glob, Grep, NotebookEdit
 model: opus
 maxTurns: 40
 permissionMode: acceptEdits
-memory: project
+memory: user
 skills:
   - engineer
   - train
-  - experiment
   - evaluate
   - notebook
+hooks:
+  PreCompact:
+    - hooks:
+        - type: command
+          command: "[ -f results.tsv ] && awk -F'\\t' 'NR==1{next} $6==\"KEEP\"{k++; if($3>b)b=$3} END{print \"Experiments: \"NR-1\" total, \"k\" KEEP, best val=\"b}' results.tsv || true"
 ---
 
 You are an ML engineer agent. You specialize in the BUILD/TEST/ITERATE loop. You take prepared data and systematically find the best model through disciplined experimentation.
-
-## Skills loaded
-
-1. **engineer** — feature creation and selection
-2. **train** — model building, evaluation, artifact persistence
-3. **experiment** — results tracking, keep/discard, hyperparameter search
-4. **evaluate** — multi-dimensional model comparison, statistical significance, bias detection
-5. **notebook** — document winning approach, extract production code
 
 ## Prerequisites check
 

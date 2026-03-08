@@ -3,10 +3,9 @@ name: research
 description: >
   Search, fetch, download, and extract ML/AI research papers from 7 free academic sources.
   Find and download ML datasets from 5 free sources (HuggingFace, OpenML, UCI, Papers with Code, Kaggle).
-  Part of the mlx workbench. Use when the user wants to find papers, look up research,
+  Use when the user wants to find papers, look up research,
   search arxiv, get citations, download a PDF, extract text from a paper, or find/download datasets.
 allowed-tools: Bash, Read, Write, WebFetch, Glob, Grep
-user-invocable: true
 argument-hint: search query or paper ID (e.g. "transformer attention" or "2401.12345")
 ---
 

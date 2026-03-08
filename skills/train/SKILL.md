@@ -1,13 +1,14 @@
 ---
 name: train
 description: >
-  Train and evaluate ML models with proper splits, cross-validation, metrics, and persistence.
-  Supports scikit-learn, XGBoost, LightGBM, and PyTorch.
-  Part of the mlx workbench. Use when the user wants to train a model, fit a classifier,
-  evaluate performance, do cross-validation, or build a prediction pipeline.
+  Train ML models and iterate systematically with experiment tracking. Covers data splitting,
+  model selection, cross-validation, metrics, persistence, hyperparameter search, and TSV-based
+  run tracking. Supports scikit-learn, XGBoost, LightGBM, and PyTorch. Use when the user
+  wants to train a model, fit a classifier, evaluate performance, do cross-validation, run
+  experiments, tune hyperparameters, compare runs, or track results.
 allowed-tools: Bash, Read, Write, Glob, Grep
-user-invocable: true
-argument-hint: path to feature-engineered dataset (e.g. "data/features.csv")
+disable-model-invocation: true
+argument-hint: path to feature-engineered dataset or results.tsv (e.g. "data/features.csv")
 ---
 
 # Model Training & Evaluation
@@ -156,3 +157,106 @@ Saved: model.xgb, metrics.json
 - Save both model and preprocessing (use Pipeline or save scaler separately)
 - Stratify splits for classification
 - Only touch test set ONCE for final evaluation
+
+---
+
+## Experiment Tracking & Iteration
+
+### Setup
+
+```bash
+echo -e "id\tmetric\tval_score\ttest_score\tmemory_mb\tstatus\tdescription" > results.tsv
+echo -e "exp000\taccuracy\t0.8523\t0.8401\t4096\tKEEP\tbaseline" >> results.tsv
+```
+
+### Results format (TSV)
+
+```
+id        metric    val_score  test_score  memory_mb  status   description
+exp000    accuracy  0.8523     0.8401      4096       KEEP     baseline
+exp001    accuracy  0.8612     0.8498      4096       KEEP     lr=0.001
+exp002    accuracy  0.8590     -           4096       DISCARD  lr=0.003 (overfit)
+exp003    accuracy  0.0000     -           0          CRASH    lr=0.01 (diverged)
+exp004    accuracy  0.8634     0.8521      4352       KEEP     dropout=0.1
+```
+
+Status: `KEEP` (improved), `DISCARD` (same or worse), `CRASH` (error/OOM/NaN)
+
+### Experiment cycle
+
+```
+1. Hypothesize (what change, why it might help)
+2. Modify (one variable at a time)
+3. Run (fixed budget: time or epochs)
+4. Record (append to results.tsv)
+5. Decide: KEEP or DISCARD
+6. Repeat
+```
+
+### What to try (priority order)
+
+**High impact (try first)**
+1. Learning rate (3x and 0.3x current)
+2. Model capacity (layers, hidden size)
+3. Batch size (double or halve)
+4. Regularization (dropout, weight decay)
+
+**Medium impact**
+5. Optimizer (Adam → AdamW → SGD+momentum)
+6. LR schedule (cosine, warmup, step decay)
+7. Data augmentation
+8. Feature selection
+
+**Low impact (try last)**
+9. Activation functions
+10. Normalization layers
+11. Initialization schemes
+12. Gradient clipping
+
+### Search strategies
+
+#### Grid (small spaces)
+```python
+from itertools import product
+params = {'lr': [1e-4, 3e-4, 1e-3], 'dropout': [0.0, 0.1, 0.3]}
+for combo in product(*params.values()):
+    config = dict(zip(params.keys(), combo))
+```
+
+#### Random (large spaces)
+```python
+import random
+def sample():
+    return {
+        'lr': 10 ** random.uniform(-5, -2),
+        'dropout': random.uniform(0, 0.5),
+        'hidden': random.choice([64, 128, 256, 512]),
+    }
+```
+
+#### Informed (after several runs)
+Analyze results.tsv: which LR range works? Did more capacity help? Narrow search.
+
+### Analyze results
+
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/analyze_results.py results.tsv
+```
+
+Or inline:
+```python
+import pandas as pd
+r = pd.read_csv("results.tsv", sep="\t")
+kept = r[r.status == "KEEP"]
+print(f"Total: {len(r)}, Kept: {len(kept)}, Best: {kept.val_score.max():.6f}")
+print(kept.nlargest(5, 'val_score')[['id', 'val_score', 'description']])
+```
+
+### Experiment rules
+
+- ONE variable per experiment
+- Validation set for decisions, test set only at the end
+- Track memory — OOM means not viable
+- Fixed random seeds
+- Log everything (stdout/stderr to run.log)
+- Commit code before each experiment

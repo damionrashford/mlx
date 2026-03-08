@@ -25,7 +25,7 @@
 
 ---
 
-**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 13 skills, zero API keys required.
+**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 14 skills, zero API keys required.
 
 ## Quick Start
 
@@ -35,7 +35,7 @@
 /plugin install mlx@damionrashford-mlx
 ```
 
-Or install manually:
+Or install directly:
 
 ```bash
 git clone https://github.com/damionrashford/mlx.git
@@ -71,28 +71,29 @@ Plugin settings cannot auto-configure permissions. For the smoothest experience,
 
 ## Skills
 
-mlx ships 13 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
+MLX ships 14 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
 | **research** | `/research transformer attention` | Search papers from 7 sources + find and download datasets from 5 sources |
 | **review** | `/review 2401.12345` | Structured paper review: strengths, weaknesses, methodology, reproducibility |
 | **prototype** | `/prototype ./paper.pdf` | Convert a research paper into a working code project (Python, TS, Rust, Go) |
-| **explore** | `/explore data/train.csv` | Systematic EDA: distributions, correlations, missing values, red flags |
-| **prepare** | `/prepare data/raw.csv` | Clean data: duplicates, nulls, outliers, type fixes, validation report |
+| **data-prep** | `/data-prep data/train.csv` | EDA + cleaning: profiling, distributions, missing values, deduplication, outlier removal |
 | **analyze** | `/analyze data/sales.csv` | Statistical tests, A/B testing, cohort analysis, segmentation, KPIs |
 | **visualize** | `/visualize data/metrics.csv` | Charts, dashboards, and reports with matplotlib, seaborn, or plotly |
 | **validate** | `/validate analysis.py` | QA checklist: join explosions, survivorship bias, sanity checks, documentation |
 | **engineer** | `/engineer data/clean.csv` | Feature engineering: transforms, encodings, interactions, aggregations |
-| **train** | `/train data/features.csv` | Train and evaluate models with sklearn, XGBoost, LightGBM, or PyTorch |
-| **experiment** | `/experiment results.tsv` | Systematic hyperparameter search with keep/discard tracking |
+| **train** | `/train data/features.csv` | Train, evaluate, and iterate on models with experiment tracking |
 | **evaluate** | `/evaluate results.tsv` | Multi-dimensional model evaluation, LLM-as-judge, bias detection |
 | **notebook** | `/notebook analysis.ipynb` | Clean, organize, document, and convert Jupyter notebooks |
+| **serve** | `/serve model.joblib` | Deploy models: inference API, Docker, CI/CD, monitoring, model cards |
+| **context-engineering** | natural language | Context window management, memory systems, multi-agent patterns for LLM apps |
+| **mcp-builder** | natural language | Build MCP servers to connect LLMs with external services |
 
 ### Lifecycle Flow
 
 ```
-research → prototype → explore → prepare → engineer → train → experiment → notebook
+research → prototype → data-prep → engineer → train → evaluate → serve → notebook
    │                      │                    │                    │
    │  find papers &       │  understand        │  build & iterate   │  document
    │  get datasets        │  your data         │  on models         │  results
@@ -100,11 +101,11 @@ research → prototype → explore → prepare → engineer → train → experi
 
 Agent coverage:
   ml-researcher ── find papers, datasets, review, prototype
-  data-analyst ─── explore, analyze, visualize, validate, report
+  data-analyst ─── data-prep, analyze, visualize, validate, report
   data-scientist ─ full pipeline: data → trained model
   ml-engineer ──── optimize: features, tuning, ablations
-  ai-engineer ──── LLM apps: RAG, prompts, agents
-  mlops ────────── deploy: serialize, serve, Docker, monitor
+  ai-engineer ──── LLM apps: RAG, prompts, agents, MCP servers
+  ml-ops ────────── deploy: serialize, serve, Docker, monitor
 ```
 
 ## Paper Research
@@ -166,16 +167,16 @@ python3 scripts/datasets.py download 61 --source openml --output ./datasets
 
 ## Agents
 
-mlx includes 6 specialized agents that orchestrate skills for complex workflows.
+MLX includes 6 specialized agents that orchestrate skills for complex workflows.
 
 | Agent | Skills Used | When to Use |
 |-------|-------------|-------------|
 | **ml-researcher** | research, review, prototype | Find papers, discover datasets, review methodology, prototype algorithms |
-| **data-analyst** | explore, prepare, analyze, visualize, validate, evaluate, notebook | Answer business questions: statistics, A/B tests, dashboards, KPIs, reports |
-| **data-scientist** | research, explore, prepare, engineer, train, experiment, evaluate, notebook | Full ML pipeline: find data, explore, clean, model, evaluate |
-| **ml-engineer** | engineer, train, experiment, evaluate, notebook | Focused iteration: feature tuning, hyperparameter sweeps, ablations |
-| **ai-engineer** | research, prototype, evaluate, notebook | Build AI apps: LLM integration, RAG pipelines, prompt engineering, agent architectures |
-| **mlops** | train, experiment, notebook | Deploy models: serialization, serving code, Docker, CI/CD, monitoring, model cards |
+| **data-analyst** | data-prep, analyze, visualize, validate, evaluate, notebook | Answer business questions: statistics, A/B tests, dashboards, KPIs, reports |
+| **data-scientist** | research, data-prep, engineer, train, evaluate, notebook | Full ML pipeline: find data, explore, clean, model, evaluate |
+| **ml-engineer** | engineer, train, evaluate, notebook | Focused iteration: feature tuning, hyperparameter sweeps, ablations |
+| **ai-engineer** | research, prototype, evaluate, context-engineering, mcp-builder, notebook | Build AI apps: LLM integration, RAG pipelines, prompt engineering, agent architectures |
+| **ml-ops** | train, serve, notebook | Deploy models: serialization, serving code, Docker, CI/CD, monitoring, model cards |
 
 ### Agent Routing
 
@@ -188,7 +189,7 @@ mlx includes 6 specialized agents that orchestrate skills for complex workflows.
 "I have a CSV, build me a model"              → data-scientist
 "Tune the hyperparameters on this model"       → ml-engineer
 "Build a RAG chatbot over my docs"             → ai-engineer
-"Deploy this model with Docker"                → mlops
+"Deploy this model with Docker"                → ml-ops
 ```
 
 Each agent follows a strict protocol:
@@ -198,7 +199,7 @@ Each agent follows a strict protocol:
 - **data-scientist**: Find data → Understand → Explore → Clean → Engineer → Train → Iterate → Report
 - **ml-engineer**: Baseline → Features → Model selection → Tuning → Ablation → Final eval → Document
 - **ai-engineer**: Requirements → Model selection → Prompt engineering → RAG/embeddings → Eval → Integration → Document
-- **mlops**: Model audit → Serialization → Inference API → Containerize → CI/CD → Monitoring → Model card → Reproducibility package
+- **ml-ops**: Model audit → Serialization → Inference API → Containerize → CI/CD → Monitoring → Model card → Reproducibility package
 
 ## Architecture
 
@@ -221,12 +222,18 @@ mlx/
 │   │       ├── sources.md       # API endpoints & rate limits
 │   │       └── api-reference.md # Full API documentation
 │   ├── prototype/               # Paper → code conversion
-│   ├── explore/                 # Exploratory data analysis
 │   │   ├── SKILL.md
 │   │   └── scripts/
-│   │       └── eda.py           # Full EDA pipeline
-│   ├── prepare/                 # Data cleaning & preprocessing
+│   │       └── main.py          # Extraction + generation pipeline
+│   ├── data-prep/               # EDA + data cleaning
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       ├── eda.py           # Full EDA pipeline
+│   │       └── clean.py         # Automated data cleaning
 │   ├── engineer/                # Feature engineering
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       └── engineer_features.py  # Auto feature transforms
 │   ├── analyze/                 # Statistical & business analysis
 │   │   ├── SKILL.md
 │   │   └── scripts/
@@ -241,34 +248,65 @@ mlx/
 │   │   └── scripts/
 │   │       ├── chart_templates.py
 │   │       └── format_number.py
-│   ├── train/                   # Model training & evaluation
-│   ├── experiment/              # Experiment tracking & iteration
+│   ├── train/                   # Model training + experiment tracking
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       └── analyze_results.py
 │   ├── validate/                # QA checklist & sanity checking
 │   │   ├── SKILL.md
 │   │   └── scripts/
 │   │       └── validate.py      # Automated pitfall detection
 │   ├── evaluate/                # Multi-dimensional model evaluation
+│   │   └── SKILL.md
 │   ├── review/                  # Structured paper review
-│   └── notebook/                # Jupyter notebook management
+│   │   └── SKILL.md
+│   ├── notebook/                # Jupyter notebook management
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       └── assess.py        # Notebook quality assessment
+│   ├── serve/                   # Model serving & deployment
+│   │   └── SKILL.md
+│   ├── context-engineering/     # LLM context window management
+│   │   └── SKILL.md
+│   └── mcp-builder/             # MCP server development
+│       ├── SKILL.md
+│       ├── scripts/
+│       │   ├── evaluation.py
+│       │   └── connections.py
+│       └── reference/
+│           ├── mcp_best_practices.md
+│           ├── python_mcp_server.md
+│           ├── node_mcp_server.md
+│           └── evaluation.md
 ├── agents/
 │   ├── ml-researcher.md         # Research, review & prototyping agent
 │   ├── data-analyst.md          # Business analysis & visualization agent
 │   ├── data-scientist.md        # Full-pipeline data science agent
 │   ├── ml-engineer.md           # Model optimization agent
 │   ├── ai-engineer.md           # AI application builder agent
-│   └── mlops.md                 # Deployment & operations agent
+│   └── ml-ops.md                # Deployment & operations agent
 ├── hooks/
-│   └── hooks.json               # ML-aware pre/post tool hooks
+│   ├── hooks.json               # ML-aware pre/post tool hooks
+│   └── scripts/                 # Hook shell scripts
+│       ├── session-context.sh
+│       ├── compact-reinject.sh
+│       ├── validate-ml-code.sh
+│       ├── watch-training.sh
+│       ├── save-experiment-state.sh
+│       └── ml-error-advisor.sh
 ├── LICENSE                      # MIT License
 └── .gitignore
 ```
 
 ### Hooks
 
-mlx includes ML-aware hooks that run automatically:
+MLX includes ML-aware hooks that run automatically:
 
+- **SessionStart**: Scans project for ML state (models, datasets, results.tsv) and restores experiment context on compaction
 - **PreToolUse** (Write/Edit): Validates training scripts for data leakage, random seed usage, and hardcoded paths
-- **PostToolUse** (Bash): Captures training metrics from command output and suggests fixes for common errors (missing packages, CUDA issues)
+- **PostToolUse** (Bash): Captures training metrics from command output
+- **PostToolUseFailure** (Bash): Suggests fixes for common ML errors (missing packages, CUDA issues)
+- **PreCompact**: Saves experiment state before context compaction
 
 ### Design Principles
 
@@ -282,21 +320,21 @@ mlx includes ML-aware hooks that run automatically:
 
 | Framework | Used in |
 |-----------|---------|
-| scikit-learn | train, engineer, experiment, analyze |
-| XGBoost | train, experiment |
-| LightGBM | train, experiment |
-| PyTorch | train, experiment |
-| pandas | explore, prepare, engineer, analyze |
+| scikit-learn | train, engineer, analyze |
+| XGBoost | train |
+| LightGBM | train |
+| PyTorch | train |
+| pandas | data-prep, engineer, analyze |
 | scipy | analyze (hypothesis testing) |
 | matplotlib | visualize (static charts) |
 | seaborn | visualize (statistical plots) |
 | plotly | visualize (interactive dashboards) |
-| polars | prepare (alternative) |
-| PySpark | prepare (distributed) |
+| polars | data-prep (alternative) |
+| PySpark | data-prep (distributed) |
 
 ## Experiment Tracking
 
-mlx uses a lightweight TSV-based experiment tracker — no MLflow server, no database, just a file.
+MLX uses a lightweight TSV-based experiment tracker — no MLflow server, no database, just a file.
 
 ```
 id        metric    val_score  test_score  memory_mb  status   description
@@ -327,7 +365,7 @@ All rate limits are enforced automatically in the scripts.
 
 ## Submit to Official Marketplace
 
-To submit mlx to the official Anthropic plugin marketplace:
+To submit MLX to the official Anthropic plugin marketplace:
 
 - **Claude.ai**: [claude.ai/settings/plugins/submit](https://claude.ai/settings/plugins/submit)
 - **Console**: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit)

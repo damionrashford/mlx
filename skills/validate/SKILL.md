@@ -7,7 +7,6 @@ description: >
   "sanity check these results", or mentions data validation, pre-delivery review,
   analysis QA, or checking for common pitfalls.
 allowed-tools: Bash, Read, Write, Glob, Grep
-user-invocable: true
 argument-hint: path to analysis script, notebook, or results (e.g. "analysis.py" or "results.csv")
 ---
 

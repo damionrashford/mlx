@@ -7,7 +7,6 @@ description: >
   "evaluate experimental design", or mentions paper review, peer review, or
   methodology critique.
 allowed-tools: Bash, Read, WebFetch, Glob, Grep
-user-invocable: true
 argument-hint: path to PDF, paper ID, or URL (e.g. "2401.12345" or "./paper.pdf")
 ---
 
