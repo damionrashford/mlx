@@ -25,7 +25,7 @@
 
 ---
 
-**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, and manage notebooks. 6 specialized agents, 14 skills, zero API keys required.
+**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, generate podcasts and content from papers, and manage notebooks. 6 specialized agents, 15 skills.
 
 ## Quick Start
 
@@ -48,8 +48,9 @@ claude --plugin-dir ./mlx
 |-------------|---------|
 | Python 3.10+ | `brew install python` or `apt install python3` |
 | pdftotext (optional, for PDF extraction) | `brew install poppler` or `apt install poppler-utils` |
+| notebooklm (optional, for podcast generation) | `pip install notebooklm` |
 
-No API keys, no paid services, no external accounts. Every data source is free and public.
+Most features require no API keys or accounts. The podcast skill requires a Google account with NotebookLM access.
 
 ### Recommended Permissions
 
@@ -71,7 +72,7 @@ Plugin settings cannot auto-configure permissions. For the smoothest experience,
 
 ## Skills
 
-MLX ships 14 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
+MLX ships 15 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
@@ -88,19 +89,20 @@ MLX ships 14 skills that cover the full ML and data lifecycle. Each is invocable
 | **notebook** | `/notebook analysis.ipynb` | Clean, organize, document, and convert Jupyter notebooks |
 | **serve** | `/serve model.joblib` | Deploy models: inference API, Docker, CI/CD, monitoring, model cards |
 | **context-engineering** | natural language | Context window management, memory systems, multi-agent patterns for LLM apps |
+| **podcast** | `/podcast paper.pdf` | Generate podcasts, videos, quizzes, reports, and slides from papers via NotebookLM |
 | **mcp-builder** | natural language | Build MCP servers to connect LLMs with external services |
 
 ### Lifecycle Flow
 
 ```
 research → prototype → data-prep → engineer → train → evaluate → serve → notebook
-   │                      │                    │                    │
-   │  find papers &       │  understand        │  build & iterate   │  document
-   │  get datasets        │  your data         │  on models         │  results
-   └──────────────────────┴────────────────────┴────────────────────┘
+   │          │            │                    │                    │
+   │  find    │ podcast    │  understand        │  build & iterate   │  document
+   │  papers  │ & content  │  your data         │  on models         │  results
+   └──────────┴────────────┴────────────────────┴────────────────────┘
 
 Agent coverage:
-  ml-researcher ── find papers, datasets, review, prototype
+  ml-researcher ── find papers, datasets, review, podcast, prototype
   data-analyst ─── data-prep, analyze, visualize, validate, report
   data-scientist ─ full pipeline: data → trained model
   ml-engineer ──── optimize: features, tuning, ablations
@@ -171,7 +173,7 @@ MLX includes 6 specialized agents that orchestrate skills for complex workflows.
 
 | Agent | Skills Used | When to Use |
 |-------|-------------|-------------|
-| **ml-researcher** | research, review, prototype | Find papers, discover datasets, review methodology, prototype algorithms |
+| **ml-researcher** | research, review, prototype, podcast | Find papers, discover datasets, review methodology, generate podcasts, prototype algorithms |
 | **data-analyst** | data-prep, analyze, visualize, validate, evaluate, notebook | Answer business questions: statistics, A/B tests, dashboards, KPIs, reports |
 | **data-scientist** | research, data-prep, engineer, train, evaluate, notebook | Full ML pipeline: find data, explore, clean, model, evaluate |
 | **ml-engineer** | engineer, train, evaluate, notebook | Focused iteration: feature tuning, hyperparameter sweeps, ablations |
@@ -183,6 +185,7 @@ MLX includes 6 specialized agents that orchestrate skills for complex workflows.
 ```
 "Find papers about attention mechanisms"      → ml-researcher
 "Review this paper's methodology"             → ml-researcher
+"Turn this paper into a podcast"               → ml-researcher
 "What drove revenue growth last quarter?"      → data-analyst
 "Create a dashboard of our KPIs"              → data-analyst
 "Run an A/B test analysis on this experiment"  → data-analyst
@@ -194,7 +197,7 @@ MLX includes 6 specialized agents that orchestrate skills for complex workflows.
 
 Each agent follows a strict protocol:
 
-- **ml-researcher**: Scope → Search → Filter → Deep analysis → Review → Dataset discovery → Synthesis → Prototype
+- **ml-researcher**: Scope → Search → Filter → Deep analysis → Review → Dataset discovery → Podcast → Synthesis → Prototype
 - **data-analyst**: Question → Explore → Clean → Analyze → Visualize → Validate → Report
 - **data-scientist**: Find data → Understand → Explore → Clean → Engineer → Train → Iterate → Report
 - **ml-engineer**: Baseline → Features → Model selection → Tuning → Ablation → Final eval → Document
@@ -264,6 +267,12 @@ mlx/
 │   │   ├── SKILL.md
 │   │   └── scripts/
 │   │       └── assess.py        # Notebook quality assessment
+│   ├── podcast/                 # Paper-to-podcast & content generation
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       ├── auth.py          # NotebookLM authentication
+│   │       ├── generate.py      # Generate podcast, video, quiz, etc.
+│   │       └── manage.py        # List/manage notebooks & artifacts
 │   ├── serve/                   # Model serving & deployment
 │   │   └── SKILL.md
 │   ├── context-engineering/     # LLM context window management
@@ -279,7 +288,7 @@ mlx/
 │           ├── node_mcp_server.md
 │           └── evaluation.md
 ├── agents/
-│   ├── ml-researcher.md         # Research, review & prototyping agent
+│   ├── ml-researcher.md         # Research, review, podcast & prototyping agent
 │   ├── data-analyst.md          # Business analysis & visualization agent
 │   ├── data-scientist.md        # Full-pipeline data science agent
 │   ├── ml-engineer.md           # Model optimization agent
