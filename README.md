@@ -52,7 +52,7 @@ claude --plugin-dir ./mlx
 | yt-dlp (optional, for YouTube extraction) | `pip install yt-dlp` |
 | youtube-transcript-api (optional, for transcripts) | `pip install youtube-transcript-api` |
 
-Most features require no API keys or accounts. The podcast skill requires a Google account with NotebookLM access.
+Most features require no API keys or accounts. The media skill's content generation requires a Google account with NotebookLM access.
 
 ### Recommended Permissions
 
@@ -234,8 +234,16 @@ mlx/
 │   │       └── api-reference.md # Full API documentation
 │   ├── prototype/               # Paper → code conversion
 │   │   ├── SKILL.md
-│   │   └── scripts/
-│   │       └── main.py          # Extraction + generation pipeline
+│   │   ├── scripts/
+│   │   │   ├── main.py          # Extraction + generation pipeline
+│   │   │   ├── analyzers/       # Paper analysis modules
+│   │   │   ├── extractors/      # Content extraction modules
+│   │   │   └── generators/      # Code generation modules
+│   │   ├── references/
+│   │   │   ├── analysis-methodology.md
+│   │   │   ├── extraction-patterns.md
+│   │   │   └── generation-rules.md
+│   │   └── assets/examples/     # Example files
 │   ├── data-prep/               # EDA + cleaning + feature engineering
 │   │   ├── SKILL.md
 │   │   ├── scripts/
@@ -298,9 +306,12 @@ mlx/
 │   │       └── patterns.md
 │   ├── mcp-builder/             # MCP server development
 │   │   ├── SKILL.md
+│   │   ├── LICENSE.txt
 │   │   ├── scripts/
 │   │   │   ├── evaluation.py
-│   │   │   └── connections.py
+│   │   │   ├── connections.py
+│   │   │   ├── example_evaluation.xml
+│   │   │   └── requirements.txt
 │   │   └── references/
 │   │       ├── mcp_best_practices.md
 │   │       ├── python_mcp_server.md
@@ -411,8 +422,9 @@ To submit MLX to the official Anthropic plugin marketplace:
 1. Fork the repository
 2. Add your skill to `skills/your-skill/SKILL.md`
 3. If your skill needs scripts, add them to `skills/your-skill/scripts/`
-4. Update `plugin.json` if adding new keywords
-5. Submit a pull request
+4. Add quick-reference docs to `skills/your-skill/references/`
+5. Update `plugin.json` if adding new keywords
+6. Submit a pull request
 
 See the [Claude Code plugin docs](https://code.claude.com/docs/en/plugins) for the expected directory layout and [plugins reference](https://code.claude.com/docs/en/plugins-reference) for the full manifest schema.
 
