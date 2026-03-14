@@ -15,7 +15,6 @@ skills:
   - data-prep
   - analyze
   - visualize
-  - validate
   - evaluate
   - notebook
 ---
@@ -112,7 +111,7 @@ Structure findings as a narrative:
 ```
 
 ### Step 7: Validate
-Before sharing, run the validate skill QA checklist:
+Before sharing, run the analyze skill's QA checklist:
 - Check row counts after joins (catch join explosions)
 - Verify denominators in rates and percentages
 - Cross-reference key numbers against known benchmarks

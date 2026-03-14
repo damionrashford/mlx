@@ -1,0 +1,455 @@
+You've probably
+seen already that many families of
+machine learning model make their predictions
+by outputting a probability. For example, if we have a
+binary classification problem, we might use
+logistic regression, which is trained to output
+the probability that the input data point belongs
+to the positive class. Naive Bayes is another example that outputs a probability. Having a model being
+able to make predictions in terms of probabilities
+is very useful. For example, if the
+classifier is being used as part of some important
+decision-making process, the prediction probability
+can be treated as a sort of confidence estimate
+that the classifier has in its prediction. If we're going to rely
+on those probability or confidence values, it's super important
+to make sure that these values are
+accurate in some sense. But what does it mean for
+probabilities to be accurate? If a classifier isn't generating
+accurate probabilities, how can we fix it
+so that it does? Making sure a model's
+prediction probabilities are accurate is known
+as model calibration. In this video,
+we'll look at what model calibration
+is in some detail, why it's super important, and how to implement model
+calibration to improve the accuracy of any classifier's
+output probabilities. Let's start by looking at
+what model calibration is. What is a calibrated model? Well, a calibrated model outputs prediction probabilities
+that are close to real-world observed
+probabilities and there's a very familiar example
+that we can use to help understand this concept and it comes from
+weather prediction. Suppose for all the days
+that a meteorologist predicted 100 percent
+chance of rain, it actually rained only
+50 percent of the time. In this case, I
+think you'd agree that the meteorologist's
+probability estimate of 100 percent doesn't match the proportion that's
+actually observed in reality, which is 50 percent. We would say that their
+prediction probabilities are not calibrated. A meteorologist's
+predictions would be calibrated if across all the days where the
+weather person predicts it will rain with
+probability R present. It actually turns
+out that it does rain R percent of the time. We have two quantities here, we have the predicted
+probability. That's the probability
+that the meteorologists actually predicts when they say it's going to rain so they predict an R
+percent chance of rain. Then we have the
+empirical probability, which is the actual
+observed proportion of days that it actually rains when the meteorologist predicts an R percent
+chance of rain. Again, the meteorologist's
+predictions are calibrated if the
+probabilities they predict, the predicted
+probabilities are equal to their empirical
+probabilities. The same concept that you can apply to a human
+making predictions, you can also apply to a machine-learning model
+making predictions. A machine learning
+model may also have calibration issues in
+exactly the same way. For example, if we define a binary classification
+problem where we have an instance x_i that has a label y_i that
+can be zero or one, we say that a predictor
+f of x_i is calibrated. Again, this is
+exactly the same as the weather example if across
+all the data points where the predictor predicts
+that the point belongs to class 1 with
+probability R percent. The data point actually
+does belong to class 1 exactly R
+percent of the time. It's the same as in
+the weather example. The predicted probability should match the empirical probability. Mathematically, we can write
+this equivalency that we're looking for a well-calibrated
+model using this notation. For all the data points x_i, for which the
+classification function f takes x_i as input and predicts some probability
+p. For example, in the binary
+classification problem, if the job of the classifier predict if it's going
+to rain tomorrow, that prediction might
+be 100 percent. These are all the
+instances where the classifier
+predicts 100 percent. Then of those days, so for all the days
+that are in that set, we compute the average or the expectation over
+the actual labels, the labels of whether it
+actually did rain or not. That's the empirical
+probability. E here is a symbol
+in mathematics that typically means expected
+value in this context. Essentially just
+think of it like an average in this case. What's the average
+zero-one label for the days where the
+predictor was 100 percent, what was the average label across all those days,
+was it 100 percent? In which case, the classification probability
+is well calibrated, or was it 50 percent
+or some other value? The requirement
+mathematically that the predicted probabilities
+from the predictor match the empirical probability is
+contained in this statement. Why is it important for a predictive models
+probabilities to match reality? Why is it important that
+they be well-calibrated? There are a number of different
+scenarios that depend on having accurate
+prediction probabilities. As I mentioned before, if
+the classifier is being used as part of some
+important decision process. This is typical in
+many scenarios, both in machine learning and
+in human decision-making. There was a famous example of the risk assessments in the
+justice system that are done, that likelihood of a
+person re-offending. That's an example
+of a classifier being used in a
+human decision loop. We need to know if those
+confidence estimates are accurate if
+they match reality. It's important in any
+decision-making scenario. Also, there are a lot of situations in machine
+learning where we want to compute the expectation or an average of an
+important quantity, like the expected number of
+clicks on a search result, the expected number of clicks on an advertisement and so on. If you want your expectation of that quantity to be valid, you want to make sure that the probabilities that go into that calculation are accurate. Finally, it's quite
+common these days to have larger systems that are
+modular and probabilistic. All the models in a large
+system that rely on each other speaks the common language of probability, for example, on the right here I have spam email detection scenario where the input to the system
+is some email content. The goal is to
+predict if this email is a spam email or not. That might involve
+more than one process. You might have a
+separate classifier that predicts whether this email is urgent or
+important based on the content. Then that estimate of
+being urgent or important forms part of the feature set that goes into the
+final predictor, whether this is a spam email. I think you'll agree that if you have a large system where the input probability from one level comes from
+an earlier system, it's important for those
+probabilities to be accurate. It allows the system to adjust itself
+within each module, keeping the probabilities
+accurate without having to re-calibrate
+the entire system. In some scenarios
+that may not be as important to do calibration. For example if your goal
+is to rank a set of things like ranking search results where the ordering is important, but the probability of relevance for those is not as important to
+explicitly calculate. Then in some cases you could rely on just the raw
+model prediction score, just making sure
+that the rankings were accurate but
+not necessarily caring about the
+specific probability of relevance of each
+of the documents. There may be some
+non-probabilistic frameworks where calibration may
+not be as important. But given the prevalence of statistical methods
+in many systems, it's important to understand for the parts of the system the
+do use probabilistic modules, that those modules are producing well-calibrated
+probabilities. Miscalibrated models are very common in machine
+learning.. You shouldn't assume that a model is
+calibrated right out of the box. This is especially true for more complex models that use [inaudible] are
+boosting for example. Finally, most estimators in
+a package like scikit-learn, for example do provide output probabilities via
+the predict proba method. But there are some
+classifiers that only implement, say,
+decision score. You can still get accurate output
+probabilities from those raw decisions scores
+by performing calibration. We'll talk a bit more
+about that in a minute. One of the first steps in looking at a prediction
+model and how well calibrated it is to visualize
+the calibration situation. We do this with something
+called calibration curves or reliability curves. You remember I said that
+well calibrated means having predicted
+probabilities that were equal to empirical
+probabilities. That's exactly what
+a reliability curve or calibration curve shows. Along the x-axis, we have the predicted probabilities
+from a classifier. We take all the instances for which predicted a
+particular probability p, let's say 0.4, and
+put those into a bin. Then we compute the
+empirical probability and show that on the y-axis. Again, in this case, all the days that were
+in the bin for which the classifier predicted
+0.4 chance of rain. I can draw a straight line
+to indicate those days. The empirical probability is
+how many days it actually rained in that pool
+of days for which the classifier predicted a
+40 percent chance of rain. Perfect calibration in the
+classification scenario on a calibration plot is
+given by the line y equals x. That line y equals x is
+exactly the line where the predicted
+probability given by the classifier exactly equals
+the empirical probability, the actual percentage of time that it rained
+that we observed. When we plot the
+predicted probability against the empirical
+probability, a perfectly calibrated
+classifier would give a calibration curve that was exactly a straight
+line along y equals x. The less calibrated
+a classifier is, the more it will deviate
+from that line y equals x. A classifier in this case, like a support vector machine, which is the topmost green line. We can see that in some cases, the predicted probability of 0.6 actually understates
+the empirical probability. Instead of being an empirical
+probability of 0.6, we actually observe with
+something closer to 0.8. Similarly, when the
+classifier predicted 0.3, the empirical probability
+turned out to be close to zero. In other words, when the
+classifier predicted a 30 percent chance of rain for all the days in that bucket, what we observed
+as the empirical probability was close to zero instead of
+being 30 percent. You can see that the support vector machine
+is quite poorly calibrated. You can see that
+some other models like logistic regression, for example the blue line
+that tracks very closely, the line y equals x is
+already very well calibrated, so its predicted
+probability is very similar to what we actually observe the empirical
+probabilities to be. A calibration curve
+is a great way to do a diagnostic on a classifier to understand how well
+calibrated it is. The more it deviates from
+the line y equals x, the less well calibrated it is, and the more closely it
+tracks the line y equals x, the better calibrated it is. I'll describe in a minute
+how you can create these calibration curves
+with Scikit-learn. But suppose for now
+that we've decided that the predictor is not well calibrated, what
+can we do about it? Well, how can we fix these poorly calibrated
+probabilities? Well, one widely
+used approach is to treat the prediction
+model like a black box. In other words, we train
+a calibration function that learns to
+correct or improve the output prediction scores of an existing predictor and to turn it into a
+calibrated predictor. We might have
+prediction function f(x) that produces
+some raw output. The output could
+be a probability if the classifier supports
+the predict problem method, or it could be a score that
+comes out of the model, in which case you can get it from the decision
+function method. But in either case,
+let's assume that that raw prediction
+output is not calibrated. We have this original model, what we're going to do
+is then we're going to take the output from
+the original models. We're not going to modify
+the original model at all. We're simply going to
+take its output and learn a transformation
+function, let's call it g, that can turn the raw
+prediction output from the original model into a calibrated prediction
+probability. We're going to learn this
+transformation function g, using what's called
+a calibration set. So this is a set of
+data that must be different from the set of data that was used to train
+the original model. We'll talk about that
+more in a minute. A good calibration
+function, this function g, ideally should be
+strictly monotonic, should always be
+increasing in order to preserve the original
+prediction rankings. For example if the
+raw score from the original model for item A is less than the
+raw score for item B, then we would expect that
+the prediction probability for item A should be less than the prediction
+probability for item B. Here I'm talking about a binary
+classification scenario. There are a couple of widely
+used methods to learn this transformation function
+g. The first method is called platt scaling
+or sigmoid calibration, where g is the sigmoid function. Then the second
+more general method is called isotonic regression. I'll explain what each of
+these is in the next slides. One simple but widely used method that's
+quite effective in some cases is called Platt scaling or
+sigmoid calibration. The original motivation
+for John Platt introducing this approach was that support vector machines typically give a raw
+prediction score. They don't give
+probabilities as outputs, they give a score
+that's related to a point position
+relative to the margin. But if we're in a situation like in spam e-mail
+detection, for example, where we need a probability, we need a way to convert those raw prediction scores
+to class probabilities. What sigmoid calibration
+does is it fits a sigmoid curve to
+the points that are formed by combining the SVM raw prediction score and the empirical probability. We can see in this
+example, in this chart, the x-axis shows the
+raw prediction score. Each of these points represents a data point that's
+to be classified. The x-axis represents
+the raw prediction score that you get when you take an existing support
+vector machine and you ask it to give a score
+for a particular point. Then the class probability is the actual
+empirical probability that the points with that prediction score
+belong to the class, the average class prediction in a binary
+classification scenario. If we plot these
+points for an SVM, we might get this curve that
+looks somewhat like this. It's roughly sigmoid shape. In this case, sigmoid
+calibration is a good way to
+approximate that curve. More specifically, what we're doing with sigmoid
+calibration is we have the raw scores from some
+predictor f with input point x. To learn the sigmoid
+function that best fits the observed
+relationship between the prediction score and
+the class probability, we just fit the sigma, which
+means finding the values for A and B that produce a sigmoid s-shaped curve that best approximates that
+set of observed points. We can tune A and B to maximize
+the calibration accuracy. Getting reliability
+curve as close as possible to the line y
+equals x in the plot. Platt scaling is
+especially effective for maximum margin type methods such as support
+vector machines or boosted trees that
+already tend to have sigmoidal distortions in their
+predicted probabilities. The second and more
+general form of calibration method is
+called isotonic regression. Instead of assuming that
+the relationship between the predicted probability and the observed class
+fraction is sigmoid, instead, we use something called isotonic regression to obtain this function g. In
+this plot on the right, we can see the
+original data points. The x-axis is the score just like before the raw score from let's say a
+support vector machine. Just like before, the y-axis represents some
+empirical estimate. between zero and one of the true empirical probability for all the items
+that have that score. In this plot, you can see
+that the red dots are the data points and the green continuous line that is fit through
+the data points here, that is a step like function
+is the isotonic fit. Isotonic regression
+is a way to get a step like regression function that captures the
+relationship in a way that guarantees a
+strictly increasing function. You can compare the
+isotonic fit to these data points with
+a simple linear fit. Like most regression situations, a linear fit is good at
+capturing certain kinds of global trends but isotonic regression can capture a
+more complex structure in the observed
+relationship between the classifier score and the
+empirical probabilities. Once we learn this function g, that's the function that allows
+us to take a raw score in x and convert it to a
+calibrated probability. We can just take our original estimate
+that came from f of x, we can pass it through
+the function g, the calibration function
+g that we learned, to get our calibrated
+probability estimate. To compare the two again,
+plot regression is restricted to using a sigmoid to capture this relationship. But isotonic regression
+can fit any bias shape. It's a more powerful method, although it's also prone to
+overfitting if you have, let's say, 1,000 data points. It's better to use it when
+you have larger data-sets. How is this all implemented
+in scikit-learn? Well, the main routine that you're going
+to want to use in scikit-learn for calibration is called calibrated
+classifier, CV. CV stands for cross-validation. The idea is you pass the base classifier you
+want to calibrate. You set some parameters that indicate the method you want
+to use for calibration, as well as the number
+of cross-validation folds to use for tuning. The result is a
+calibrated version of the input classifier
+that you gave it. Calibrated classifiers
+CV supports both of the methods
+that I just described, both the sigmoid calibration
+and isotonic calibration. Scikit-learn also
+has routines to generate the calibration
+curve that I showed you, where you can pass it, the array of the true
+target values and the corresponding probabilities
+with the positive class. Then it will bin the given
+examples and compute the empirical and predicted
+probabilities for each bin of examples. In newer versions
+of scikit-learn, they have included
+a function called calibration display for
+plotting these curves. Let's start with a
+scenario where you've already fitted a classifier like a logistic regression classifier or a support vector machine. You don't want to fit it, you just want to correct the output scores of probabilities so that
+they're well calibrated. In this case there's a parameter to calibrate a classified CV, called CV that indicates the method you want to
+use for cross validation. If you set that to
+the value prefit, then it won't actually
+do cross-validation, so they won't split the data. It'll take all the data
+you provide when you call the fit method for
+calibrated classifiers CV, and use that to fit the regressor, the
+calibration regressor. Again, you have to ensure that the calibration data for fitting the
+calibration regressor is completely disjoint
+from the data you used to train the
+underlying prediction model. There's another setting
+called ensemble for calibrated classifies CV. I'll talk about
+that in a minute. But that setting is ignored
+if you specify prefit. Here's an example of using
+calibrated classifiers CV, when you already have
+a classifier that you've trained and you just want to make sure that
+the output scores are probabilities
+are well calibrated. Here I've made a toy
+example where I've created a toy classification problem
+using make classification. We're calling train
+test split here. Now note that calling
+train test split, we have the x_train
+and y_train as usual. But then what we normally
+call the test split, we're calling x
+calib and y calib. The reason for that
+is, as I said, you want to train the
+regressing function in the calibrated classifier using different data than you used
+to train the classifier. We're going to fit
+this, in this case a Gaussian Naive Bayes model. We're going to train it using
+the training data as usual. But then to calibrate it, we're going to pass
+in the Gaussian Naive Bayes classifier that we trained as the
+base estimator. We're going to set this
+CV setting to prefit. In order to get the
+calibration going, we call the fit method on the calibrated
+classifiers CV object. The data we give it to
+do the calibration is the calibration set that
+we split off initially. You can see it's a very
+straightforward process to take an existing
+classifier and correct its outputs so that you get better calibrated
+probabilities. Now let's look at the
+case where you have not yet trained the classifier, where you want to do the fitting and the calibrating
+simultaneously. In this case, you set the CV setting to the cross-validation
+strategy you want. The default if you don't
+specify any CV setting, is to use five-fold
+cross-validation, which is stratified if the
+label that you're predicting is a binary or
+multi-class label. You can set the
+ensemble parameter according to how
+you want to combine the results from each of
+these cross-validation folds. I'm not going to go into
+too much detail here about all the different combinations of scenarios you can handle. You can see the scikit-learn documentation at the bottom of this slide for more details. Here's a quick
+example of how to use the calibrated classifier
+CV object to take a base classifier
+that has not yet been trained and
+to do the training and the calibration simultaneously using
+cross-validation. In this case, I haven't
+specified the CV setting. By default, it's going to do
+stratified cross-validation. I did actually specify
+here that I want 5-folds. The default behavior
+for the ensemble, I'll talk about in a
+minute, basically, the workflow is very similar to the pre-trained
+classifier, except, in this case, you're passing
+in all of the data that you have in order to fit that
+calibration regression model. Internally, what it'll
+do is I will do the 5 cross-validation
+folds splits with 4 out of 5 parts that
+are the training data. It will train the
+classifier with those, and then with the
+remaining part, it will do the calibration. By default for each
+cross-validation split, if it's a copy of the
+base estimator to the training set and
+then it calibrates, the result is in the test set. By default for prediction, when the ensemble
+equals true flag is on, then the predicted
+probabilities that come out of the calibrated
+classifier object are the averages across the individual
+calibrated classifiers. You can see that when I call calibrated classifier
+CV with this base, Gaussian Naive Bayes model, the results if I look at the property calibrated
+classifiers underscore, since I asked for 5-fold
+cross-validation, it will provide me 5
+calibrated classifiers. It's those 5 classifiers if the ensemble equals
+true flag is on. It will combine the
+predicted probabilities across all those individual
+calibrated classifiers. It will average those
+to give the final calibrated predicted
+probability for the overall calibrated
+classifier CV model. Just to wrap up my calibration, how do you integrate this calibration step
+into your workflow? The first step is to decide whether calibration matters
+for your application. You should consider
+using a calibration if you have a probabilistic framework that you're
+working within, if there are important
+consequences to the accuracy of the probabilistic outputs
+if they're being used as confidence or risk estimates
+and decision-making, or if you have important
+expected values of quantities that
+you want to compute. You should always run
+the calibration step on a separate
+validation set that's different from the
+training set that was used originally to
+train the classifier. Otherwise, if you don't do this, then adding the calibration
+step could simply worsen any over-fitting
+problems you might have. There are some other
+technical considerations that for the sake of
+time, I didn't go into, the calibration
+function in addition to ideally being
+strictly increasing, should also minimize
+what's called the strictly proper
+scoring rule, and it should also ideally maximize what's called
+the sharpness property. That basically means that
+it should make predictions that are far from just the
+global probability average. If you want more details, I provided a paper
+at the bottom of this slide that goes into more of those technical
+considerations. But to make sure that you use calibration correctly
+in your workflow, it's not as important to follow these last
+technical considerations. The most important things
+to remember are to always run the calibration
+step on data that's different from the training
+data to make sure that calibration is
+something that's appropriate for your
+machine-learning scenario in the first place. That's my summary of model
+calibration, what it is, why it's important, and how to implement it in scikit-learn. As I said, it's an
+incredibly important aspect of probabilistic models. It's not something
+that you can take for granted for out-of-the-box
+machine learning models. You can't assume that
+they were calibrated. I recommend using calibration
+reliability plots to get an initial
+estimate for how well your models are calibrated and to apply the
+methods I described in this talk to potentially increase the accuracy of
+the probability estimates that come out of your
+machine-learning models.

@@ -11,7 +11,7 @@ maxTurns: 40
 permissionMode: acceptEdits
 memory: user
 skills:
-  - engineer
+  - data-prep
   - train
   - evaluate
   - notebook

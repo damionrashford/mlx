@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+		<link rel="pingback" href="https://www.approximatelycorrect.com/xmlrpc.php">
+		<script>(function(html){html.className=html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>The Foundations of Algorithmic Bias &#8211; Approximately Correct</title>
+<meta name='robots' content='max-image-preview:large'/>
+<!-- Grow Social by Mediavine v.1.18.2 https://marketplace.mediavine.com/grow-social-pro/ -->
+<meta property="og:locale" content="en_US"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="The Foundations of Algorithmic Bias"/>
+<meta property="og:description" content="This morning, millions of people woke up and impulsively checked Facebook. They were greeted immediately by content curated by Facebook’s newsfeed algorithms. To some degree, this news might have influenced their perceptions of the day’s news, the economy’s"/>
+<meta property="og:url" content="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/"/>
+<meta property="og:site_name" content="Approximately Correct"/>
+<meta property="og:updated_time" content="2020-07-31T12:54:31+00:00"/>
+<meta property="article:published_time" content="2016-11-07T19:00:26+00:00"/>
+<meta property="article:modified_time" content="2020-07-31T12:54:31+00:00"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="The Foundations of Algorithmic Bias"/>
+<meta name="twitter:description" content="This morning, millions of people woke up and impulsively checked Facebook. They were greeted immediately by content curated by Facebook’s newsfeed algorithms. To some degree, this news might have influenced their perceptions of the day’s news, the economy’s"/>
+<!-- Grow Social by Mediavine v.1.18.2 https://marketplace.mediavine.com/grow-social-pro/ -->
+<link rel='dns-prefetch' href='//fonts.googleapis.com'/>
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect'/>
+<link rel="alternate" type="application/rss+xml" title="Approximately Correct &raquo; Feed" href="https://www.approximatelycorrect.com/feed/"/>
+<link rel="alternate" type="application/rss+xml" title="Approximately Correct &raquo; Comments Feed" href="https://www.approximatelycorrect.com/comments/feed/"/>
+<link rel="alternate" type="application/rss+xml" title="Approximately Correct &raquo; The Foundations of Algorithmic Bias Comments Feed" href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/feed/"/>
+		<!-- This site uses the Google Analytics by MonsterInsights plugin v7.17.0 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+							<script src="//www.googletagmanager.com/gtag/js?id=UA-4984788-11" type="text/javascript" data-cfasync="false"></script>
+			<script type="text/javascript" data-cfasync="false">var mi_version='7.17.0';var mi_track_user=true;var mi_no_track_reason='';var disableStr='ga-disable-UA-4984788-11';function __gtagTrackerIsOptedOut(){return document.cookie.indexOf(disableStr+'=true')>-1;}
+if(__gtagTrackerIsOptedOut()){window[disableStr]=true;}
+function __gtagTrackerOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';window[disableStr]=true;}
+if('undefined'===typeof gaOptout){function gaOptout(){__gtagTrackerOptout();}}
+window.dataLayer=window.dataLayer||[];if(mi_track_user){function __gtagTracker(){dataLayer.push(arguments);}
+__gtagTracker('js',new Date());__gtagTracker('set',{'developer_id.dZGIzZG':true,});__gtagTracker('config','UA-4984788-11',{forceSSL:true,});window.gtag=__gtagTracker;(function(){var noopfn=function(){return null;};var newtracker=function(){return new Tracker();};var Tracker=function(){return null;};var p=Tracker.prototype;p.get=noopfn;p.set=noopfn;p.send=function(){var args=Array.prototype.slice.call(arguments);args.unshift('send');__gaTracker.apply(null,args);};var __gaTracker=function(){var len=arguments.length;if(len===0){return;}
+var f=arguments[len-1];if(typeof f!=='object'||f===null||typeof f.hitCallback!=='function'){if('send'===arguments[0]){var hitConverted,hitObject=false,action;if('event'===arguments[1]){if('undefined'!==typeof arguments[3]){hitObject={'eventAction':arguments[3],'eventCategory':arguments[2],'eventLabel':arguments[4],'value':arguments[5]?arguments[5]:1,}}}
+if(typeof arguments[2]==='object'){hitObject=arguments[2];}
+if(typeof arguments[5]==='object'){Object.assign(hitObject,arguments[5]);}
+if('undefined'!==typeof(arguments[1].hitType)){hitObject=arguments[1];}
+if(hitObject){action='timing'===arguments[1].hitType?'timing_complete':hitObject.eventAction;hitConverted=mapArgs(hitObject);__gtagTracker('event',action,hitConverted);}}
+return;}
+function mapArgs(args){var gaKey,hit={};var gaMap={'eventCategory':'event_category','eventAction':'event_action','eventLabel':'event_label','eventValue':'event_value','nonInteraction':'non_interaction','timingCategory':'event_category','timingVar':'name','timingValue':'value','timingLabel':'event_label',};for(gaKey in gaMap){if('undefined'!==typeof args[gaKey]){hit[gaMap[gaKey]]=args[gaKey];}}
+return hit;}
+try{f.hitCallback();}catch(ex){}};__gaTracker.create=newtracker;__gaTracker.getByName=newtracker;__gaTracker.getAll=function(){return[];};__gaTracker.remove=noopfn;__gaTracker.loaded=true;window['__gaTracker']=__gaTracker;})();}else{console.log("");(function(){function __gtagTracker(){return null;}
+window['__gtagTracker']=__gtagTracker;window['gtag']=__gtagTracker;})();}</script>
+				<!-- / Google Analytics by MonsterInsights -->
+		<script>window._wpemojiSettings={"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.approximatelycorrect.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.4.7"}};!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83e\udef1\ud83c\udffb\u200d\ud83e\udef2\ud83c\udfff","\ud83e\udef1\ud83c\udffb\u200b\ud83e\udef2\ud83c\udfff")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);</script>
+<link rel='stylesheet' id='wp-quicklatex-format-css' href='https://www.approximatelycorrect.com/wp-content/plugins/wp-quicklatex/css/quicklatex-format.css?ver=6.4.7' media='all'/>
+<link rel='stylesheet' id='twentysixteen-jetpack-css' href='https://www.approximatelycorrect.com/wp-content/plugins/jetpack/modules/theme-tools/compat/twentysixteen.css?ver=9.8.3' media='all'/>
+<style id='wp-emoji-styles-inline-css'>img.wp-smiley,img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 .07em!important;vertical-align:-.1em!important;background:none!important;padding:0!important}</style>
+<link rel='stylesheet' id='wp-block-library-css' href='https://www.approximatelycorrect.com/wp-includes/css/dist/block-library/style.min.css?ver=6.4.7' media='all'/>
+<style id='wp-block-library-inline-css'>.has-text-align-justify{text-align:justify}</style>
+<style id='wp-block-library-theme-inline-css'>.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video{margin:0 0 1em}.wp-block-template-part.has-background{margin-bottom:0;margin-top:0;padding:1.25em 2.375em}</style>
+<style id='classic-theme-styles-inline-css'>.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}</style>
+<style id='global-styles-inline-css'>body{--wp--preset--color--black:#000;--wp--preset--color--cyan-bluish-gray:#abb8c3;--wp--preset--color--white:#fff;--wp--preset--color--pale-pink:#f78da7;--wp--preset--color--vivid-red:#cf2e2e;--wp--preset--color--luminous-vivid-orange:#ff6900;--wp--preset--color--luminous-vivid-amber:#fcb900;--wp--preset--color--light-green-cyan:#7bdcb5;--wp--preset--color--vivid-green-cyan:#00d084;--wp--preset--color--pale-cyan-blue:#8ed1fc;--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-purple:#9b51e0;--wp--preset--color--dark-gray:#1a1a1a;--wp--preset--color--medium-gray:#686868;--wp--preset--color--light-gray:#e5e5e5;--wp--preset--color--blue-gray:#4d545c;--wp--preset--color--bright-blue:#007acc;--wp--preset--color--light-blue:#9adffd;--wp--preset--color--dark-brown:#402b30;--wp--preset--color--medium-brown:#774e24;--wp--preset--color--dark-red:#640c1f;--wp--preset--color--bright-red:#ff675f;--wp--preset--color--yellow:#ffef8e;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple:linear-gradient(135deg,rgba(6,147,227,1) 0%,#9b51e0 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan:linear-gradient(135deg,#7adcb4 0%,#00d082 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange:linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red:linear-gradient(135deg,rgba(255,105,0,1) 0%,#cf2e2e 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray:linear-gradient(135deg,#eee 0%,#a9b8c3 100%);--wp--preset--gradient--cool-to-warm-spectrum:linear-gradient(135deg,#4aeadc 0%,#9778d1 20%,#cf2aba 40%,#ee2c82 60%,#fb6962 80%,#fef84c 100%);--wp--preset--gradient--blush-light-purple:linear-gradient(135deg,#ffceec 0%,#9896f0 100%);--wp--preset--gradient--blush-bordeaux:linear-gradient(135deg,#fecda5 0%,#fe2d2d 50%,#6b003e 100%);--wp--preset--gradient--luminous-dusk:linear-gradient(135deg,#ffcb70 0%,#c751c0 50%,#4158d0 100%);--wp--preset--gradient--pale-ocean:linear-gradient(135deg,#fff5cb 0%,#b6e3d4 50%,#33a7b5 100%);--wp--preset--gradient--electric-grass:linear-gradient(135deg,#caf880 0%,#71ce7e 100%);--wp--preset--gradient--midnight:linear-gradient(135deg,#020381 0%,#2874fc 100%);--wp--preset--font-size--small:13px;--wp--preset--font-size--medium:20px;--wp--preset--font-size--large:36px;--wp--preset--font-size--x-large:42px;--wp--preset--spacing--20:.44rem;--wp--preset--spacing--30:.67rem;--wp--preset--spacing--40:1rem;--wp--preset--spacing--50:1.5rem;--wp--preset--spacing--60:2.25rem;--wp--preset--spacing--70:3.38rem;--wp--preset--spacing--80:5.06rem;--wp--preset--shadow--natural:6px 6px 9px rgba(0,0,0,.2);--wp--preset--shadow--deep:12px 12px 50px rgba(0,0,0,.4);--wp--preset--shadow--sharp:6px 6px 0px rgba(0,0,0,.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp:6px 6px 0px rgba(0,0,0,1)}:where(.is-layout-flex){gap:.5em}:where(.is-layout-grid){gap:.5em}body .is-layout-flow>.alignleft{float:left;margin-inline-start:0;margin-inline-end:2em}body .is-layout-flow>.alignright{float:right;margin-inline-start:2em;margin-inline-end:0}body .is-layout-flow>.aligncenter{margin-left:auto!important;margin-right:auto!important}body .is-layout-constrained>.alignleft{float:left;margin-inline-start:0;margin-inline-end:2em}body .is-layout-constrained>.alignright{float:right;margin-inline-start:2em;margin-inline-end:0}body .is-layout-constrained>.aligncenter{margin-left:auto!important;margin-right:auto!important}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width:var(--wp--style--global--content-size);margin-left:auto!important;margin-right:auto!important}body .is-layout-constrained>.alignwide{max-width:var(--wp--style--global--wide-size)}body .is-layout-flex{display:flex}body .is-layout-flex{flex-wrap:wrap;align-items:center}body .is-layout-flex>*{margin:0}body .is-layout-grid{display:grid}body .is-layout-grid>*{margin:0}:where(.wp-block-columns.is-layout-flex){gap:2em}:where(.wp-block-columns.is-layout-grid){gap:2em}:where(.wp-block-post-template.is-layout-flex){gap:1.25em}:where(.wp-block-post-template.is-layout-grid){gap:1.25em}.has-black-color{color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-color{color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-color{color:var(--wp--preset--color--white)!important}.has-pale-pink-color{color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-color{color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-color{color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-color{color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-color{color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-color{color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-color{color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-color{color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-color{color:var(--wp--preset--color--vivid-purple)!important}.has-black-background-color{background-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-background-color{background-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-background-color{background-color:var(--wp--preset--color--white)!important}.has-pale-pink-background-color{background-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-background-color{background-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-background-color{background-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-background-color{background-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-background-color{background-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-background-color{background-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-background-color{background-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-background-color{background-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-background-color{background-color:var(--wp--preset--color--vivid-purple)!important}.has-black-border-color{border-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-border-color{border-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-border-color{border-color:var(--wp--preset--color--white)!important}.has-pale-pink-border-color{border-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-border-color{border-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-border-color{border-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-border-color{border-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-border-color{border-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-border-color{border-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-border-color{border-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-border-color{border-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-border-color{border-color:var(--wp--preset--color--vivid-purple)!important}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background:var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple)!important}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background:var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan)!important}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange)!important}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red)!important}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background:var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray)!important}.has-cool-to-warm-spectrum-gradient-background{background:var(--wp--preset--gradient--cool-to-warm-spectrum)!important}.has-blush-light-purple-gradient-background{background:var(--wp--preset--gradient--blush-light-purple)!important}.has-blush-bordeaux-gradient-background{background:var(--wp--preset--gradient--blush-bordeaux)!important}.has-luminous-dusk-gradient-background{background:var(--wp--preset--gradient--luminous-dusk)!important}.has-pale-ocean-gradient-background{background:var(--wp--preset--gradient--pale-ocean)!important}.has-electric-grass-gradient-background{background:var(--wp--preset--gradient--electric-grass)!important}.has-midnight-gradient-background{background:var(--wp--preset--gradient--midnight)!important}.has-small-font-size{font-size:var(--wp--preset--font-size--small)!important}.has-medium-font-size{font-size:var(--wp--preset--font-size--medium)!important}.has-large-font-size{font-size:var(--wp--preset--font-size--large)!important}.has-x-large-font-size{font-size:var(--wp--preset--font-size--x-large)!important}.wp-block-navigation a:where(:not(.wp-element-button)){color:inherit}:where(.wp-block-post-template.is-layout-flex){gap:1.25em}:where(.wp-block-post-template.is-layout-grid){gap:1.25em}:where(.wp-block-columns.is-layout-flex){gap:2em}:where(.wp-block-columns.is-layout-grid){gap:2em}.wp-block-pullquote{font-size:1.5em;line-height:1.6}</style>
+<link rel='stylesheet' id='email-subscribers-css' href='https://www.approximatelycorrect.com/wp-content/plugins/email-subscribers/lite/public/css/email-subscribers-public.css?ver=4.7.5.1' media='all'/>
+<link rel='stylesheet' id='dpsp-frontend-style-pro-css' href='https://www.approximatelycorrect.com/wp-content/plugins/social-pug/assets/dist/style-frontend-pro.1.18.2.css?ver=1.18.2' media='all'/>
+<link rel='stylesheet' id='twentysixteen-fonts-css' href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic%7CMontserrat%3A400%2C700%7CInconsolata%3A400&#038;subset=latin%2Clatin-ext&#038;display=fallback' media='all'/>
+<link rel='stylesheet' id='genericons-css' href='https://www.approximatelycorrect.com/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' media='all'/>
+<link rel='stylesheet' id='twentysixteen-style-css' href='https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/style.css?ver=20190507' media='all'/>
+<link rel='stylesheet' id='twentysixteen-block-style-css' href='https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/css/blocks.css?ver=20190102' media='all'/>
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css' href='https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/css/ie.css?ver=20170530' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css' href='https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/css/ie8.css?ver=20170530' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css' href='https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/css/ie7.css?ver=20170530' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='jetpack_css-css' href='https://www.approximatelycorrect.com/wp-content/plugins/jetpack/css/jetpack.css?ver=9.8.3' media='all'/>
+<script id="monsterinsights-frontend-script-js-extra">var monsterinsights_frontend={"js_events_tracking":"true","download_extensions":"doc,pdf,ppt,zip,xls,docx,pptx,xlsx","inbound_paths":"[]","home_url":"https:\/\/www.approximatelycorrect.com","hash_tracking":"false","ua":"UA-4984788-11"};</script>
+<script src="https://www.approximatelycorrect.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend-gtag.min.js?ver=7.17.0" id="monsterinsights-frontend-script-js"></script>
+<script src="https://www.approximatelycorrect.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script src="https://www.approximatelycorrect.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script id="email-subscribers-js-extra">var es_data={"messages":{"es_empty_email_notice":"Please enter email address","es_rate_limit_notice":"You need to wait for sometime before subscribing again","es_single_optin_success_message":"Successfully Subscribed.","es_email_exists_notice":"Email Address already exists!","es_unexpected_error_notice":"Oops.. Unexpected error occurred.","es_invalid_email_notice":"Invalid email address","es_try_later_notice":"Please try after some time"},"es_ajax_url":"https:\/\/www.approximatelycorrect.com\/wp-admin\/admin-ajax.php"};</script>
+<script src="https://www.approximatelycorrect.com/wp-content/plugins/email-subscribers/lite/public/js/email-subscribers-public.js?ver=4.7.5.1" id="email-subscribers-js"></script>
+<!--[if lt IE 9]>
+<script src="https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/js/html5.js?ver=3.7.3" id="twentysixteen-html5-js"></script>
+<![endif]-->
+<script src="https://www.approximatelycorrect.com/wp-content/plugins/wp-quicklatex/js/wp-quicklatex-frontend.js?ver=1.0" id="wp-quicklatex-frontend-js"></script>
+<link rel="https://api.w.org/" href="https://www.approximatelycorrect.com/wp-json/"/><link rel="alternate" type="application/json" href="https://www.approximatelycorrect.com/wp-json/wp/v2/posts/41"/><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.approximatelycorrect.com/xmlrpc.php?rsd"/>
+<meta name="generator" content="WordPress 6.4.7"/>
+<link rel="canonical" href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/"/>
+<link rel='shortlink' href='https://www.approximatelycorrect.com/?p=41'/>
+<link rel="alternate" type="application/json+oembed" href="https://www.approximatelycorrect.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.approximatelycorrect.com%2F2016%2F11%2F07%2Fthe-foundations-of-algorithmic-bias%2F"/>
+<link rel="alternate" type="text/xml+oembed" href="https://www.approximatelycorrect.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.approximatelycorrect.com%2F2016%2F11%2F07%2Fthe-foundations-of-algorithmic-bias%2F&#038;format=xml"/>
+<style type="text/css" data-source="Grow Social by Mediavine">@media screen and (max-width:720px ){.dpsp-content-wrapper.dpsp-hide-on-mobile{display:none!important}.dpsp-share-text.dpsp-hide-on-mobile{display:none!important}}</style><style type='text/css'>img#wpstats{display:none}</style>
+		<style>.recentcomments a{display:inline!important;padding:0!important;margin:0!important}</style><link rel="icon" href="https://www.approximatelycorrect.com/wp-content/uploads/2021/07/cropped-approx-32x32.png" sizes="32x32"/>
+<link rel="icon" href="https://www.approximatelycorrect.com/wp-content/uploads/2021/07/cropped-approx-192x192.png" sizes="192x192"/>
+<link rel="apple-touch-icon" href="https://www.approximatelycorrect.com/wp-content/uploads/2021/07/cropped-approx-180x180.png"/>
+<meta name="msapplication-TileImage" content="https://www.approximatelycorrect.com/wp-content/uploads/2021/07/cropped-approx-270x270.png"/>
+
+<!-- START - Open Graph and Twitter Card Tags 3.1.1 -->
+ <!-- Facebook Open Graph -->
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Approximately Correct"/>
+  <meta property="og:title" content="The Foundations of Algorithmic Bias"/>
+  <meta property="og:url" content="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="This morning, millions of people woke up and impulsively checked Facebook. They were greeted immediately by content curated by Facebook’s newsfeed algorithms. To some degree, this news might have influenced their perceptions of the day’s news, the economy’s outlook, and the state of the election. Ev"/>
+  <meta property="article:published_time" content="2016-11-07T19:00:26+00:00"/>
+  <meta property="article:modified_time" content="2020-07-31T12:54:31+00:00"/>
+  <meta property="og:updated_time" content="2020-07-31T12:54:31+00:00"/>
+  <meta property="article:section" content="Machine Learning Ethics"/>
+ <!-- Google+ / Schema.org -->
+  <meta itemprop="name" content="The Foundations of Algorithmic Bias"/>
+  <meta itemprop="headline" content="The Foundations of Algorithmic Bias"/>
+  <meta itemprop="description" content="This morning, millions of people woke up and impulsively checked Facebook. They were greeted immediately by content curated by Facebook’s newsfeed algorithms. To some degree, this news might have influenced their perceptions of the day’s news, the economy’s outlook, and the state of the election. Ev"/>
+  <meta itemprop="datePublished" content="2016-11-07"/>
+  <meta itemprop="dateModified" content="2020-07-31T12:54:31+00:00"/>
+  <meta itemprop="author" content="Zachary C. Lipton"/>
+  <!--<meta itemprop="publisher" content="Approximately Correct"/>--> <!-- To solve: The attribute publisher.itemtype has an invalid value -->
+ <!-- Twitter Cards -->
+  <meta name="twitter:title" content="The Foundations of Algorithmic Bias"/>
+  <meta name="twitter:url" content="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/"/>
+  <meta name="twitter:description" content="This morning, millions of people woke up and impulsively checked Facebook. They were greeted immediately by content curated by Facebook’s newsfeed algorithms. To some degree, this news might have influenced their perceptions of the day’s news, the economy’s outlook, and the state of the election. Ev"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+ <!-- SEO -->
+ <!-- Misc. tags -->
+ <!-- is_singular -->
+<!-- END - Open Graph and Twitter Card Tags 3.1.1 -->
+	
+</head>
+
+<body data-rsssl=1 class="post-template-default single single-post postid-41 single-format-standard wp-embed-responsive group-blog">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-header-main">
+				<div class="site-branding">
+					
+											<p class="site-title"><a href="https://www.approximatelycorrect.com/" rel="home">Approximately Correct</a></p>
+												<p class="site-description">Technical and Social Perspectives on Machine Learning</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-nav-container"><ul id="menu-nav" class="primary-menu"><li id="menu-item-1001" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1001"><a href="http://acmilab.org">ACMI Lab</a></li>
+<li id="menu-item-154" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-154"><a href="https://www.approximatelycorrect.com/contact/">Contact</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+<article id="post-41" class="post-41 post type-post status-publish format-standard hentry category-machine-learning-ethics tag-bias tag-machine-learning tag-supervised-learning">
+	<header class="entry-header">
+		<h1 class="entry-title">The Foundations of Algorithmic Bias</h1>	</header><!-- .entry-header -->
+
+	
+	
+	<div class="entry-content">
+		<div id="dpsp-content-top" class="dpsp-content-wrapper dpsp-shape-rectangular dpsp-size-medium dpsp-hide-on-mobile dpsp-button-style-1"><ul class="dpsp-networks-btns-wrapper dpsp-networks-btns-share dpsp-networks-btns-content dpsp-column-auto ">
+			<li>
+				<a rel="nofollow noopener" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.approximatelycorrect.com%2F2016%2F11%2F07%2Fthe-foundations-of-algorithmic-bias%2F&t=The%20Foundations%20of%20Algorithmic%20Bias" class="dpsp-network-btn dpsp-facebook dpsp-first dpsp-has-label" target="_blank" aria-label="Share on Facebook" title="Share on Facebook">
+					<span class="dpsp-network-icon">
+						<span class="dpsp-network-icon-inner"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32"><path d="M17.12 0.224v4.704h-2.784q-1.536 0-2.080 0.64t-0.544 1.92v3.392h5.248l-0.704 5.28h-4.544v13.568h-5.472v-13.568h-4.544v-5.28h4.544v-3.904q0-3.328 1.856-5.152t4.96-1.824q2.624 0 4.064 0.224z"></path></svg></span>
+					</span>
+					<span class="dpsp-network-label">Facebook</span>
+					
+				</a>
+				
+			</li>
+			
+			<li>
+				<a rel="nofollow noopener" href="https://twitter.com/intent/tweet?text=The%20Foundations%20of%20Algorithmic%20Bias&url=https%3A%2F%2Fwww.approximatelycorrect.com%2F2016%2F11%2F07%2Fthe-foundations-of-algorithmic-bias%2F" class="dpsp-network-btn dpsp-twitter dpsp-has-label" target="_blank" aria-label="Share on Twitter" title="Share on Twitter">
+					<span class="dpsp-network-icon">
+						<span class="dpsp-network-icon-inner"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 30 32"><path d="M28.928 7.296q-1.184 1.728-2.88 2.976 0 0.256 0 0.736 0 2.336-0.672 4.64t-2.048 4.448-3.296 3.744-4.608 2.624-5.792 0.96q-4.832 0-8.832-2.592 0.608 0.064 1.376 0.064 4.032 0 7.168-2.464-1.888-0.032-3.36-1.152t-2.048-2.848q0.608 0.096 1.088 0.096 0.768 0 1.536-0.192-2.016-0.416-3.328-1.984t-1.312-3.68v-0.064q1.216 0.672 2.624 0.736-1.184-0.8-1.888-2.048t-0.704-2.752q0-1.568 0.8-2.912 2.176 2.656 5.248 4.256t6.656 1.76q-0.16-0.672-0.16-1.312 0-2.4 1.696-4.064t4.064-1.696q2.528 0 4.224 1.824 1.952-0.384 3.68-1.408-0.672 2.048-2.56 3.2 1.664-0.192 3.328-0.896z"></path></svg></span>
+					</span>
+					<span class="dpsp-network-label">Twitter</span>
+					
+				</a>
+				
+			</li>
+			
+			<li>
+				<button rel="nofollow noopener" data-href="#" class="dpsp-network-btn dpsp-pinterest dpsp-has-label" target="_blank" aria-label="Save to Pinterest" title="Save to Pinterest">
+					<span class="dpsp-network-icon">
+						<span class="dpsp-network-icon-inner"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="23" height="32" viewBox="0 0 23 32"><path d="M0 10.656q0-1.92 0.672-3.616t1.856-2.976 2.72-2.208 3.296-1.408 3.616-0.448q2.816 0 5.248 1.184t3.936 3.456 1.504 5.12q0 1.728-0.32 3.36t-1.088 3.168-1.792 2.656-2.56 1.856-3.392 0.672q-1.216 0-2.4-0.576t-1.728-1.568q-0.16 0.704-0.48 2.016t-0.448 1.696-0.352 1.28-0.48 1.248-0.544 1.12-0.832 1.408-1.12 1.536l-0.224 0.096-0.16-0.192q-0.288-2.816-0.288-3.36 0-1.632 0.384-3.68t1.184-5.152 0.928-3.616q-0.576-1.152-0.576-3.008 0-1.504 0.928-2.784t2.368-1.312q1.088 0 1.696 0.736t0.608 1.824q0 1.184-0.768 3.392t-0.8 3.36q0 1.12 0.8 1.856t1.952 0.736q0.992 0 1.824-0.448t1.408-1.216 0.992-1.696 0.672-1.952 0.352-1.984 0.128-1.792q0-3.072-1.952-4.8t-5.12-1.728q-3.552 0-5.952 2.304t-2.4 5.856q0 0.8 0.224 1.536t0.48 1.152 0.48 0.832 0.224 0.544q0 0.48-0.256 1.28t-0.672 0.8q-0.032 0-0.288-0.032-0.928-0.288-1.632-0.992t-1.088-1.696-0.576-1.92-0.192-1.92z"></path></svg></span>
+					</span>
+					<span class="dpsp-network-label">Pinterest</span>
+					
+				</button>
+				
+			</li>
+			
+			<li>
+				<a rel="nofollow noopener" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fwww.approximatelycorrect.com%2F2016%2F11%2F07%2Fthe-foundations-of-algorithmic-bias%2F&title=The%20Foundations%20of%20Algorithmic%20Bias&summary=This%20morning%2C%20millions%20of%20people%20woke%20up%20and%20impulsively%20checked%20Facebook.%C2%A0They%20were%20greeted%20immediately%20by%20content%20curated%20by%20Facebook%E2%80%99s%20newsfeed%20algorithms.%C2%A0To%C2%A0some%20degree%2C%20this%20news%20might%20have%20influenced%20their%20perceptions%20of%20the%20day%E2%80%99s%20news%2C%20the%20economy%E2%80%99s&mini=true" class="dpsp-network-btn dpsp-linkedin dpsp-last dpsp-has-label" target="_blank" aria-label="Share on LinkedIn" title="Share on LinkedIn">
+					<span class="dpsp-network-icon">
+						<span class="dpsp-network-icon-inner"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="27" height="32" viewBox="0 0 27 32"><path d="M6.24 11.168v17.696h-5.888v-17.696h5.888zM6.624 5.696q0 1.312-0.928 2.176t-2.4 0.864h-0.032q-1.472 0-2.368-0.864t-0.896-2.176 0.928-2.176 2.4-0.864 2.368 0.864 0.928 2.176zM27.424 18.72v10.144h-5.856v-9.472q0-1.888-0.736-2.944t-2.272-1.056q-1.12 0-1.856 0.608t-1.152 1.536q-0.192 0.544-0.192 1.44v9.888h-5.888q0.032-7.136 0.032-11.552t0-5.28l-0.032-0.864h5.888v2.56h-0.032q0.352-0.576 0.736-0.992t0.992-0.928 1.568-0.768 2.048-0.288q3.040 0 4.896 2.016t1.856 5.952z"></path></svg></span>
+					</span>
+					<span class="dpsp-network-label">LinkedIn</span>
+					
+				</a>
+				
+			</li>
+			</ul></div><p><span style="font-weight: 400;">This morning, millions of people woke up and impulsively checked Facebook. </span><span style="font-weight: 400;">They were greeted immediately by content curated by Facebook’s newsfeed algorithms. To</span><span style="font-weight: 400;"> some degree, this news might have influenced their perceptions of the day’s news, </span><span style="font-weight: 400;">the economy’s outlook, and the state of the election. </span><span style="font-weight: 400;">Every year, millions of people apply for jobs. </span><span style="font-weight: 400;">Increasingly, their success might lie in part in the hands of computer programs </span><span style="font-weight: 400;">tasked with matching applications to job openings. And every year, roughly 12 million people are arrested. Throughout the criminal justice system, computer-generated risk-assessments are used to determine which arrestees should be set free.</span><span style="font-weight: 400;"> In all these situations, algorithms are tasked with making decisions. </span></p>
+<p><span style="font-weight: 400;">Algorithmic decision-making mediates more and more of our interactions, </span><span style="font-weight: 400;">influencing our social experiences, the news we see, our finances, and our career opportunities. </span><span style="font-weight: 400;">We task computer programs with approving lines of credit, </span><span style="font-weight: 400;">curating news, and filtering job applicants. </span><span style="font-weight: 400;">Courts even deploy computerized algorithms to predict &#8220;risk of recidivism&#8221;, </span><span style="font-weight: 400;">the probability that an individual relapses into criminal behavior. It seems likely that this</span><span style="font-weight: 400;"> trend will only accelerate as breakthroughs in artificial intelligence</span><span style="font-weight: 400;"> rapidly broaden the capabilities of software. </span></p>
+<p><img fetchpriority="high" decoding="async" class="alignnone wp-image-72" src="https://54.90.220.187/wp-content/uploads/2016/11/futurama-judge-300x168.png" alt="futurama-judge" width="400" height="224" srcset="https://www.approximatelycorrect.com/wp-content/uploads/2016/11/futurama-judge-300x168.png 300w, https://www.approximatelycorrect.com/wp-content/uploads/2016/11/futurama-judge.png 639w" sizes="(max-width: 400px) 85vw, 400px"/></p>
+<p><span style="font-weight: 400;">Turning decision-making over to algorithms naturally raises worries about our ability </span><span style="font-weight: 400;">to assess and enforce the neutrality of these new decision makers. </span><span style="font-weight: 400;">How can we be sure that the algorithmically curated news doesn&#8217;t have a political party bias </span><span style="font-weight: 400;">or job listings don&#8217;t reflect a gender or racial bias? </span><span style="font-weight: 400;">What other biases might our automated processes be exhibiting that that we wouldn&#8217;t even know to look for?</span></p>
+<p><span id="more-41"></span></p>
+<p><span style="font-weight: 400;">The rise of machine learning complicates these concerns. </span><span style="font-weight: 400;">Traditional software is typically composed from simple, hand-coded logic rules. IF condition X holds THEN perform action Y</span><b><i>.  </i></b><span style="font-weight: 400;">But machine learning relies on complex statistical models to discover patterns in large datasets. Take loan approval for instance. Given</span><span style="font-weight: 400;"> years of credit history and other side information, a machine learning algorithm might then output a probability that the applicant will default.  </span><span style="font-weight: 400;">The logic behind this assessment wouldn’t be coded by hand. </span><span style="font-weight: 400;">Instead, the model would extrapolate from the records of thousands or millions of other customers.</span></p>
+<p><span style="font-weight: 400;">On highly specialized problems, and given enough data, </span><span style="font-weight: 400;">machine learning algorithms can often make predictions with near-human or super-human accuracy. </span><span style="font-weight: 400;">But it’s often hard to say precisely why a decision was made. </span><span style="font-weight: 400;">So how can we ensure that these decisions don’t encode bias? How can we ensure that giving these algorithms decision-making power doesn&#8217;t amount to a breach of ethics? </span><span style="font-weight: 400;">The potential for prejudice hasn’t gone under the radar. </span><span style="font-weight: 400;">In the last year alone, <a href="https://www.technologyreview.com/s/601775/why-we-should-expect-algorithms-to-be-biased/">MIT Technology Review</a> [1], </span><span style="font-weight: 400;"><a href="https://www.theguardian.com/commentisfree/2016/jun/26/algorithms-racial-bias-offenders-florida">the Guardian</a> [2], </span><span style="font-weight: 400;">and the <a href="http://www.nytimes.com/2016/05/19/opinion/the-real-bias-built-in-at-facebook.html">New York Times</a> [3], </span><span style="font-weight: 400;">all published thought pieces cautioning against algorithmic bias. Some of the best coverage has come from ProPublica, which <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">quantitatively studied racial bias in a widely used  criminal risk-assessment score</a> [4].</span></p>
+<p><span style="font-weight: 400;">Each article counters the notion that algorithms are necessarily objective. </span><span style="font-weight: 400;">Technology Review invokes Fred Berenson&#8217;s assertion </span><span style="font-weight: 400;">that we are susceptible to &#8216;mathwashing&#8217;. </span><span style="font-weight: 400;">That is, we tend to (misguidedly) assume that any system built with complex mathematics </span><span style="font-weight: 400;">at its core must somehow be objective, devoid of the biases that plague human decision-making. </span></p>
+<p><span style="font-weight: 400;">Alas, the public discourse rarely throws light on the precise mechanisms by which bias actually enters algorithmic decision-making processes. </span><span style="font-weight: 400;">Tech Review for example, points to the abundance of men working in computer science without explaining how this might alter the behavior of their algorithms. </span><span style="font-weight: 400;">You might think that the bias seeped through via the air filtration system. </span><span style="font-weight: 400;">The Guardian makes a compelling argument that the &#8220;recidivism&#8221; predictor encodes racial bias, producing evidence to support the claim. </span><span style="font-weight: 400;">But they never discuss how this came to be, </span><span style="font-weight: 400;">describing the algorithms simply as black boxes. </span><span style="font-weight: 400;">Similarly, the New York Times piece calls attention to bias and to the opacity of FaceBook algorithms for new curation, </span><span style="font-weight: 400;">but doesn&#8217;t elucidate the precise mechanisms by which undesirable outcomes manifest. Admirably, in the ProPublica piece, author Julia Adwin sought the risk-assessment algorithm itself, but software-company Northpointe would not share the precise proprietary formula.  </span></p>
+<p><span style="font-weight: 400;">It&#8217;s encouraging that these pieces have helped to spark a global conversation </span><span style="font-weight: 400;">about the responsibilities of programmatic decision-makers. </span><span style="font-weight: 400;">However, the mystical quality of the discussion threatens to stymie progress. </span><span style="font-weight: 400;">If we don&#8217;t know how algorithms can become biased, how can we know when to suspect them? </span><span style="font-weight: 400;">Moreover, without this understanding, how can we hope to counteract the bias? </span></p>
+<p><span style="font-weight: 400;">To bring some rigor to the dialogue, let’s first run through a crash-course on what algorithms are, how they make decisions, and where machine learning enters the picture. </span><span style="font-weight: 400;">Armed with this information, we’ll then introduce a catalogue of fundamental ways that things can go wrong.</span></p>
+<p><strong>[ALGORITHMS]</strong></p>
+<p><span style="font-weight: 400;">To start, let’s briefly explain </span><i><span style="font-weight: 400;">algorithms</span></i><span style="font-weight: 400;">. </span><span style="font-weight: 400;">Algorithms are the instructions that tell your computer precisely how to accomplish some task.  </span><span style="font-weight: 400;">Typically, this means how to take some input and producing some output. </span><span style="font-weight: 400;">The software that takes two addresses on a map and returns the shortest route between them is an algorithm. </span><span style="font-weight: 400;">So is the method that doctors use to calculate cardiac risk. </span><span style="font-weight: 400;">This particular algorithm takes the age, blood pressure, smoking status, and a few other inputs, </span><span style="font-weight: 400;">combines them according to a precise formula, and outputs the risk of a cardiovascular event.</span></p>
+<p><span style="font-weight: 400;">Compared to these simple examples, many of the algorithms at the heart of technologies like self-driving cars and recommender systems are considerably more complex, containing many instructions, advanced mathematical operations, and complicated logic. Sometimes, the line between an algorithm and what might better be described as a complex software systems can become blurred.</span></p>
+<p><span style="font-weight: 400;">Consider the algorithms behind Google’s search service. </span><span style="font-weight: 400;">From the outside it might appear to be monolithic, </span><span style="font-weight: 400;">but it’s actually a complex software system, </span><span style="font-weight: 400;">encompassing multiple sub-algorithms, each of which may be maintained by large teams of engineers and scientists and consisting of millions of lines of code. </span></p>
+<p><span style="font-weight: 400;">There’s little that can be said universally about algorithms. </span><span style="font-weight: 400;">Collectively, they’re neither racist nor neutral, fast nor slow, sentient nor insensate. </span>If you could <span class="il">simulate</span> your <span class="il">brain</span> with a computer program, perfectly capturing the behavior of each neuron, that program would itself be an <span class="il">algorithm</span>. So, in<span style="font-weight: 400;"> an important sense, there’s nothing fundamentally special about algorithmic decisions. </span><span style="font-weight: 400;">In any situation in which human decisions might exhibit bias, so might those made by computerized algorithms. One</span><span style="font-weight: 400;"> important difference between human and algorithmic bias might be that for humans, we</span><span style="font-weight: 400;"> know to suspect bias, and we have some intuition for what sorts of bias to expect. </span></p>
+<p>To dispense with any doubt that an algorithm might encode bias, <span style="font-weight: 400;">consider the following rule for extending a line of credit: </span><i><span style="font-weight: 400;">If race=white THEN approve loan ELSE deny</span></i><span style="font-weight: 400;">. </span><span style="font-weight: 400;">This program, however simple, constitutes an algorithm and yet reflects an obvious bias. </span><span style="font-weight: 400;">Of course, this explicit racism might be easy to detect </span><span style="font-weight: 400;">and straightforward to challenge legally. </span><span style="font-weight: 400;">Deciphering its logic doesn’t require formidable expertise.</span></p>
+<p><span style="font-weight: 400;">But today’s large-scale software and machine-learning systems can grow opaque. </span><span style="font-weight: 400;">Even the programmer of a system might struggle to say why precisely any individual system makes any specific prediction. </span><span style="font-weight: 400;">For complex algorithms, biases may exist, but detecting the bias, identifying its cause, and correcting for it, may not always be straightforward. N</span><span style="font-weight: 400;">evertheless, there exist some common patterns for how bias can creep into systems. </span><span style="font-weight: 400;">Understanding these patterns may prove vital to guarding against preventable problems. </span></p>
+<p><b>[MACHINE LEARNING]</b></p>
+<p><span style="font-weight: 400;">Now let&#8217;s review the basics of machine learning. </span><span style="font-weight: 400;">Machine learning refers to powerful set of techniques for building algorithms that improve as a function of experience. </span><span style="font-weight: 400;">The field of machine learning addresses a broad class of problems and algorithmic solutions </span><span style="font-weight: 400;">but we’re going to focus on supervised learning, the kind directly concerned with pattern recognition and  predictive modeling. </span></p>
+<p><span style="font-weight: 400;">Most machine learning in the wild today consists of supervised learning. </span><span style="font-weight: 400;">When Facebook recognizes your face in a photograph, when your mailbox filters spam, and when your bank predicts default risk &#8211; these are all examples of supervised machine learning in action.</span></p>
+<p><span style="font-weight: 400;">We use machine learning because sometimes it’s impossible to specify a good enough program a priori. Let&#8217;s say you wanted to build a</span><span style="font-weight: 400;"> spam filter. </span><span style="font-weight: 400;">You might be tempted to implement a rule-based system with a blacklist of particularly spammy  words. </span><span style="font-weight: 400;">Is any email referring to &#8220;Western Union&#8221; spam? </span><span style="font-weight: 400;">Perhaps. But even so, that only describes a small percentage of spam. </span><span style="font-weight: 400;">There’s still the solicitations from illegal drug companies, </span><span style="font-weight: 400;">pornographic sites, and the legendary Nigerian prince who wants to wire you millions of dollars. </span></p>
+<p><span style="font-weight: 400;">Suppose now that through herculean effort you produced a perfect spam filter, </span><span style="font-weight: 400;">cobbling together 1000s of consistent rules to cover all the known cases of spam while letting all legitimate email pass through. </span><span style="font-weight: 400;">As soon as you&#8217;d completed this far-fetched feat and secured some well-deserved sleep, </span><span style="font-weight: 400;">you&#8217;d wake up to find that the spam filter no longer worked as well. </span><span style="font-weight: 400;">The spammers would have invented new varieties of spam, invalidating all your hard work.</span></p>
+<p><span style="font-weight: 400;">Machine learning proposes an alternative way to deal with these problems. </span><span style="font-weight: 400;">Even if we can&#8217;t specify precisely what constitutes spam, we might know it when we see it. </span><span style="font-weight: 400;">Instead of coming up with the exact solution ourselves by enumerating rules, </span><span style="font-weight: 400;">we can compile a large dataset containing emails known either to be spam or to be safe. </span><span style="font-weight: 400;">The dataset might consist of millions of emails, </span><span style="font-weight: 400;">each of which would be characterized by a large number of attributes and annotated according to whether it’s believed (by a human) to actually spam or not. </span><span style="font-weight: 400;">Typical attributes might include the words themselves, the time the email was sent, the email address, server, and domain from which it was sent, and statistics about previous correspondence with this address.</span></p>
+<p><strong>Already, you might see a problem. <i>Who gets to decide which emails are spam and not?  </i>What biases may factor into these decisions? If the labelers think all emails from Nigeria constitute spam, how can we justify using a system that will treat millions of people unfairly?</strong></p>
+<p><span style="font-weight: 400;">Once we’ve got a dataset, we can specify a flexible family of statistical models </span><span style="font-weight: 400;">for mapping between an email and a probability that it is spam. </span><span style="font-weight: 400;">A simple model might be to assign a score (weight) to every word in the vocabulary. </span><span style="font-weight: 400;">If that weight is positive, then it increases the probability that the email is spam. If negative it decreases the probability. </span></p>
+<p><img decoding="async" class="alignnone wp-image-46" src="https://54.90.220.187/wp-content/uploads/2016/11/machine-learning-300x225.png" alt="machine-learning" width="400" height="300" srcset="https://www.approximatelycorrect.com/wp-content/uploads/2016/11/machine-learning-300x225.png 300w, https://www.approximatelycorrect.com/wp-content/uploads/2016/11/machine-learning-768x576.png 768w, https://www.approximatelycorrect.com/wp-content/uploads/2016/11/machine-learning-1024x768.png 1024w, https://www.approximatelycorrect.com/wp-content/uploads/2016/11/machine-learning-1200x900.png 1200w, https://www.approximatelycorrect.com/wp-content/uploads/2016/11/machine-learning.png 1500w" sizes="(max-width: 400px) 85vw, 400px"/></p>
+<p><span style="font-weight: 400;">To calculate the final score, we might sum up the counts of each word, multiplying each by the corresponding weight. </span><span style="font-weight: 400;">This describes the family of linear models, a classical technique from statistics. </span><span style="font-weight: 400;">Machine learning practitioners also have many, more complicated, models at their disposal, i</span><span style="font-weight: 400;">ncluding tremendously popular neural networks (a family of techniques now referred to as deep learning). In</span> our present discussion, the exact form of the model doesn&#8217;t matter much.</p>
+<p><span style="font-weight: 400;">When we say the machine learns, we simply mean that as it sees more and more data, it updates its belief, as by tuning the weights, about which model in the family is best. </span><span style="font-weight: 400;">So rather than building a spam filter with a bank of rules such as &#8220;IF contains(&#8220;Western Union&#8221;) THEN SPAM&#8221;, </span><span style="font-weight: 400;">we&#8217;d curate a large list of thousands or millions of emails, indicating for each whether or not it&#8217;s spam. </span><span style="font-weight: 400;">These labels are often collected actively, as by crowdsourcing low-wage workers through services like Amazon’s mechanical turk. </span><span style="font-weight: 400;">Labels can also be collected passively, as by harvesting information when users explicitly mark emails as spam or remove emails from their spam boxes to their inboxes. </span></p>
+<p><span style="font-weight: 400;">For all supervised machine learning models, the big picture remains the same. </span><span style="font-weight: 400;">We have a collection of</span> examples<span style="font-weight: 400;"> of (hopefully representative) data. </span><span style="font-weight: 400;">We also have a collection of corresponding</span><b> </b>labels<span style="font-weight: 400;"> collected either actively or passively (typically from human annotators). </span><span style="font-weight: 400;">These reflect an (often subjective) choice over what constitutes the ground truth.  </span><span style="font-weight: 400;">Stepping back, we’ve also made a subjective choice regarding what’s worth predicting in the first place. </span><span style="font-weight: 400;">For example, do we ask our annotators to label </span><i><span style="font-weight: 400;">spam</span></i><span style="font-weight: 400;">, or </span><i><span style="font-weight: 400;">offensive content </span></i><span style="font-weight: 400;">or </span><i><span style="font-weight: 400;">uninteresting content</span></i><span style="font-weight: 400;">?</span></p>
+<p>And sometimes, machine learning practitioners formulate problems in such a way that the very notion of ground truth seems questionable. In many applications, researchers classify sentences or documents according to one of several <em>sentiments</em>. Other papers break down emotional classification into two dimensions: an <em>arousal</em> score and a<em> valence </em>score<em>. </em>Whether these simplistic scores can capture anything reasonably related to the ideas indicated by <em>emotion </em>or<em> sentiment </em>seems debatable.</p>
+<p><b>[BIAS]</b></p>
+<p><span style="font-weight: 400;">We can now begin to demystify the processes by which undesirable biases can infiltrate machine learning models. </span></p>
+<p><b>[BIASED DATA]</b></p>
+<p><span style="font-weight: 400;">Perhaps the most obvious way that a machine learning algorithm can become compromised is if the underlying data itself reflects biases. </span></p>
+<p><span style="font-weight: 400;">Consider, for example, a model predicting risk of recidivism. </span><span style="font-weight: 400;">The training examples here would consist of past prisoners&#8217; records. </span><span style="font-weight: 400;">The corresponding labels would be binary values (1 if they were convicted of another crime, 0 if not). </span><span style="font-weight: 400;">However, these labels themselves can reflect profound biases. </span><span style="font-weight: 400;">For example, an individual is only convicted of a crime if they are first caught and arrested. </span><span style="font-weight: 400;">But arrest rates reflect well-document racial biases.  </span><span style="font-weight: 400;">Thus, black men, in addition to facing a higher probability of incarceration in the first place, </span><span style="font-weight: 400;">could see their misfortune compounded through use of the recidivism predictor.</span></p>
+<p><span style="font-weight: 400;">You might hope that we could get around this problem by withholding sensitive demographic information from the machine learning algorithm. </span><span style="font-weight: 400;">If the model didn’t know who was black and who is white, how could it learn to discriminate between the two?</span></p>
+<p><span style="font-weight: 400;">Unfortunately, it’s not so simple. </span><span style="font-weight: 400;">Given a rich enough set of features and a rich enough family of models, </span><span style="font-weight: 400;">the machine algorithm deduce race implicitly, and use this information to predict recidivism. </span><span style="font-weight: 400;">For example, zip code, occupation, even the previous crime committed could each leak clues as to the race of the inmate. </span></p>
+<p><span style="font-weight: 400;">Acting upon the biased model’s predictions to make parole decisions could in turn perpetuate the cycle of incarceration. </span><span style="font-weight: 400;">The lesson here is that if the purported underlying data is intrinsically biased, we should expect that the machine learning algorithm will produced commensurately biased models.</span></p>
+<p><span style="font-weight: 400;">Another example of machine learning absorbing the biases in training data recently came to attention as researchers at Boston University and Microsoft Research led by Tolga Bolukbasi <a href="https://arxiv.org/abs/1606.06121">examined a technique called </a></span><span style="font-weight: 400;"><a href="https://arxiv.org/abs/1606.06121">word embedding</a> [5]</span><span style="font-weight: 400;">.</span></p>
+<p><span style="font-weight: 400;">Word embedding is a technique in which each word in a vocabulary is a assigned to a vector. </span><span style="font-weight: 400;">The main idea is that the meaning of each word can be captured by the angle of the vector. </span><span style="font-weight: 400;">These vectors can be used to represent the word when used as input to a machine learning algorithm. </span></p>
+<p><span style="font-weight: 400;">Researchers made waves in 2013 by showing a technique for learning these vectors by choosing the vectors which best predict the neighboring words in a large corpus of data. </span><span style="font-weight: 400;">Serendipitously, the researchers discovered that these representations admitted some remarkable properties. Among them, the vectors could be used in straight-forward ways to execute analogical reasoning. One now-famous example showed that in this vector space &lt;China&gt; &#8211; &lt;Beijing&gt; roughly equals &lt;Russia&gt; &#8211; &lt;Moscow&gt;. </span></p>
+<p><span style="font-weight: 400;">Similar examples showed that &lt;king&gt; &#8211; &lt;queen&gt; roughly equalled &lt;prince&gt; &#8211; &lt;princess&gt;. </span><span style="font-weight: 400;">And some preliminary work showed that these embeddings were sufficiently useful to perform human-level analogical reasoning on standardized tests like the SAT. </span></p>
+<p><span style="font-weight: 400;">In the last three years word embeddings have become a nearly ubiquitous tool at machine learning and natural language processing labs throughout academia and industry. </span><span style="font-weight: 400;">But Tolga Bolukbasi and colleagues showed that in addition to picking up on meaningful semantic relationships, the word embeddings also picked absorbed common biases reflected in the underlying text corpuses. </span></p>
+<p><span style="font-weight: 400;">In one example, they showed that learned embeddings also coded for man − woman ≈ computer programmer &#8211; homemaker. Similarly, in the learned embedding space, the occupations closest to “she” were 1. homemaker 2. nurse 3. receptionist 4. librarian 5. socialite 6. hairdresser. </span></p>
+<p><span style="font-weight: 400;">In contrast, the occupations closes to “he” included 1. </span>maestro 2. skipper 3. protege 4. philosopher 5. captain 6. architect.</p>
+<p><span style="font-weight: 400;">Bolukbasi and colleagues proposed a method for identifying the subspace of learned embeddings corresponding to gender and correcting for it. </span><span style="font-weight: 400;">However, we should note that this doesn’t correct for any of the myriad other potential biases that might lurk within the word embeddings.</span></p>
+<p><span style="font-weight: 400;">The same might be said of humans. We call attention to certain biases, emphasizing them, testing for their existence, and correcting them as best we can. </span><span style="font-weight: 400;">But only by identifying the problem and proposing a test for it can we address it. It&#8217;s hard to guess what prejudices might influence human decision-making that we&#8217;ve never thought to examine.</span></p>
+<p><b>[BIAS by OMISSION]</b></p>
+<p><span style="font-weight: 400;">Even without absorbing explicit biases from datasets, </span><span style="font-weight: 400;">machine learning could produce biased classifications and decisions as a result because the data is implicitly biased by virtue of who is represented and who is omitted.</span></p>
+<p><span style="font-weight: 400;">As glaring example, Google last year added a state-of-the-art objection detection algorithm to its photo app. The algorithm annotated photos with descriptions of the objects they contained such as “skyscrapers”, “airplanes”, “cars”. </span></p>
+<p><strong>However, things went horribly wrong when the app tagged a picture of a black couple as “gorillas”. </strong></p>
+<p><img decoding="async" class="alignnone wp-image-44" src="https://54.90.220.187/wp-content/uploads/2016/11/gorillas_google-300x237.png" alt="gorillas_google" width="400" height="316" srcset="https://www.approximatelycorrect.com/wp-content/uploads/2016/11/gorillas_google-300x237.png 300w, https://www.approximatelycorrect.com/wp-content/uploads/2016/11/gorillas_google.png 402w" sizes="(max-width: 400px) 85vw, 400px"/></p>
+<p><span style="font-weight: 400;">There a few things to keep in mind here. First, the classifier was likely trained on the academic 1-million image benchmark dataset <a href="http://image-net.org/">ImageNet</a> [6], for which the misclassification rate per 2014 state of the art is 7.4%. That means, for any large population uploading photos, a considerable number will be misclassified.</span></p>
+<p><span style="font-weight: 400;">However, this noted, it’s not hard to imagine that being black had something to do with it. To see why, consider the construction of the ImageNet dataset. An academic benchmark, imagenet was built to provide a testbed for advancing computer vision. The dataset contains 1 million images consisting of 1,000 images each from 1,000 object classes. Roughly half of these images depict organisms like humans, birds, and gorillas, while the other half depict artificial objects like airplanes and skyscrapers.</span></p>
+<p><span style="font-weight: 400;">Out of curiosity, I thumbed through the ImageNet explorer, selecting for images of humans and passing over the first 500 by eye.  Out of 500 randomly selected images of humans, only 2 depicted black people. </span><span style="font-weight: 400;">These two consisted of one image of Gary Coleman, and another of a black man dressed in drag. </span></p>
+<p><span style="font-weight: 400;">A machine trained on these images might never have seen a typical black man and thus wouldn’t know upon seeing one whether to categorize based on color or physiology. </span><span style="font-weight: 400;">Now ImageNet was built by well-meaning academics. </span><span style="font-weight: 400;">It seems exceedingly unlikely that the creators of the dataset intended for models trained on it to misbehave in this fashion.</span></p>
+<p><span style="font-weight: 400;">Released in 2009 by Dr. Fei Fei Li and colleagues, the dataset was inspired that humans see many images per second while forming their ability to recognize objects, and that a computer might need access to a similarly rich dataset. </span></p>
+<p><span style="font-weight: 400;">To my knowledge, the dataset doesn’t encode any explicit human bias. There are no images of black men and women mislabeled as gorillas. However, it might alarm us that the absence of blacks from the ImageNet dataset parallels their lack of representation in computer science generally. </span></p>
+<p><span style="font-weight: 400;">While the Google app incident might be isolated and somewhat benign, it’s not hard to imagine how this problem could metastasize. Consider, for example, a security system based on face recognition that only allowed employees to enter a building when it was at least 99% sure of they were correctly ID’d and called security otherwise. If a minority group were missing from training datasets used to train the face recognition algorithm, it might throw alarms disproportionately when these citizens went to work detaining them with greater frequency.</span></p>
+<p><span style="font-weight: 400;">This point is important, even absent racist researchers, corporations or customers, and with algorithms which do not express any intrinsic preferences, absent critical thought we might accidentally birth a system that systematically racially profiles. </span></p>
+<p><span style="font-weight: 400;">On the other hand, we might find this realization empowering because it provides straight-forward prescriptions for how to detect and avoid some kinds of unintentional bias.</span></p>
+<p><span style="font-weight: 400;">Contrary to the Guardian&#8217;s John Naughton’s suggestion that our desire to scrutinize algorithms is stymied b</span><span style="font-weight: 400;">y their impenetrable, black-box nature, this particular kind of error can be found simply by examining the training data, a task that surely doesn’t require a PhD in machine learning. </span></p>
+<p><b>[SURROGATE OBJECTIVES]</b></p>
+<p><span style="font-weight: 400;">Thus far we’ve considered only the ways that bias can infiltrate algorithms via datasets. </span><span style="font-weight: 400;">But this isn’t the only way that ethically dubious behavior enters algorithmic decision-making. </span><span style="font-weight: 400;">Another source of trouble can be the choice of objective: W</span><span style="font-weight: 400;">hat do we choose to predict? And how do we act upon that information?</span></p>
+<p><span style="font-weight: 400;">Consider, for example, the the recommender systems that services like Facebook rely upon to suggest news items from around the world on social media. </span><span style="font-weight: 400;">Abstractly we might state the goal of such a recommender systems is to surface articles that keep users informed of important events. </span><span style="font-weight: 400;">We might hope that surfaced articles would be truthful. </span><span style="font-weight: 400;">And in an election year, we might hope that different candidates would have equal opportunities to get messages across.</span></p>
+<p><span style="font-weight: 400;">In short, these are the responsibilities we normatively expect humans to take when they make curatorial decisions as with major television stations and newspapers. But</span><span style="font-weight: 400;"> this isn’t how the algorithms behind real-life recommender systems on the internet work today. Typically, t</span><span style="font-weight: 400;">hey don’t know or care about truth and they don’t know about neutrality. </span></p>
+<p><span style="font-weight: 400;">That’s not necessarily because internet giants dislike these virtues &#8211; it’s often simply because it’s hard. Where can we find examples of millions of articles scored according to journalistic quality or truth content as assessed by impartial fact-checks? Moreover, ensuring neutrality requires that we not only rank individual articles (and deliver the top ones) but that we rank sets of recommended articles according to their diversity, a considerably harder optimization problem.</span></p>
+<p><span style="font-weight: 400;">Moreover, solving hard problems can be extremely expensive. Google, Amazon, and Facebook have invested billions of dollars in providing machine learning services at scale. And these services typically optimize very simple goals . Solving a yet harder problem with potentially little prospect for additional remuneration cuts against the financial incentives of a large company.</span></p>
+<p><span style="font-weight: 400;">So what do machine learning practitioners typically optimize instead? Clicks. The operating assumption is that people are generally more likely to click on better articles and less likely to click on worse articles. Further, it’s easy for sites like Facebook, Google and Amazon to log every link that you click on. This passively collected click data can then be used as supervision to the machine learning algorithms trained to optimize search results. In the end people see more articles that they are likely to click on. The hope would be that this corresponds closely to what we really care about &#8211; that the articles are interesting, or of high quality. But it’s not hard to imagine how these goals might diverge. For example, sensational headlines might be more likely to get clicks even if they’re less likely to point to true stories.   </span></p>
+<p><span style="font-weight: 400;">This is common in machine learning. Sometimes the real problem is difficult to define, or we don’t have any solid data. So instead we optimize a surrogate problem, hoping that the solutions are similar enough. And indeed many services, like Google search, despite it’s shortcomings, turns up far more relevant results than purely random or chronological selection from the web at large.</span></p>
+<p><span style="font-weight: 400;">But the success of these systems, and our consequent dependence on them, also makes their shortcomings more problematic. After all, no one would be worried about FaceBook’s curation of the news if no one received their news from the site. </span></p>
+<p><span style="font-weight: 400;">To see how things could go wrong, we might take a look at the current presidential election. </span><span style="font-weight: 400;">On conventional media like radio and TV, broadcast licensees are required to give equal time to opposing presidential candidates if they request it. </span><span style="font-weight: 400;">That is, even if one candidate might seem more entertaining, or procure higher ratings, we believe that it biases elections for one candidate to receive significantly more coverage than another.</span></p>
+<p><span style="font-weight: 400;">While the adherence of conventional media outlets to this principle might be debatable, it seems clear that denizens of social media were treated to a disproportionate deluge of articles about Donald Trump. While these articles may have truly been more likely to elicit clicks, the overall curated content lacked the diversity we would expect from conventional election coverage.</span></p>
+<p><span style="font-weight: 400;">Of course, FaceBook’s news curation is thorny issue. On one hand Facebook has a role in curating the news, even if it doesn&#8217;t fully embrace its role news organization. On the other hand, Facebook also functions as a public square, a place where people go to speak out loud and be heard. In that context, we wouldn’t expect any enforcement of equal time, nor would we expect all messages to be given equal chance to be heard by all in earshot.  But, as we all know, Facebook doesn’t simply pass on all information on equally, so it isn’t quite a public square either. </span></p>
+<p><span style="font-weight: 400;">It can be hard to anticipate the effects of optimizing these surrogate tasks. </span><span style="font-weight: 400;">Rich Caruana, a researcher at Microsoft Research Redmond presented a compelling case where a predictive machine learning model is trained to predict risk of death in pneumonia patients. </span><span style="font-weight: 400;">The model ended up learning that patients who also had asthma as comorbid condition were given a better probability of survival.</span></p>
+<p><span style="font-weight: 400;">You might wonder why the model reached such a counterintuitive conclusion. </span><span style="font-weight: 400;">The model didn’t make an error. Asthma was indeed predictive of survival, this was a true association in the training data.</span></p>
+<p><span style="font-weight: 400;">However, the relationship is not causal. </span><span style="font-weight: 400;">The asthma patients were more likely to survive because they had been treated more aggressively. </span><span style="font-weight: 400;">Thus there’s often an obvious mismatch between the problem we want to solve and the one on which we actually train our algorithms.</span></p>
+<p><span style="font-weight: 400;">We train the model to classify asthma risk, assuming nothing changes. </span><span style="font-weight: 400;">But then we operate on the hypothesis that these classifications are causal relationships. Then, when we act based on this hypothesis </span><span style="font-weight: 400;"> to intervene in the world, we invalidate the basic assumptions of the predictive model.</span></p>
+<p><span style="font-weight: 400;">As I articulated in <a href="https://arxiv.org/abs/1606.03490">a recent paper</a> [7], i</span><span style="font-weight: 400;">t’s in precisely these situations, where real and optimized objectives disagree, that we suddenly become very interested interpreting models, that is, figuring out how precisely they make decisions. Say, for example, that we want to classify tumors as malignant or benign, and that we have perfectly curated training data. If our algorithm achieves 100% accuracy, then it may not be essential to understand how precisely it makes its decisions. Absent transparency, this algorithm would still save lives. </span>But when our real-world goals and the optimized machine learning objectives diverge, things change.</p>
+<p>Take Facebook&#8217;s newsfeed as an example. Their real-world goal may be to present a personalized and useful stream of curated content. But likely, the machine learning goal is simply to maximize clicks and/or other superficial measures of engagement.  It&#8217;s not hard to see how these goals might diverge. A story can grab lots of clicks by offering a sensational headline but point to fake news. In that case, the story might be clicky but not useful. Moreover this sort of divergence may be inevitable. There are many situations where for various reasons it might be impossible to optimize real objectives directly. They may be too complex, or there might be no available annotations. In these situations it seems important to have some way of questioning models, either by introspecting them or analyzing their behavior.</p>
+<p><span style="font-weight: 400;">In a recent conversation, Rich Caruana suggested a silver lining. </span><span style="font-weight: 400;">These problems may be worse now precisely because machine learning has become so powerful. Take search engines for example. W</span><span style="font-weight: 400;">hen search engines were predicting total garbage, the salient question wasn’t whether we should be following click signal or a more meaningful objective. We </span><span style="font-weight: 400;">simply wondered whether we could make systems that behave comprehensibly at all.</span></p>
+<p><span style="font-weight: 400;">But now that the technology is maturing, the gap between real and surrogate objectives is more pronounced. </span><span style="font-weight: 400;">Consider a spacecraft coming from another galaxy and aiming for earth but pointed (incorrectly) at the Sun. The flaw in its trajectory might only become apparent as the spacecraft entered the solar system. </span><span style="font-weight: 400;">But eventually, as the craft drew closer to the sun, the difference in trajectory would become more pronounced. </span><span style="font-weight: 400;">At some point it might even point in the exact opposite direction.</span></p>
+<p><strong>[DEFINING BIAS]</strong></p>
+<p>So far we&#8217;ve punted on a precise definition of bias. We&#8217;ve relied instead on some exemplar cases that seem to fall under a mainstream consensus of egregiously biased behavior.  And in some sense, we use machine learning precisely because we want to make individualized decisions. In the case of loan approval, for example, that necessarily means that the algorithm advantages some users and disadvantages others.</p>
+<p>So what does it mean for an algorithm to be fair? One sense of fairness might be that the algorithm doesn&#8217;t take into account certain protected information, such as race or gender. Another sense of fairness might be that the algorithm is similarly accurate for different groups. Another notion of fairness might be that the algorithm is calibrated for all groups. In other words, it doesn&#8217;t overestimate or underestimate the risk for any group. Interestingly, any approach  that hopes to guarantee this property, might have to look at the protected information. So there are clearly some cases in which ensuring one notion of fairness might come at the expense of another.</p>
+<p>In a <a href="https://arxiv.org/pdf/1609.05807v1.pdf">recent paper</a>, Professor Jon Kleinberg gave an impossibility theorem for fairness in determining risk scores. He shows that three intuitive notions of fairness are not reconcilable except in unrealistically constrained cases [8]. So it might not be enough simply to demand that algorithms <em>be fair. </em>We may need to think critically about each problem and determine which notion of fairness is most relevant.</p>
+<p><strong>[TAKEAWAYS]</strong></p>
+<p><span style="font-weight: 400;">Many of the problems with bias in algorithms are similar to problems with bias in humans. S</span><span style="font-weight: 400;">ome articles suggest that we can detect our own biases and therefore correct for them, while for machine learning we cannot.  </span><span style="font-weight: 400;">But this seems far-fetched. We have little idea how the brain works. And ample studies show that humans are flagrantly biased in college admissions, employment decisions, dating behavior, and more. Moreover, we typically detect b</span><span style="font-weight: 400;">iases in human behavior post-hoc by evaluating human behavior, not through an a priori examination of the processes by which we think.  </span></p>
+<p><span style="font-weight: 400;">Perhaps the most salient difference between human and algorithmic bias may be that with human decisions, we expect bias. </span><span style="font-weight: 400;">Take for example, the well-documented racial biases among employers, less likely to call back  workers with more more typically black names than those with white names but identical resumes.  </span><span style="font-weight: 400;">We detect these biases because we suspect that they exist and have decided that they are undesirable, and therefore vigilantly test for their existence. </span></p>
+<p><span style="font-weight: 400;">As algorithmic decision-making slowly moves from simple rule-based systems towards more complex, human-level decision making, it’s only reasonable to expect that these decisions are susceptible to bias. Perhaps, b</span><span style="font-weight: 400;">y treating this bias as a property of the decision itself and not focusing overly on the algorithm that made it, w</span><span style="font-weight: 400;">e can bring to bear the same tools and institutions that have helped to strengthen ethics and equality in the workplace, college admissions etc. over the past century. </span></p>
+<p><strong>Acknowledgments</strong></p>
+<p>Thanks to Tobin Chodos, Dave Schneider, Victoria Krakovna, Chet Lipton, and Zeynep Tufekci for constructive feedback in preparing this draft.</p>
+<p><b>References</b></p>
+<ol>
+<li><span style="font-weight: 400;">Byrnes, Nanette, <em>Why we Should Expect Algorithms to be Biased</em> 2016 <a href="https://www.technologyreview.com/s/601775/why-we-should-expect-algorithms-to-be-biased/">https://www.technologyreview.com/s/601775/why-we-should-expect-algorithms-to-be-biased/</a></span></li>
+<li>Naughton, John <em>Even Algorithms are Biased Against Black Men</em> 2016 <a href="https://www.theguardian.com/commentisfree/2016/jun/26/algorithms-racial-bias-offenders-florida">https://www.theguardian.com/commentisfree/2016/jun/26/algorithms-racial-bias-offenders-florida</a></li>
+<li>Tufekci, Zeynep, <em>The Real Bias Built in at Facebook</em> New York Times 2016 <span style="font-weight: 400;"> <a href="http://www.nytimes.com/2016/05/19/opinion/the-real-bias-built-in-at-facebook.html">http://www.nytimes.com/2016/05/19/opinion/the-real-bias-built-in-at-facebook.html</a></span></li>
+<li>Angqin, Julia et al., <em>Machine Bias </em>2016 <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing</a></li>
+<li>Bolukbasi, Tolga et al. <em>Quantifying and Reducing Stereotypes in Word Embeddings ICML Workshop on #Data4Good </em>2016 <a href="https://arxiv.org/abs/1606.06121">https://arxiv.org/abs/1606.06121</a></li>
+<li>Deng, Jia, et al. <em>Imagenet: A large-scale hierarchical image database.</em> CVPR<i> 2009</i></li>
+<li>Lipton, Zachary C., <em>The Mythos of Model Interpretability.</em> ICML Workshop on Human Interpretability of Machine Learning 2016) <a href="https://arxiv.org/abs/1606.03490">https://arxiv.org/abs/1606.03490</a>.</li>
+<li>Kleinberg, Jon et al., <em>Inherent Trade-Offs in the Fair Determination of Risk Scores</em> <a href="https://arxiv.org/pdf/1609.05807v1.pdf">https://arxiv.org/pdf/1609.05807v1.pdf</a></li>
+</ol>
+<div class="pp-multiple-authors-wrapper multiple-authors-target-the-content pp-multiple-authors-layout-simple_list">
+            <h2 class="widget-title">Authors</h2>
+    
+    <ul>
+                    <li class="author_index_1">
+                <a href="https://www.approximatelycorrect.com/author/zack/" class="author url fn" rel="author">Zachary C. Lipton</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35'/>
+                            </li>
+            </ul>
+</div>
+
+<div class="author-info">
+	<div class="author-avatar">
+		<img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>	</div><!-- .author-avatar -->
+
+	<div class="author-description">
+		<h2 class="author-title"><span class="author-heading">Author:</span> Zachary C. Lipton</h2>
+
+		<p class="author-bio">
+			<a href="http://zacklipton.com">Zachary Chase Lipton</a> is an assistant professor at Carnegie Mellon University. He is interested in both core machine learning methodology and applications to healthcare and dialogue systems. He is also a visiting scientist at Amazon AI, and has worked with Amazon Core Machine Learning, Microsoft Research Redmond, &amp; Microsoft Research Bangalore.			<a class="author-link" href="https://www.approximatelycorrect.com/author/zack/" rel="author">
+				View all posts by Zachary C. Lipton			</a>
+		</p><!-- .author-bio -->
+	</div><!-- .author-description -->
+</div><!-- .author-info -->
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<span class="byline"><span class="author vcard"><img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=49&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=98&#038;d=mm&#038;r=g 2x' class='avatar avatar-49 photo' height='49' width='49' loading='lazy' decoding='async'/><span class="screen-reader-text">Author </span> <a class="url fn n" href="https://www.approximatelycorrect.com/author/zack/">Zachary C. Lipton</a></span></span><span class="posted-on"><span class="screen-reader-text">Posted on </span><a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/" rel="bookmark"><time class="entry-date published" datetime="2016-11-07T19:00:26+00:00">November 7, 2016</time><time class="updated" datetime="2020-07-31T12:54:31+00:00">July 31, 2020</time></a></span><span class="cat-links"><span class="screen-reader-text">Categories </span><a href="https://www.approximatelycorrect.com/category/machine-learning-ethics/" rel="category tag">Machine Learning Ethics</a></span><span class="tags-links"><span class="screen-reader-text">Tags </span><a href="https://www.approximatelycorrect.com/tag/bias/" rel="tag">Bias</a>, <a href="https://www.approximatelycorrect.com/tag/machine-learning/" rel="tag">Machine Learning</a>, <a href="https://www.approximatelycorrect.com/tag/supervised-learning/" rel="tag">Supervised Learning</a></span>			</footer><!-- .entry-footer -->
+</article><!-- #post-41 -->
+
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			19 thoughts on &ldquo;The Foundations of Algorithmic Bias&rdquo;		</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-3" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-3" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/d425e728afe1976fa274c9b8c8c3ce7c?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d425e728afe1976fa274c9b8c8c3ce7c?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Ml student</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-3"><time datetime="2016-11-17T05:23:39+00:00">November 17, 2016 at 5:23 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Interesting article. One of the examples you&#8217;re citing (ProPublica) has been refuted by the way. The court software they looked at was NOT biased. The rest of your points still stand of course. </p>
+<p>Source: Flores, Bechtel, Lowencamp; Federal Probation Journal, September 2016, &#8220;False Positives, False Negatives, and False Analyses: A Rejoinder to “Machine Bias: There’s Software Used Across the Country to Predict Future Criminals. And it’s Biased Against Blacks.”&#8221;, </p>
+<p>URL <a href="http://www.uscourts.gov/statistics-reports/publications/federal-probation-journal/federal-probation-journal-september-2016" rel="nofollow ugc">http://www.uscourts.gov/statistics-reports/publications/federal-probation-journal/federal-probation-journal-september-2016</a> </p>
+<p>In fact the ProPublica analysis was so wrong that the authors wrote: &#8220;It is noteworthy that the ProPublica code of ethics advises investigative journalists that &#8220;when in doubt, ask&#8221; numerous times. We feel that Larson et al.&#8217;s (2016) omissions and mistakes could have been avoided had they just asked. Perhaps they might have even asked&#8230;a criminologist? We certainly respect the mission of ProPublica, which is to &#8220;practice and promote investigative journalism in the public interest.&#8221; However, we also feel that the journalists at ProPublica strayed from their own code of ethics in that they did not present the facts accurately, their presentation of the existing literature was incomplete, and they failed to &#8220;ask.&#8221; While we aren’t inferring that they had an agenda in writing their story, we believe that they are better equipped to report the research news, rather than attempt to make the research news.&#8221; Sounds pretty bad, hu?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=3#respond' data-commentid="3" data-postid="41" data-belowelement="div-comment-3" data-respondelement="respond" data-replyto="Reply to Ml student" aria-label='Reply to Ml student'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-6" class="comment byuser comment-author-zack bypostauthor odd alt depth-2">
+			<article id="div-comment-6" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="http://zacklipton.com" class="url" rel="ugc external nofollow">Zachary C. Lipton</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-6"><time datetime="2016-11-17T15:47:17+00:00">November 17, 2016 at 3:47 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi. Thanks for the link. I&#8217;ll take a closer read and see if the challenge holds water. Regardless of the verdict, I&#8217;d caution to be less trusting of anything that just happens to look like a paper. This draft appears in a criminal justice journal, and is composed by an assistant professor of criminal justice. These are by no means disqualifying, but it&#8217;s certainly a signal not to take these conclusions on faith. </p>
+<p>Regarding the present piece, as you note, the content of the article doesn&#8217;t hang on the quality of Propublica&#8217;s piece (it was actually a late addition to the article). For my purposes the very fact that the risk score is used prompts these urgent questions. The matter especially pressing because the score relies on data including years of education and age of first arrest. From multiple angles we ought to be concerned with the ways applying such a model could compromise equal treatment under the law.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=6#respond' data-commentid="6" data-postid="41" data-belowelement="div-comment-6" data-respondelement="respond" data-replyto="Reply to Zachary C. Lipton" aria-label='Reply to Zachary C. Lipton'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-4" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-4" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/9abbcd4d79bb4f9b0b606d844ff0d421?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/9abbcd4d79bb4f9b0b606d844ff0d421?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">static</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-4"><time datetime="2016-11-17T13:54:27+00:00">November 17, 2016 at 1:54 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>&#8220;Unfortunately, it’s not so simple. Given a rich enough set of features and a rich enough family of models, the machine algorithm [can] deduce race implicitly, and use this information to predict recidivism. For example, zip code, occupation, even the previous crime committed could each leak clues as to the race of the inmate.&#8221;</p>
+<p>The fact that factors correlated with recidivism may also be correlated with race is irrelevant. What is relevant is whether those factors are correlated with recidivism, and whether they are predictive. E.g., someone unemployed may be more likely to return to a life of petty theft than someone who had particular job skills. </p>
+<p>Just because something is correlated with race doesn&#8217;t mean it is equivalent to using race as a factor in making a decision. It&#8217;s the exact opposite of that, because people of that race who do not match that correlation do not get treated like those do.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=4#respond' data-commentid="4" data-postid="41" data-belowelement="div-comment-4" data-respondelement="respond" data-replyto="Reply to static" aria-label='Reply to static'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-5" class="comment byuser comment-author-zack bypostauthor odd alt depth-2 parent">
+			<article id="div-comment-5" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="http://zacklipton.com" class="url" rel="ugc external nofollow">Zachary C. Lipton</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-5"><time datetime="2016-11-17T15:31:30+00:00">November 17, 2016 at 3:31 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, I believe you&#8217;re mistaken on the structure of this argument. Race may indeed be predictive of recidivism. One reason why could be that recidivism is only observed when people are re-arrested. And arrest rates are well-known to be biased higher for some races. In this case, when race is truly predictive (due to the biases of the labels themselves), removing race as a feature doesn&#8217;t necessarily prevent the model from discriminating. </p>
+<p>I hope this allays your confusion. Note, in a kaggle competition, predictive accuracy is enough. But in many situations, there may be models that get high predictive accuracy but should&#8217;t be used to guide decisions. </p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=5#respond' data-commentid="5" data-postid="41" data-belowelement="div-comment-5" data-respondelement="respond" data-replyto="Reply to Zachary C. Lipton" aria-label='Reply to Zachary C. Lipton'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-7" class="comment even depth-3 parent">
+			<article id="div-comment-7" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/9abbcd4d79bb4f9b0b606d844ff0d421?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/9abbcd4d79bb4f9b0b606d844ff0d421?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">static</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-7"><time datetime="2016-11-19T17:16:08+00:00">November 19, 2016 at 5:16 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I didn&#8217;t suggest that &#8220;race&#8221; would not be correlated with recidivism. As you say, it may be. What I suggested is that removing &#8220;race&#8221; as an explicit factor DOES make the algorithm no longer &#8220;racially stereotyping&#8221; or &#8220;racially profiling&#8221;.  It is not &#8220;deducing race&#8221;, it is modeling people with features that are not 100% dependent on race.  Whether those other factors are 0.2 or 0.8 correlated with whatever racial categorization system one applies to people is irrelevant, as those labeled as being of the race without those features are not affected.   The fundamental error of stereotyping, assuming that ALL of class A have feature B because SOME of class A have feature B is the one you are making in your recommended approaches for assessing bias, not the one the algorithm is making in ignoring race.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=7#respond' data-commentid="7" data-postid="41" data-belowelement="div-comment-7" data-respondelement="respond" data-replyto="Reply to static" aria-label='Reply to static'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-8" class="comment byuser comment-author-zack bypostauthor odd alt depth-4 parent">
+			<article id="div-comment-8" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="http://zacklipton.com" class="url" rel="ugc external nofollow">Zachary C. Lipton</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-8"><time datetime="2016-11-19T19:33:51+00:00">November 19, 2016 at 7:33 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;m glad we&#8217;re having this discussion. But I have to point out that your analysis is incorrect. Easy example: Imagine that the real police have a strong racial bias and arrest more black people. Thus the rate of recidivism will be higher among black citizens (because recidivism is only measured if you are re-arrested). In this case there would be causal connection between being black and getting arrested. The mechanism for this connection is racism.</p>
+<p>Now you could remove the race feature from your data. But say your data contained features on zip-code, job title and income. These features may have nothing to do with crime intrinsically, but they could effectively recover the signal from the missing race feature. So if the labels are truly racist, we should expect the trained model to be racist (even if we eliminate the race feature). </p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=8#respond' data-commentid="8" data-postid="41" data-belowelement="div-comment-8" data-respondelement="respond" data-replyto="Reply to Zachary C. Lipton" aria-label='Reply to Zachary C. Lipton'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-2528" class="comment even depth-5 parent">
+			<article id="div-comment-2528" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/f0e431e03e08ceb7038efc6524691cc2?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/f0e431e03e08ceb7038efc6524691cc2?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">bryan</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-2528"><time datetime="2017-06-11T02:56:21+00:00">June 11, 2017 at 2:56 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Zachary.  I&#8217;m late to this debate, having only come across this article recently for a class I&#8217;m now taking.  I enjoyed reading it, and the portions on omission errors was particularly interesting.</p>
+<p>I&#8217;m also glad there was an actual reasoned, non-personal discussion on the bias issue.  This comment is meant in that vein and tone.</p>
+<p>I&#8217;m having a hard time following your argument.  Your beef seems to be more whether or not we should try to predict recidivism based on past history.  You believe there is racism at play (a moral issue) in who gets arrested.   </p>
+<p>Should such a model be forbidden from taking into account gender(men tend to get rearrested at a much higher rate)?  Or age (since younger people tend to commit more violent offenses at all levels)?  Are models that do sexist or ageist?  Or do those factors reflect reality? Or both?</p>
+<p>I don&#8217;t like the recidivism reality anymore than you &#8211; I hope no one does.  And I think most thinking people agree there are a wide range of factors at play to explain that reality &#8211; racism one among many.  But trying to massage the data to get a less robust answer (which incidentally has moral value, is to try to protect the average citizen of any race from becoming a victim of a criminal) because reality makes us queasy isn&#8217;t science.  Not real science, anyway.</p>
+<p>Very thought provoking article though.</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2531" class="comment byuser comment-author-zack bypostauthor odd alt depth-5">
+			<article id="div-comment-2531" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="http://zacklipton.com" class="url" rel="ugc external nofollow">Zachary C. Lipton</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-2531"><time datetime="2017-06-11T06:44:06+00:00">June 11, 2017 at 6:44 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for you thoughts. I think what you may be missing is that while inferring the conditional probability P(Y|X) might be a &#8220;science&#8221;, deciding what to model (What is Y?) and how to take actions (as by making sentencing decision) based on this information are not sciences, they are value judgments. </p>
+<p>On the specific case of recidivism prediction I think it&#8217;s an inherently flaws way to be making sentencing decisions. Punishments should be for crimes committed, not future crimes forecasted by flawed models. </p>
+<p>Regarding the issue of arrests: yes, there is racism in who gets arrested. So we don&#8217;t actually observe an unbiased sample of who commits a crime, we only see who both commits a crime AND gets caught. Because who gets arrested reflects race-based policing, we wind up with a biased sample. The big issue here (ignoring for the moment the fundamental problems with risk-based sentencing in the first place) is that the model is misrepresented as telling us who&#8217;s likely to reoffend, but actually reflects a different quantity that happens to be biased (in both the statistical and common use sense) against some minorities.</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-9828" class="comment even depth-5">
+			<article id="div-comment-9828" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/ccd9f3b45391ba68e39567979baffc4c?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/ccd9f3b45391ba68e39567979baffc4c?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Kim Woods</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-9828"><time datetime="2018-05-06T00:21:39+00:00">May 6, 2018 at 12:21 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It&#8217;s a shame people seem to be misunderstanding your point here. It&#8217;s a very important point.</p>
+<p>Here is another way of looking at this issue (and yes it&#8217;s a data labelling issue, so let&#8217;s take race out of it for now).</p>
+<p>Person 1 grew up in a poor family in a deprived area of town. Their first offence was at 15 with some associates stealing a car. Due to age, they were not given a custodial sentence. Their second offence was breaking and entering at age 16, for which they were also caught and given a short custodial sentence in a juvenile facility.</p>
+<p>Person 2 is from a fairly wealthy family, and at 28 lives alone, no partner no children. They run a real estate company. For the past three years they were engaged in white collar crime, until this was discovered and, as a result of a good lawyer, paid a fine. Since this they started a new company and have continued with similar white collar crime the past two years as well as occasionally selling Class A drugs on to friends in their network.</p>
+<p>In our data, Person 1 is labelled as having higher recidivism. Some people may have a lower chance of getting caught, but this does not mean they didn&#8217;t commit crime. Ideally we want future algorithms to detect the crime that currently flies under the radar, not enhance it&#8217;s ability to stay buried.</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-9" class="pingback odd alt thread-even depth-1">
+			<div class="comment-body">
+				Pingback: <a href="https://approximatelycorrect.com/2016/12/20/machine-leanring-policy-reflections-on-the-human-use-of-machine-learning-2016/" class="url" rel="ugc external nofollow">Machine Learning Meets Policy: Reflections on HUML 2016 &#8211; Approximately Correct</a> 			</div>
+		</li><!-- #comment-## -->
+		<li id="comment-2848" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-2848" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/71f146b707f52c4eaa5c1cf33af56b78?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/71f146b707f52c4eaa5c1cf33af56b78?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">nicolas</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-2848"><time datetime="2017-07-03T08:25:19+00:00">July 3, 2017 at 8:25 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You shouldn&#8217;t kept the gorilla example unless your a racist.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=2848#respond' data-commentid="2848" data-postid="41" data-belowelement="div-comment-2848" data-respondelement="respond" data-replyto="Reply to nicolas" aria-label='Reply to nicolas'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-3037" class="comment byuser comment-author-zack bypostauthor odd alt depth-2">
+			<article id="div-comment-3037" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="http://zacklipton.com" class="url" rel="ugc external nofollow">Zachary C. Lipton</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-3037"><time datetime="2017-07-20T09:37:49+00:00">July 20, 2017 at 9:37 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>With respect, I don&#8217;t think you&#8217;ve thought this comment through. The gorilla example presents clear evidence of the the *real* problem that algorithms can inadvertently exhibit racist behavior. How can the community correct the problem without discussing it openly and presenting evidence of its existence?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=3037#respond' data-commentid="3037" data-postid="41" data-belowelement="div-comment-3037" data-respondelement="respond" data-replyto="Reply to Zachary C. Lipton" aria-label='Reply to Zachary C. Lipton'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-3961" class="comment even thread-even depth-1">
+			<article id="div-comment-3961" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0286c6a87475f8dae95c0bc9bc493893?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0286c6a87475f8dae95c0bc9bc493893?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Vladimir</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-3961"><time datetime="2017-09-03T14:41:58+00:00">September 3, 2017 at 2:41 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello Zachary!<br/>
+Thank you for a very interesting and insightful article!</p>
+<p>As a takeaway I was thinking: &#8220;Hey! weren&#8217;t machines supposed to diminish all those tools and institutions in the first place, greatly improve time for decisions, and a-priori considered as most impartial?&#8221; While the article suggests to treat bias as a property of decision itself. Further implies to treat machine decisions as any other &#8220;blackbox&#8221; decisions and therefore apply institutions and tools same as for humans!<br/>
+I believe in that case the institutions are a subject to great transformations.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=3961#respond' data-commentid="3961" data-postid="41" data-belowelement="div-comment-3961" data-respondelement="respond" data-replyto="Reply to Vladimir" aria-label='Reply to Vladimir'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-7334" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-7334" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a774a7e7f230906a16a077e2c1fe9ffc?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a774a7e7f230906a16a077e2c1fe9ffc?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Ven Kumar</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-7334"><time datetime="2018-02-05T23:13:24+00:00">February 5, 2018 at 11:13 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Very interesting discussions on bias.  is there a &#8216;Fairness&#8217; test similar to a &#8220;Turing&#8221; test that is available or the academia is working on to certify algorithms for their fairness. Is it almost like a Fairness score of of 1 to 10 that can be created .</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=7334#respond' data-commentid="7334" data-postid="41" data-belowelement="div-comment-7334" data-respondelement="respond" data-replyto="Reply to Ven Kumar" aria-label='Reply to Ven Kumar'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-11413" class="comment even thread-even depth-1">
+			<article id="div-comment-11413" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/1bf08be3efeac58afd07ae86fea08923?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/1bf08be3efeac58afd07ae86fea08923?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="http://lubsey.co" class="url" rel="ugc external nofollow">andrew lubsey</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-11413"><time datetime="2018-06-11T05:59:29+00:00">June 11, 2018 at 5:59 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Zachary . thanks for bringing attention to  such an important issue.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=11413#respond' data-commentid="11413" data-postid="41" data-belowelement="div-comment-11413" data-respondelement="respond" data-replyto="Reply to andrew lubsey" aria-label='Reply to andrew lubsey'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-18429" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-18429" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fab2dad5f5bbf5ee4604bed7c5939116?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fab2dad5f5bbf5ee4604bed7c5939116?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Stella</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-18429"><time datetime="2018-09-11T04:20:38+00:00">September 11, 2018 at 4:20 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Based on the previous comments, I&#8217;m guessing some people will still not believe, or be able to parse, how a recidivism ML algorithm becomes racist without labels of skin color, and how that might play out in the real world. </p>
+<p>Let&#8217;s take one young black man as an example, who got caught stealing candy once in the city and was turned into the police (instead of a stiff warning from the shopkeep like a white kid might get &#8211; one way racism enters the algorithm). In the local system, black men from the poor part of town are more likely to get picked up, arrested or accused, because racism. It is also because desperateness and glamorization of crime affects poor communities of color, which can lead to more actual crimes being committed by people there. So, the numbers in the ML algorithm are not in the post code&#8217;s favor. As explained in above article, the algorithm will take in data like location of crime and kid&#8217;s home (this, as well as being booked for something rather petty, feeds the algorithm racism), crime type, age, level of education, maybe medical history?, previous record etc, but (hopefully) not the way they look. The candy-stealing kid, who is the nicest boy you&#8217;d ever meet, maybe just had an urge to test a system (like all teens do). He gets marked as someone who will commit a crime again because his data points are closer to other recidivists (ie black/from a certain area/education level) than perhaps white folk in another part of town. </p>
+<p>tl;dr, a well-meaning kid is marked as a criminal for life just because a shop keeper feared him and he lived in a rougher black neighborhood.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=18429#respond' data-commentid="18429" data-postid="41" data-belowelement="div-comment-18429" data-respondelement="respond" data-replyto="Reply to Stella" aria-label='Reply to Stella'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-112420" class="comment even thread-even depth-1">
+			<article id="div-comment-112420" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/ec27c16b6826e63b7ba1c0abaa01e9ac?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/ec27c16b6826e63b7ba1c0abaa01e9ac?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn"><a href="https://www.builddaysis.com/" class="url" rel="ugc external nofollow">Builddaysis.Com</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-112420"><time datetime="2020-04-28T17:23:29+00:00">April 28, 2020 at 5:23 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Are there statutory guardrails that companies should be reviewing to ensure that the algorithm is both legal and ethical?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=112420#respond' data-commentid="112420" data-postid="41" data-belowelement="div-comment-112420" data-respondelement="respond" data-replyto="Reply to Builddaysis.Com" aria-label='Reply to Builddaysis.Com'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-130771" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-130771" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/7fb3342f6d1898749a1b0d75afac3a31?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/7fb3342f6d1898749a1b0d75afac3a31?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Garth</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-130771"><time datetime="2020-06-19T19:38:08+00:00">June 19, 2020 at 7:38 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I feel that is among the so much vital information for me. And i am glad reading your article. But want to remark on some basic issues, The site style is perfect, the articles is truly excellent : D. Good job, cheers|</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=130771#respond' data-commentid="130771" data-postid="41" data-belowelement="div-comment-130771" data-respondelement="respond" data-replyto="Reply to Garth" aria-label='Reply to Garth'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-278636" class="comment even thread-even depth-1">
+			<article id="div-comment-278636" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/9af5375f6f0fc1ca5ed3076b6b6899a7?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/9af5375f6f0fc1ca5ed3076b6b6899a7?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' loading='lazy' decoding='async'/>						<b class="fn">Ajay</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-278636"><time datetime="2022-04-04T05:36:04+00:00">April 4, 2022 at 5:36 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It is a wonderful article. The way bias creeps into our own conscious/sub-conscious is no different when it comes to algorithms. Examining the training data (for uncovering hidden bias) may require more effort/time than a PhD in ML/Data Science as it is not very easy to see and question our own beliefs/thought patterns.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/?replytocom=278636#respond' data-commentid="278636" data-postid="41" data-belowelement="div-comment-278636" data-respondelement="respond" data-replyto="Reply to Ajay" aria-label='Reply to Ajay'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h2 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2016/11/07/the-foundations-of-algorithmic-bias/#respond" style="display:none;">Cancel reply</a></small></h2><form action="https://www.approximatelycorrect.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment"><label for="comment">Comment <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" autocomplete="url"/></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"/> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"/> <input type='hidden' name='comment_post_ID' value='41' id='comment_post_ID'/>
+<input type='hidden' name='comment_parent' id='comment_parent' value='0'/>
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="411e781847"/></p><input type="hidden" id="ak_js" name="ak_js" value="97"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	
+</div><!-- .comments-area -->
+
+	<nav class="navigation post-navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://www.approximatelycorrect.com/2016/10/01/mission-statement/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous</span> <span class="screen-reader-text">Previous post:</span> <span class="post-title">Mission Statement</span></a></div><div class="nav-next"><a href="https://www.approximatelycorrect.com/2016/11/10/the-failure-of-simple-narratives/" rel="next"><span class="meta-nav" aria-hidden="true">Next</span> <span class="screen-reader-text">Next post:</span> <span class="post-title">The Failure of Simple Narratives</span></a></div></div>
+	</nav>
+	</main><!-- .site-main -->
+
+	<aside id="content-bottom-widgets" class="content-bottom-widgets" role="complementary">
+			<div class="widget-area">
+			
+		<section id="recent-posts-3" class="widget widget_recent_entries">
+		<h2 class="widget-title">Recent Posts</h2>
+		<ul>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2021/08/10/superheroes-of-deep-learning-vol-2-machine-learning-for-healthcare/">Superheroes of Deep Learning Vol 2: Machine Learning for Healthcare</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2021/07/02/when-curation-becomes-creation/">When Curation Becomes Creation</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2020/10/26/superheroes-of-deep-learning-vol-1-machine-learning-yearning/">Superheroes of Deep Learning Vol 1: Machine Learning Yearning</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2020/09/15/hope-returns-to-the-machine-learning-universe/">Hope Returns to the Machine Learning Universe</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2020/08/17/5-habits-of-highly-effective-data-scientists/">5 Habits of Highly Effective Data Scientists</a>
+									</li>
+					</ul>
+
+		</section>		</div><!-- .widget-area -->
+	
+	</aside><!-- .content-bottom-widgets -->
+
+</div><!-- .content-area -->
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary">
+		<section id="email-subscribers-form-2" class="widget widget_email-subscribers-form">
+		<div class="emaillist" id="es_form_f1-n1">
+						<form action="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#es_form_f1-n1" method="post" class="es_subscription_form es_shortcode_form" id="es_subscription_form_6932106f48514" data-source="ig-es">
+								<div class="es-field-wrap"><label>Name<br/><input type="text" name="esfpx_name" class="ig_es_form_field_name" placeholder="" value=""/></label></div><div class="es-field-wrap"><label>Email*<br/><input class="es_required_field es_txt_email ig_es_form_field_email" type="email" name="esfpx_email" value="" placeholder="" required="required"/></label></div><input type="hidden" name="esfpx_lists[]" value="26222fdf703d"/><input type="hidden" name="esfpx_form_id" value="1"/>				<input type="hidden" name="es" value="subscribe"/>
+				<input type="hidden" name="esfpx_es_form_identifier" value="f1-n1"/>
+				<input type="hidden" name="esfpx_es_email_page" value="41"/>
+				<input type="hidden" name="esfpx_es_email_page_url" value="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/"/>
+				<input type="hidden" name="esfpx_status" value="Unconfirmed"/>
+				<input type="hidden" name="esfpx_es-subscribe" id="es-subscribe" value="8bf3f8cea8"/>
+				<label style="position:absolute;top:-99999px;left:-99999px;z-index:-99;"><input type="email" name="esfpx_es_hp_email" class="es_required_field" tabindex="-1" autocomplete="-1" value=""/></label>
+								<input type="submit" name="submit" class="es_subscription_form_submit es_submit_button es_textbox_button" id="es_subscription_form_submit_6932106f48514" value="Submit"/>
+
+				
+				<span class="es_spinner_image" id="spinner-image"><img src="https://www.approximatelycorrect.com/wp-content/plugins/email-subscribers/lite/public/images/spinner.gif" alt=""/></span>
+
+			</form>
+						<span class="es_subscription_message " id="es_subscription_message_6932106f48514">
+						</span>
+		</div>
+
+		</section><section id="search-2" class="widget widget_search">
+<form role="search" method="get" class="search-form" action="https://www.approximatelycorrect.com/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s"/>
+	</label>
+	<button type="submit" class="search-submit"><span class="screen-reader-text">Search</span></button>
+</form>
+</section>
+		<section id="recent-posts-2" class="widget widget_recent_entries">
+		<h2 class="widget-title">Recent Posts</h2>
+		<ul>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2021/08/10/superheroes-of-deep-learning-vol-2-machine-learning-for-healthcare/">Superheroes of Deep Learning Vol 2: Machine Learning for Healthcare</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2021/07/02/when-curation-becomes-creation/">When Curation Becomes Creation</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2020/10/26/superheroes-of-deep-learning-vol-1-machine-learning-yearning/">Superheroes of Deep Learning Vol 1: Machine Learning Yearning</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2020/09/15/hope-returns-to-the-machine-learning-universe/">Hope Returns to the Machine Learning Universe</a>
+									</li>
+											<li>
+					<a href="https://www.approximatelycorrect.com/2020/08/17/5-habits-of-highly-effective-data-scientists/">5 Habits of Highly Effective Data Scientists</a>
+									</li>
+					</ul>
+
+		</section><section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">Recent Comments</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">Prismane</span> on <a href="https://www.approximatelycorrect.com/2021/08/10/superheroes-of-deep-learning-vol-2-machine-learning-for-healthcare/#comment-279065">Superheroes of Deep Learning Vol 2: Machine Learning for Healthcare</a></li><li class="recentcomments"><span class="comment-author-link">Ajay</span> on <a href="https://www.approximatelycorrect.com/2016/11/07/the-foundations-of-algorithmic-bias/#comment-278636">The Foundations of Algorithmic Bias</a></li><li class="recentcomments"><span class="comment-author-link">Deliveryboy Man</span> on <a href="https://www.approximatelycorrect.com/2021/08/10/superheroes-of-deep-learning-vol-2-machine-learning-for-healthcare/#comment-265290">Superheroes of Deep Learning Vol 2: Machine Learning for Healthcare</a></li><li class="recentcomments"><span class="comment-author-link">Deliveryboy Man</span> on <a href="https://www.approximatelycorrect.com/2021/08/10/superheroes-of-deep-learning-vol-2-machine-learning-for-healthcare/#comment-265281">Superheroes of Deep Learning Vol 2: Machine Learning for Healthcare</a></li><li class="recentcomments"><span class="comment-author-link">Rui</span> on <a href="https://www.approximatelycorrect.com/2021/08/10/superheroes-of-deep-learning-vol-2-machine-learning-for-healthcare/#comment-265199">Superheroes of Deep Learning Vol 2: Machine Learning for Healthcare</a></li></ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">Archives</h2>
+			<ul>
+					<li><a href='https://www.approximatelycorrect.com/2021/08/'>August 2021</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2021/07/'>July 2021</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2020/10/'>October 2020</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2020/09/'>September 2020</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2020/08/'>August 2020</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2019/02/'>February 2019</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/12/'>December 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/11/'>November 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/07/'>July 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/06/'>June 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/05/'>May 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/03/'>March 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/01/'>January 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/12/'>December 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/11/'>November 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/10/'>October 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/09/'>September 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/08/'>August 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/07/'>July 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/05/'>May 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/04/'>April 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/03/'>March 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/02/'>February 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/01/'>January 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2016/12/'>December 2016</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2016/11/'>November 2016</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2016/10/'>October 2016</a></li>
+			</ul>
+
+			</section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">Categories</h2>
+			<ul>
+					<li class="cat-item cat-item-53"><a href="https://www.approximatelycorrect.com/category/causality/">Causality</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="https://www.approximatelycorrect.com/category/comics/">Comics</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://www.approximatelycorrect.com/category/computational-creativity/">Computational Creativity</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://www.approximatelycorrect.com/category/conference-coverage/">Conference Coverage</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://www.approximatelycorrect.com/category/editorial/">Editorial</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="https://www.approximatelycorrect.com/category/healthcare/">Healthcare</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://www.approximatelycorrect.com/category/journalism/">Journalism</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://www.approximatelycorrect.com/category/machine-learning-ethics/">Machine Learning Ethics</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="https://www.approximatelycorrect.com/category/machine-learning-methodology/">Machine Learning Methodology</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://www.approximatelycorrect.com/category/machine-learning-policy/">Machine Learning Policy</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="https://www.approximatelycorrect.com/category/natural-language-processing/">Natural Language Processing</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="https://www.approximatelycorrect.com/category/opinion/">Opinion</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.approximatelycorrect.com/category/political/">Political</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://www.approximatelycorrect.com/category/problem-formulation/">Problem Formulation</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="https://www.approximatelycorrect.com/category/satire/">Satire</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://www.approximatelycorrect.com/category/uncategorized/">Uncategorized</a>
+</li>
+			</ul>
+
+			</section><section id="meta-2" class="widget widget_meta"><h2 class="widget-title">Meta</h2>
+		<ul>
+						<li><a href="https://www.approximatelycorrect.com/wp-login.php">Log in</a></li>
+			<li><a href="https://www.approximatelycorrect.com/feed/">Entries feed</a></li>
+			<li><a href="https://www.approximatelycorrect.com/comments/feed/">Comments feed</a></li>
+
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>
+		</ul>
+
+		</section><section id="archives-3" class="widget widget_archive"><h2 class="widget-title">Archives</h2>
+			<ul>
+					<li><a href='https://www.approximatelycorrect.com/2021/08/'>August 2021</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2021/07/'>July 2021</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2020/10/'>October 2020</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2020/09/'>September 2020</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2020/08/'>August 2020</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2019/02/'>February 2019</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/12/'>December 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/11/'>November 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/07/'>July 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/06/'>June 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/05/'>May 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/03/'>March 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2018/01/'>January 2018</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/12/'>December 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/11/'>November 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/10/'>October 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/09/'>September 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/08/'>August 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/07/'>July 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/05/'>May 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/04/'>April 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/03/'>March 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/02/'>February 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2017/01/'>January 2017</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2016/12/'>December 2016</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2016/11/'>November 2016</a></li>
+	<li><a href='https://www.approximatelycorrect.com/2016/10/'>October 2016</a></li>
+			</ul>
+
+			</section><section id="multiple_authors_list_widget-2" class="widget multiple_authors_authors-list_widget"><h2 class="widget-title"><h2 class="widget-title">Authors List</h2></h2><div class="pp-multiple-authors-wrapper multiple-authors-target-widget pp-multiple-authors-layout-simple_list">
+    
+    <ul>
+                    <li class="author_index_1">
+                <a href="https://www.approximatelycorrect.com/author/alex/" class="author url fn" rel="author">Alex Dimakis</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/9099bcebf6c956c62b65c747a0f230ea?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/9099bcebf6c956c62b65c747a0f230ea?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_2">
+                <a href="https://www.approximatelycorrect.com/author/dylan/" class="author url fn" rel="author">Dylan Hadfield-Menell</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/f93ea51ad942966a4deee00d3c080e41?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/f93ea51ad942966a4deee00d3c080e41?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_3">
+                <a href="https://www.approximatelycorrect.com/author/falaah/" class="author url fn" rel="author">Falaah Arif Khan</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/aab89cc0d3f8d2d6bd63c66ea3120c9e?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aab89cc0d3f8d2d6bd63c66ea3120c9e?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_4">
+                <a href="https://www.approximatelycorrect.com/author/greg/" class="author url fn" rel="author">Greg Ver Steeg</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/61241b23a4b1d533a438d093c0c44300?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/61241b23a4b1d533a438d093c0c44300?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_5">
+                <a href="https://www.approximatelycorrect.com/author/jack/" class="author url fn" rel="author">Jack Clark</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/806c1cebfd38dc765acec84d0008d605?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/806c1cebfd38dc765acec84d0008d605?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_6">
+                <a href="https://www.approximatelycorrect.com/author/leon/" class="author url fn" rel="author">Leon Derczynski</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/c1dce9f7aeb7f7196133c50aa4a7372b?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/c1dce9f7aeb7f7196133c50aa4a7372b?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_7">
+                <a href="https://www.approximatelycorrect.com/author/leqi/" class="author url fn" rel="author">Leqi Liu</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/9efb4f809d8961b47d3ae687f6e8dc2f?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/9efb4f809d8961b47d3ae687f6e8dc2f?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_8">
+                <a href="https://www.approximatelycorrect.com/author/mark/" class="author url fn" rel="author">Mark Saroufim</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/cf69db15a3a783a1e9f4f87bdee43323?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/cf69db15a3a783a1e9f4f87bdee43323?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_9">
+                <a href="https://www.approximatelycorrect.com/author/victoria/" class="author url fn" rel="author">Victoria Krakovna</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/4c8fedf5ececb9580b93902d290e33fb?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/4c8fedf5ececb9580b93902d290e33fb?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35' loading='lazy' decoding='async'/>
+                            </li>
+                    <li class="author_index_10">
+                <a href="https://www.approximatelycorrect.com/author/zack/" class="author url fn" rel="author">Zachary C. Lipton</a>
+                                    <img alt='' src='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=35&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aabea06f614d645629249fd2fc0cb366?s=70&#038;d=mm&#038;r=g 2x' class='avatar avatar-35 photo' height='35' width='35'/>
+                            </li>
+            </ul>
+</div>
+</section>	</aside><!-- .sidebar .widget-area -->
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+							<nav class="main-navigation" role="navigation" aria-label="Footer Primary Menu">
+					<div class="menu-nav-container"><ul id="menu-nav-1" class="primary-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1001"><a href="http://acmilab.org">ACMI Lab</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-154"><a href="https://www.approximatelycorrect.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+			
+			<div class="site-info">
+								<span class="site-title"><a href="https://www.approximatelycorrect.com/" rel="home">Approximately Correct</a></span>
+								<a href="https://wordpress.org/" class="imprint">
+					Proudly powered by WordPress				</a>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+<div id="mv-grow-data" data-settings='{&quot;general&quot;:{&quot;contentSelector&quot;:false},&quot;shareCounts&quot;:{&quot;facebook&quot;:171,&quot;pinterest&quot;:2},&quot;shouldRun&quot;:true,&quot;buttonSVG&quot;:{&quot;facebook&quot;:{&quot;path&quot;:&quot;M17.12 0.224v4.704h-2.784q-1.536 0-2.080 0.64t-0.544 1.92v3.392h5.248l-0.704 5.28h-4.544v13.568h-5.472v-13.568h-4.544v-5.28h4.544v-3.904q0-3.328 1.856-5.152t4.96-1.824q2.624 0 4.064 0.224z&quot;,&quot;width&quot;:18,&quot;height&quot;:32},&quot;twitter&quot;:{&quot;path&quot;:&quot;M28.928 7.296q-1.184 1.728-2.88 2.976 0 0.256 0 0.736 0 2.336-0.672 4.64t-2.048 4.448-3.296 3.744-4.608 2.624-5.792 0.96q-4.832 0-8.832-2.592 0.608 0.064 1.376 0.064 4.032 0 7.168-2.464-1.888-0.032-3.36-1.152t-2.048-2.848q0.608 0.096 1.088 0.096 0.768 0 1.536-0.192-2.016-0.416-3.328-1.984t-1.312-3.68v-0.064q1.216 0.672 2.624 0.736-1.184-0.8-1.888-2.048t-0.704-2.752q0-1.568 0.8-2.912 2.176 2.656 5.248 4.256t6.656 1.76q-0.16-0.672-0.16-1.312 0-2.4 1.696-4.064t4.064-1.696q2.528 0 4.224 1.824 1.952-0.384 3.68-1.408-0.672 2.048-2.56 3.2 1.664-0.192 3.328-0.896z&quot;,&quot;width&quot;:30,&quot;height&quot;:32},&quot;pinterest&quot;:{&quot;path&quot;:&quot;M0 10.656q0-1.92 0.672-3.616t1.856-2.976 2.72-2.208 3.296-1.408 3.616-0.448q2.816 0 5.248 1.184t3.936 3.456 1.504 5.12q0 1.728-0.32 3.36t-1.088 3.168-1.792 2.656-2.56 1.856-3.392 0.672q-1.216 0-2.4-0.576t-1.728-1.568q-0.16 0.704-0.48 2.016t-0.448 1.696-0.352 1.28-0.48 1.248-0.544 1.12-0.832 1.408-1.12 1.536l-0.224 0.096-0.16-0.192q-0.288-2.816-0.288-3.36 0-1.632 0.384-3.68t1.184-5.152 0.928-3.616q-0.576-1.152-0.576-3.008 0-1.504 0.928-2.784t2.368-1.312q1.088 0 1.696 0.736t0.608 1.824q0 1.184-0.768 3.392t-0.8 3.36q0 1.12 0.8 1.856t1.952 0.736q0.992 0 1.824-0.448t1.408-1.216 0.992-1.696 0.672-1.952 0.352-1.984 0.128-1.792q0-3.072-1.952-4.8t-5.12-1.728q-3.552 0-5.952 2.304t-2.4 5.856q0 0.8 0.224 1.536t0.48 1.152 0.48 0.832 0.224 0.544q0 0.48-0.256 1.28t-0.672 0.8q-0.032 0-0.288-0.032-0.928-0.288-1.632-0.992t-1.088-1.696-0.576-1.92-0.192-1.92z&quot;,&quot;width&quot;:23,&quot;height&quot;:32},&quot;linkedin&quot;:{&quot;path&quot;:&quot;M6.24 11.168v17.696h-5.888v-17.696h5.888zM6.624 5.696q0 1.312-0.928 2.176t-2.4 0.864h-0.032q-1.472 0-2.368-0.864t-0.896-2.176 0.928-2.176 2.4-0.864 2.368 0.864 0.928 2.176zM27.424 18.72v10.144h-5.856v-9.472q0-1.888-0.736-2.944t-2.272-1.056q-1.12 0-1.856 0.608t-1.152 1.536q-0.192 0.544-0.192 1.44v9.888h-5.888q0.032-7.136 0.032-11.552t0-5.28l-0.032-0.864h5.888v2.56h-0.032q0.352-0.576 0.736-0.992t0.992-0.928 1.568-0.768 2.048-0.288q3.040 0 4.896 2.016t1.856 5.952z&quot;,&quot;width&quot;:27,&quot;height&quot;:32}}}'></div><link rel='stylesheet' id='dashicons-css' href='https://www.approximatelycorrect.com/wp-includes/css/dashicons.min.css?ver=6.4.7' media='all'/>
+<link rel='stylesheet' id='multiple-authors-widget-css-css' href='https://www.approximatelycorrect.com/wp-content/plugins/publishpress-authors/src/assets/css/multiple-authors-widget.css?ver=3.14.0' media='all'/>
+<style id='multiple-authors-widget-css-inline-css'>:root{--ppa-color-scheme:#655997;--ppa-color-scheme-active:#504778}:root{--ppa-color-scheme:#655997;--ppa-color-scheme-active:#504778}</style>
+<script async data-noptimize src="https://www.approximatelycorrect.com/wp-content/plugins/social-pug/assets/dist/front-end-free.1.18.2.js?ver=1.18.2" id="dpsp-frontend-js-pro-js"></script>
+<script src="https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js?ver=20170530" id="twentysixteen-skip-link-focus-fix-js"></script>
+<script src="https://www.approximatelycorrect.com/wp-includes/js/comment-reply.min.js?ver=6.4.7" id="comment-reply-js" async data-wp-strategy="async"></script>
+<script id="twentysixteen-script-js-extra">var screenReaderText={"expand":"expand child menu","collapse":"collapse child menu"};</script>
+<script src="https://www.approximatelycorrect.com/wp-content/themes/twentysixteen/js/functions.js?ver=20181217" id="twentysixteen-script-js"></script>
+<script async="async" src="https://www.approximatelycorrect.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.9" id="akismet-form-js"></script>
+<script src='https://stats.wp.com/e-202549.js' defer></script>
+<script>_stq=window._stq||[];_stq.push(['view',{v:'ext',j:'1:9.8.3',blog:'225001439',post:'41',tz:'0',srv:'www.approximatelycorrect.com'}]);_stq.push(['clickTrackerInit','225001439','41']);</script>
+</body>
+</html>

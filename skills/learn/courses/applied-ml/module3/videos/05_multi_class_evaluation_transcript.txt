@@ -1,0 +1,139 @@
+Now that we've looked at evaluation of
+binary classifiers, let's take a look at how
+the more general case of multi-class classification
+is handled in evaluation. In many respects,
+multi-class evaluation is a straightforward extension of the methods we use in
+binary evaluation. Instead of two classes, we have multiple classes, so the results for multi-class
+evaluation amount to a collection of true
+versus predicted binary outcomes per class. Just as we saw in
+the binary case, you can generate
+confusion matrices in the multi-class case, they're especially
+useful when you have multiple classes
+because there are many different errors that result from one true class being predicted as
+a different class. We'll look an example of that. Classification reports
+that we saw in the binary case are easy to generate for
+the multi-class case. Now the one area which is worth a little more examination is how averaging across
+classes takes place. There are different
+ways to average multi-class results that
+we'll cover shortly. The support, the number
+of instances for each class is
+important to consider, so just as we were
+interested in how to handle imbalanced classes
+in the binary case, it's important, as we'll see, to consider similar issue of how the support
+for classes might vary to a large or small extent
+across multiple classes. There is a case of
+multi-label classification in which each instance could
+have multiple labels. For example, a web page
+might be labeled with different topics that come from a predefined set of
+areas of interests. We won't cover multi-label classification
+in this lecture. Instead, we'll focus exclusively on multi-class evaluation. The multi-class
+confusion matrix is a straightforward extension of the binary classifier 2
+by 2 confusion matrix. For example, in our
+digits data-set, there are ten classes for the
+digits zero through nine. The ten class confusion matrix
+is a 10 by 10 matrix with the true digit class indexed by row and the predicted digit
+class indexed by column. As with the 2 by 2 case, the correct predictions
+by the classifier, where the true class matches
+the predicted class, are all along the diagonal and misclassifications
+are off the diagonal. In this example, which was created using the
+following notebook code. Based on a support vector
+classifier with linear kernel, we can see that most of the
+predictions are correct with only a few misclassifications
+here and there. The most frequent type of
+mistake here was apparently misclassifying the true digit
+8 as a predicted digit 1, which happened three times. Indeed the overall
+accuracy is high, about 97%, as shown here. As an aside, it's sometimes useful to display a
+confusion matrix as a heat map in order to highlight the relative frequencies of
+different types of errors. I've included the code
+to generate that here. For comparison, I've also included a second
+confusion matrix on the same data-set for another support vector
+classifier that does much worse in
+a distinctive way. The only change is to use an RBF radial basis
+function kernel instead of a linear kernel. While we can see from
+the accuracy number of about 49% below the confusion matrix
+that the classifier is doing much worse than
+with a linear kernel, that single number, doesn't
+give much insight into why. Looking at the confusion
+matrix, however, reveals that for every
+true digit class, a significant fraction of outcomes are to
+predict the digit 4. That's rather
+surprising. For example, of the forty-four instances of the true digit 2 in row 2, 17 are classified correctly, but 27 are classified
+as the digit 4. Clearly something is
+broken with this model. I picked the second
+example just to show an extreme example of what you might see when things
+go quite wrong. This digits data set is well-established and
+free of problems, but especially when developing
+with a new data set. Seeing patterns like this in a confusion matrix
+could give you valuable clues about
+possible problems, say, in the feature
+pre-processing, for example. As a general rule of thumb
+as part of model evaluation, I suggest always looking at
+the confusion matrix for your classifier to
+get some insight into what errors that is
+making for each class. Including whether some
+classes are much more prone to certain
+errors than others. Next, just as in
+the binary case, you can get a
+classification report that summarizes multiple
+evaluation metrics for a multi-class classifier with an average metric
+computed for each class. Now what I'm about
+to describe also applies to the
+binary class case, but it's easier to
+see we're looking at a multi-class
+classification problem with several classes. Let's look at a specific
+example of micro versus macro averaging
+using our fruit dataset. With macro averaging,
+we're treating each class as if it has equal weight in the
+overall calculation. What we need to do is we
+first compute a metric. In this case we're
+going to compute precision within each
+class separately. Then once we've done
+that for each class, then we'll average
+the results across all the classes to get the final macro average
+precision number. For each of the classes, we look at all the cases
+where the classifier predicted that a
+particular piece of fruit was going
+to be an orange. But then we look at the
+true class to see how many times that it was
+actually an orange. In this case, the
+classifier predicted orange correctly one
+time out of five. The rest of the time
+it seemed to be very confused and predict
+lemons and apples. The precision for the orange
+class was one fifth or 0.2. We can do the same thing
+for the lemon class. Every time the classifier
+predicted lemons, we can see that it
+got one example correct and one
+example incorrect, so it had a precision for the
+lemon class of 1/2 or 0.5. Similarly, for apples, it always predicted the
+correct, the true class. It got perfect precision or 1.0. These are the precision
+for each class. To compute the macro
+average precision, we then just average the precisions that we
+got for the classes. That turns out to be
+in this case 0.57. When we compute micro
+averages on the other hand, we give each instance in the dataset equal weight so that classes with
+the most instances, the largest ones have the most influence and the
+final macro average number. Here we're going to compute
+micro average precision. To do that, we don't need to consider each class
+separately anymore. We can simply aggregate
+all the outcomes across all the classes and compute precision across the
+aggregate outcomes. All that means is we just take all nine examples
+that we have here. We look to see how many the predicted class
+matches the true class. In this case, we have
+four correct predictions. Four correct predictions out
+of nine total instances. That gives us a micro
+average precision of 0.44. If the classes have about the
+same number of instances, macro and micro average
+will be about the same. If some classes are much larger, have more instances than others, and you want to weight
+your metric toward the largest ones use
+micro averaging. If you want to weight
+your metric towards the smallest classes,
+use macro averaging. If the micro average is much lower than the macro average, then examine the larger classes for poor metric performance. If the macro average is much lower than
+the micro average, then you should examine
+the smaller classes to see why they have
+poor metric performance. Here we use the
+average parameter on the scoring function. In the first example, we use
+the precision metric and specify whether we want
+micro average precision, which is the first case, or macro average precision
+in the second case. In the second example, we use the f1 metric and compute micro and macro averaged f1. Now that we've seen how
+to compute these metrics, let's take a look at how to use them to do model selection.

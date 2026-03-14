@@ -1,11 +1,14 @@
 ---
 name: data-prep
 description: >
-  Explore and clean datasets end-to-end: statistical profiling, distribution checks,
-  missing value analysis, duplicate detection, outlier removal, type fixing, and encoding.
+  Explore, clean, and engineer datasets end-to-end: statistical profiling, distribution checks,
+  missing value analysis, duplicate detection, outlier removal, type fixing, encoding,
+  create features, encode categories, transform columns, add rolling windows, build interaction
+  terms, and feature engineering.
   Supports pandas, polars, and PySpark. Use when the user wants to explore data, profile
   columns, understand a dataset, clean data, handle missing values, remove duplicates, fix
-  data types, or preprocess a dataset before modeling.
+  data types, preprocess a dataset before modeling, create features, encode categories,
+  transform columns, add rolling windows, build interaction terms, or do feature engineering.
 allowed-tools: Bash, Read, Write, Glob, Grep
 argument-hint: path to dataset (e.g. "data/train.csv")
 ---
@@ -20,6 +23,7 @@ Two-phase workflow for systematic data preparation. Always run EDA first — fin
 |--------|-------|
 | [eda.py](scripts/eda.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/eda.py data.csv --target price` |
 | [clean.py](scripts/clean.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv` |
+| [engineer_features.py](scripts/engineer_features.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv -o data/features.csv` |
 
 ---
 
@@ -192,6 +196,59 @@ cleaning_pipeline:
     required_columns: ['id', 'name']
 ```
 
+## Phase 3: Feature Engineering
+
+Transforms clean data into model-ready features. Run the script for automated engineering, or use the recipes below for custom transforms.
+
+### Decision guide
+
+| Data type | Transform |
+|-----------|-----------|
+| Skewed numeric | Log, sqrt |
+| High cardinality categorical | Target/frequency encoding |
+| Low cardinality categorical | One-hot |
+| Datetime | Year/month/day + cyclical |
+| Free text | Length, word count |
+| Multiple numeric | Interactions, ratios |
+| Time series | Rolling stats, lags, diffs |
+| Grouped data | Aggregations, deviation from mean |
+
+### Quick start
+
+```bash
+# Auto-engineer all columns
+python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv -o data/features.csv
+
+# Engineer specific columns with target encoding
+python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --cols age income category --target price -o features.csv
+
+# Generate interaction features
+python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --interactions -o features.csv
+
+# Time series features
+python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --cols revenue --types timeseries -o features.csv
+
+# Group aggregations
+python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --group segment revenue -o features.csv
+
+# Summary as JSON
+python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --json
+```
+
+Flags: `--cols` (specific columns), `--types` (numeric, categorical, datetime, text, timeseries), `--target` (target column for encoding), `--interactions`, `--group GROUP_COL AGG_COL`, `--json`, `-o OUTPUT`
+
+### Feature selection (after engineering)
+
+```python
+from sklearn.feature_selection import mutual_info_classif
+
+mi = mutual_info_classif(X.fillna(0), y, random_state=42)
+top = pd.Series(mi, index=X.columns).sort_values(ascending=False).head(20)
+print(top)
+```
+
+---
+
 ## Rules
 
 - Always keep original data — clean into a copy
@@ -199,3 +256,4 @@ cleaning_pipeline:
 - Remove duplicates BEFORE handling nulls
 - Test on a sample before full dataset
 - EDA findings drive cleaning decisions — don't clean blind
+- Feature engineering follows cleaning — engineer from clean data, never raw

@@ -1,0 +1,100 @@
+Precision-recall curves are very widely used evaluation
+method for machine learning. As we just saw in the example, the x-axis shows precision
+and the y-axis shows recall. Now, an ideal classifier
+would be able to achieve perfect precision of 1.0 and perfect recall of 1.0, so the optimal point would
+be up here in the top right. In general, with
+precision-recall curves, the closer in some
+sense the curve is to the top right corner, the more preferable it is, the more beneficial the trade-off it gives between
+precision and recall. We saw some examples already of how there is a trade-off between those two quantities
+between precision and recall with many classifiers. This example here is an actual precision-recall
+curve that we generated using the
+following notebook code. The red circle indicates the
+precision and recall that's achieved when the decision
+threshold is zero. I created this curve using exactly the same method as we
+saw in the previous example by looking at the
+decision function output from a support
+vector classifier, applying varying
+decision boundary, and looking at how the
+precision and recall changed as the decision
+boundary changed. Now, fortunately,
+Scikit-learn has a function that's built in that
+does all of that, that can compute precision
+and recall curve and that's what we've been
+using in the notebook here. You can see that in this
+particular application, there is a general downward
+trend so as the precision of the classifier goes up the
+recall tends to go down. In this particular case, you'll see also that it's not exactly a smooth curve there these jaggy areas
+here and in fact, the jumps tend to
+get little bigger as we approach maximum precision. This is a consequence of how the formulas for precision
+and recall are computed. They use discrete counts
+that include the number of true positives and so as the decision
+threshold increases, there are fewer and fewer
+points that remain as positive predictions so
+the fractions that are computed for these smaller
+numbers can change pretty dramatically with
+small changes and the decision
+threshold that's why these trailing edges of the precision-recall curve can appear a bit jagged
+when you plot them. ROC curves or receiver operating
+characteristic curves are very widely used
+visualization method that illustrate the performance
+of a binary classifier. ROC curves on the x-axis show a classifier is
+false positive rate, so that would go from 0-1.0. On the y-axis they show classifier's true positive rate so that would also
+go from 0-1.0. It's worth mentioning
+here that the y-axis of the ROC curve plot is
+just the recall metric. The ideal point in ROC
+space is one where the classifier achieve false
+positive rate of zero, and a true positive rate of one so that would be the
+upper-left corner. Curves in ROC space represent
+different trade-offs as the decision threshold is varied for the classifier so just as in the
+precision-recall case, as we vary decision threshold
+will get different numbers of false positives and true positives that we
+can plot on the chart. The dotted line here
+that I'm showing is the classifier curve that
+results the ROC curve that results from a classifier
+that simply randomly guesses the label
+for a binary class. It's like flipping a coin, so if you have two classes
+with equal numbers of positive and negative
+instances then flipping a coin will get you randomly
+equal numbers of false positives and true
+positives for large datasets. The dotted line here
+is used as a baseline. A bad classifier will have
+performance that is random or maybe even worse than random or maybe slightly
+better than random. A reasonably good classifier
+will give an ROC curve that is consistently
+better than random across all decision
+threshold choices. Then an excellent
+classifier would be one like I've shown here, which is way up into the left. This particular example
+is an example of a logistic regression
+classifier using the notebook example
+that you've seen. The shape of the curve
+can be important as well, the steepness of the curve we want classifiers that maximize the true positive rate while minimizing the false
+positive rate. Now as we'll see next, we can quantify the
+goodness of a classifier in some sense by looking at how much area there is
+underneath the curve. The area underneath the random
+classifier is going to be 0.5 but then the
+area as you can see the size of the bumpiness of the classifier as it
+approaches the top-left corner, the area underneath the
+curve will get larger and larger it will
+approach one and so, as we'll see in the next slide, we use something called
+area under the curve, AUC. That's a single
+number that measures this total area underneath the ROC curve as a way to summarize a classifier's
+performance. An AUC of zero represents
+a very bad classifier, and an AUC of one will represent
+an optimal classifier. Like any other
+evaluation metric, AUC has advantages
+and disadvantages. It's advantages
+include the fact that AUC gives a single number, which makes it easy to
+compare classifiers. Another advantage is
+that AUC does not require specifying a
+particular decision threshold. Instead, you can think
+of AUC as a summary of the performance of
+a classifier over all possible
+decision thresholds. On the other hand, like any
+other single number metric, AUC loses information about classifier trade-offs and
+the shape of the ROC curve. It might be that two
+classifiers have similar AUC but have overlapping ROC curves with different shapes
+and different areas. For example, it might
+be important to achieve very low false positive rates for a specific range of
+true positive rates. But using only AUC
+would not be able to necessarily detect those more subtle
+performance differences.

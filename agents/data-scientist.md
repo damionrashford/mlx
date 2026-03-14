@@ -13,7 +13,6 @@ memory: user
 skills:
   - research
   - data-prep
-  - engineer
   - train
   - evaluate
   - notebook

@@ -1,0 +1,275 @@
+Now that we've gotten a sense for what's in our data set as
+a simple example to get started. We're going to use this data set to train
+a classifier that will automatically identify any future pieces of fruit that
+might come our way based on the features available to the classifier,
+such as the objects, color, size and mass. To do this will use a popular and
+easy to understand type of machine learning algorithm known as
+K-nearest neighbors or K-NN. The K-nearest neighbors algorithm
+can be used for classification and regression though here will focus for the
+time being on using it for classification. K-NN classifiers are an example of
+what's called instance based or memory based supervised learning. What this means is that instance based
+learning methods work by memorizing the labeled examples they
+see in the training set and then they use those memorized examples
+to classify new objects, later. The K in K-NN refers to the number
+of nearest neighbors the classifier will retrieve and
+use in order to make its prediction. In particular the K-NN algorithm has
+three steps that can be specified. First of all when given a new previously
+unseen instance of something to classify. K-NN classifier will look into its
+set of memorized training examples to find the K examples that
+have the closest features. And we'll talk about what
+closest means in a minute. Second, the classifier will look up
+the class labels for those K-nearest neighbor examples and then once it's
+done that it will combine the labels of those examples to make a prediction for
+the label of the new object. Typically, for example,
+by using simple majority vote. Let's look at a visual example of a K-NN classifier that's based
+on our fruit dataset. So what I've done here is
+taken our training set and plotted each piece of fruit using two of
+its features, the width and the height. These two features together form
+what is called the feature space of the classifier. And I've shown each data points label
+using the colors shown in the legend. So as you can see there are 4 different
+colors here that correspond to the 4 types of fruit that are in our dataset. These broad areas of color show
+how any point given width and height could be classified according
+to a one nearest neighbor rule. So in other words, I've set K=1 here. So for example, a data point over here
+that had a height of 6 centimeters and a width of 9 centimeters would
+be classified as an apple. Because it falls within this red
+area here that the K-NN classifier has decided map to Objects that
+are apples based on the dimensions. Or for example, if I saw that
+the classifier saw a piece of fruit that had a height of 4 centimeter and
+a width of 7 centimeter. It would be classified as
+a mandarin orange because it falls within this decision area that's
+assigned to mandarin oranges. So what does it mean to have a one
+nearest neighbor rule, [COUGH] where did that come up with these different
+class assignments in the first place? Well, let's take a look at
+the apple example over here. The object that has a height of 6
+centimeter and a width of 9 centimeter. If you give the classifier that point,
+what it will do is search within all the different training
+examples that it's seen. So it will look at all these points and
+see which one is closest. So we're looking at
+the nearest single neighbor. So we're looking at K=1. We're trying to find the one
+point that's closest to our, what's called the query point. This is the point we want to classify. So in this case we can see probably
+that this point over here is the nearest neighbor of the query
+point in feature space. Similarly, if we look at
+the mandarin example over here, the closest training, set object to
+the quarry point is one of these. Probably maybe this point right here. Okay, so that's the nearest
+neighbor of that query point. So for
+any query point in the future space, let's say we're over here in
+the lemon zone, the nearest neighbor to this quarry point would be
+this training set point right here. And because the training set points
+are labeled, we have the labels for those in the one nearest neighbor case,
+the classifier will simply assign to the query point,
+the class of the nearest neighbor object. So because the nearest
+neighbor here is an apple, the quarry point here will
+get classified as an apple. And if we look at the mandarin
+orange point over here, the nearest data point
+is a mandarin orange. So it will get classified in that region. And if we do that for
+every possible query point, we get this pattern of class regions. The zones where we transition
+from one class to another. This line right here is called
+the decision boundary because query points that are on one side of the line
+get mapped to one class and points that are on the other side of
+the line get mapped to a different class. So, I want to note that in this example,
+we've been finding nearest neighbors using an ordinary Euclidean distance function
+that gives both features equal weight. We could instead use what's called a
+weighted Euclidean distance function that gives different features, different
+weights in the distance calculation, which might improve the accuracy
+in some applications. Using a way to distance function can
+change the behavior of the classifier significantly. And here's an example of what I mean. So on the left, we have our
+standard setup, including distance with equal feature weights for
+both the height and the width features. On the right, I've changed the distance
+function to give the width feature, the y axis measurement 10 times
+the weight of the height feature. So I haven't changed the training data. You can see all the training points
+are still in the same positions. What we've changed is the distance
+definition between the points. A small change in the width
+feature now has a much larger effect on the classification
+decision than it did before. Because of that 10 times multiplier
+factor when the distance is computed and you can see that on the right. This results in decision boundaries and
+regions that are now quite skewed and sort of compressed in the Y
+direction compared to the original. The original including distance
+with equal feature weight. Whether or not this is the fact you want
+will depend on your specific application. Some of the facts I've mentioned about KNN
+using ordinary Euclidean distance may also change if you change to a weighted
+Euclidean distance measure. For example,
+using a weighted distance measure, the decision boundaries between
+classes can change significantly. They may no longer lie. Along equidistant lines perpendicular
+to the line joining training points of different classes, so
+I'll show you what I mean. In the original Euclidean distance with
+equal weights on the features when we had decision boundaries between
+the points of different classes, we could draw a line
+through these two points. And then the decision
+boundary would be equidistant perpendicular to the line
+joining these two points. So you can see that happens here,
+and here in these examples. But once we switched to
+a weighted Euclidean distance, you can see that the decision
+boundary here is no longer no longer perpendicular to the line bisecting
+these two points of different classes. It's now sort of skewed. So this is one example of how
+certain facts might change with weighted Euclidean distance. On a related note, K and
+N can be sensitive to features that have values on very different scales. If that's the case with your data, you should consider normalizing
+the training data before fitting the classifier to ensure that all
+features are on the same scale. We'll cover how to do that to normalize
+your data in week two as part of the module on regression. So because this is a k-nearest
+neighbor classifier and we're looking at the case
+where k equals 1. Let's take an example over here, we
+have a point over here that's an orange, another point that's a lemon here. And we can see the decision boundary,
+because it's based on Euclidean distance. And we're waiting points equally that
+the decision boundary goes exactly at a distance equidistant
+to these two things, it's exactly halfway between
+these two points, right? Because if it were any
+closer to this point, it would be mapped to the orange class. And if we're any closer to the lemon, instance over here will be
+mapped to the lemon class. So you can see this pattern for
+all the decision boundaries here. This line is equidistant to
+these two nearest points. So this is basically how the k-nearest
+neighbor classifies new instances. So you can imagine with quarry
+points where k is larger than 1, we might use a slightly more
+complicated decision rule. Let's take this example over here. Suppose you have a quarry
+point that's an orange and we're doing two nearest
+neighbor classification. So in that case, the two nearest
+points are these two points here. And in cases where k is bigger than 1,
+we use a simple majority vote. We take the class that's most predominant
+in the labels of the neighbor examples. So in this case, the labels happen to
+agree they're both oranges, and so this point in a two nearest neighbor situation
+would be classified as an orange. When you get points that
+are closer to say point over here, the two nearest neighbors,
+in that case might be these points here in which case you could choose randomly
+between them to break the tie. Typically, the value of k is odd so that we can simply k equals 3,
+it might look like this. And so you can see that the three nearest
+neighbors here are a red point and apple, blue point and orange, and
+another red point and apple. So the in the k equals 3 case, the vote would go towards
+labeling this as an apple. And that's basically all there is to
+the basic mechanism for k-NN classifiers. More generally,
+to use the nearest neighbor algorithm, we specify four things. First, we need to define what
+distance means in our feature space. So we know how to properly
+select the nearby neighbors. In the example that I just showed
+you with the fruit dataset, we use the simple straight line or Euclidean distance to measure
+the distance between points. Second, we must tell the algorithm how
+many of these nearest neighbors to use in making a prediction. This must be a number
+that is at least one. Third, we may want to give some
+neighbors more influence on the outcome. For example, we may decide that
+neighbors that are closer to the new instance that we're trying to classify
+should have more influence or more votes on the final label. Finally, once we have the labels
+of the k nearby points, we must specify how to combine them
+to produce a final prediction. Here's a specific example of some
+typical choices we might make for these four things. The most common distance metric and the one that psychic uses by default is
+the Euclidean or straight line distance. So technically, if you're interested,
+the Euclidean metric is actually a special case of a more general
+metric called the Minkowski metric. Where there's a parameter p that's set to
+2 that will give you the Euclidean metric. And you'll see this in the notebook
+when you look at the actual settings. They're done in terms of
+the Minkowski metric. We might choose to use the five nearest
+neighbors let's say for our choice of k. And we might specify that
+there's no special treatment for neighbors that are closer, so
+we have a uniform waiting. Also by default, psychic learner
+will apply for the fourth criterion, a simple majority vote. And it will predict the class with
+the most representatives among the nearest neighbors. We'll look at a number of alternative
+classifiers in next week's class on supervised learning methods. For now, let's take a look at the notebook
+to see how we apply a k-nearest neighbor classifier in Python
+to our example fruit dataset. As a reminder, you can use Shift tab
+to show the documentation pop up for the method as you're entering it to help
+remind you of the different parameter options and syntax. So recall that our task was to correctly
+classify new incoming objects, and our example case, pieces of fruit. So our newly trained classifier
+will take data instances input, and give us a predicted label as output. The first step in Python that we need to
+take is to load the necessary modules, as well as load the dataset
+into a Pandas DataFrame. After we've done that, we can dump out the
+first few rows using the head method to check the column names and get some
+examples of the first few instances. Now, what I'm doing next here in
+the notebook is defining a dictionary that takes a numeric fruit
+label as the input key and returns a value that's a string
+with the name of the fruit. And this dictionary just makes it
+easier to convert the output of a classifier prediction to something
+a person can more easily interpret, the name of the fruit in this case. So for this example,
+we'll define a variable capital X that holds the features
+of our data set without the label. And here, I'm going to use the mass,
+width, and height of the fruit as features. So this collection of features
+is called the feature space. We define a second variable lower case
+y to hold the corresponding labels for the instances in X. Now, we can pass X and Y to the train-test
+split function in psychic learning. Normally, the splitting into training and
+test sets is done randomly. But for this lecture, I want to make
+sure we all get the same results. So I set the random state parameter
+to a specific value, in this case, I happen to choose 0. The results of the train-test
+split function are put into the four variables you see on the left. And these are marked as X_ train,
+X_ test, Y_ train, and Y_ test. We going to be using this X and
+Y variable naming convention throughout the course to refer to data and
+labels. Once we have our train-test split,
+we then need to create an instance of the classifier object,
+in this case, a k-NN classifier. And then set the important parameter,
+in this case, the number of neighbors to a specific
+value to be used by the classifier. We then train the classifier by passing
+in the training set data in X_ train, and the labels in Y_ train,
+to the classifiers fit method. Now, the k-NN classifier that I'm
+using in this case is an example of a more general class called
+an estimator in psychic learning. So all estimators have a fit method
+that takes the training data and then changes the state of
+the classifier or estimator object to essentially enable prediction
+once the training is finished. In other words, it updates the state
+of the k-NN variable here. Which means that in the case of
+K-Nearest Neighbors, it will memorize the training set examples in some kind
+of internal storage for future use. And that's really all there is
+to training the k-NN classifier. And the first thing we can do with this
+newly trained classifier is to see how accurate it's likely to be on
+some new previously unseen instances. To do this, we can apply the classifier
+to all the instances in the test set that we've put aside since these
+test instances were not explicitly included in the classifier's training. One simple way to assess if
+the classifier is likely to be good at predicting the label of future
+previously unseen data instances is to compute the classifier's accuracy
+on the test set data items. Remember that the k-NN classifier
+did not see any of the fruits in the test set during the training phase. So to do this, we use the score method for
+the classifier object. So this will take the test set points
+as input and compute the accuracy. And now the accuracy is defined
+as the fraction of test set items whose true label was correctly
+predicted by the classifier. We can also use our new classifier to
+classify individual instances of fruit. In fact, this was our goal in the first
+place, was to be able to take individual instances of objects and
+assign them a label. So here for example,
+I'll enter the mass, width, and height for a hypothetical piece
+of fruit that is fairly small. And if we ask the classifier to predict
+the label using the predict method, we can see the output is that it
+predicts it's a mandarin orange. I can then pass a different example,
+which is maybe a larger, slightly elongated fruit that has a height that's
+greater than the width and a larger mass. In this case,
+using the predict method on this instance, results in a label that says the
+classifier thinks this object is a lemon. Now, let's use a utility function called
+plot_fruit_knn that's included in the shared utilities module
+that comes with this course. This will produce the colored plots I
+showed you earlier that have the decision boundaries. You can then try out
+different values of K for yourself to see what the effect
+is on the decision boundaries. The uniform parameter that I pass
+in here as the last parameter is the weighting method to be used. So here I'm passing in the string uniform, which means to treat all neighbors
+equally when combining their labels. If you like, you can try changing
+this to the word distance, if you want to try
+a distance-weighted method. You can also pass your own function,
+but we'll leave that for later. We can also see how our new classifier
+behaves for different values of K. So in this series of plots, we can see the different
+decision boundaries that are produced as K is
+varied from 1 to 5 to 10. We can see that when K has a small value
+like 1, the classifier is good at learning the classes for
+individual points in the training set. But with the decision boundary that's
+fragmented with considerable variation. This is because when K=1, the prediction
+is sensitive to noise, outliers, mislabeled data, and other sources of
+variation in individual data points. For larger values of K, the areas assigned
+to different classes are smoother and not as fragmented, and more robust
+to noise in the individual points. But possibly with some mistakes,
+more mistakes in individual points. This is an example of what's known
+as a bias variance tradeoff. And we'll look at that phenomenon and its implications in more
+depth in next week's class. Given the changes in the classifier's
+decision boundaries we observe when we change K, a natural question
+might be how the value of K, how the choice of K affects
+the accuracy of the classifier. We can plot the accuracy
+as a function of K very easily using this short snippet of code. We see that indeed, larger values
+of K do lead to worse accuracy for this particular data set and
+fixed single train-test split. Keep in mind though,
+these results are only for this particular training test split. To get a more reliable estimate of likely
+future accuracy, for a particular value of K, we would want to look at results
+over multiple possible train-test splits. We'll go into this issue of model
+selection next week as well. In general, the best choice of the value
+of K, that is, the one that leads to the highest accuracy,
+can vary greatly depending on the dataset. In general,
+with K- Nearest Neighbors using a larger K suppresses the effects
+of noisy individual labels, but results in classification
+boundaries that are less detailed. So we've taken several
+steps in this course. So far, we've looked at a data set,
+plotted some features. We then took the features and
+learned how to compute a train-test split. Used that to train a classifier, and used the resulting classifier to make
+some predictions for new objects. So congratulations,
+you've just created and run your first machine learning
+application in Python. In next week's class, we'll go into some
+supervised learning methods in more depth. And look beyond K- Nearest Neighbors
+to learn how and why to apply other types of classifiers
+to machine learning problems.

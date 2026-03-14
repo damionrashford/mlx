@@ -1,0 +1,182 @@
+In this video, I'm
+going to talk about what to do when you have categorical values for features or categorical
+values for labels. A lot of the
+introductory machine learning examples that
+you might have seen, assume that all the features
+are numeric and it's a very common situation
+though to have features that are a category of something or a mixture of categorical
+and numerical features. We're going to
+discuss in this video how to handle that
+particular situation. Let's take a specific
+example of what might be a categorical variable that you might see in a
+particular problem. Let's say we're
+looking at color. There's a color feature
+in your dataset and the color can be one of
+several possible values. It can be red, yellow, green, it can be 30 different values depending on your application. But in general, the idea
+is that it's a category. The category is part of a
+set of possible values, it's not a numerical value. Many predictors can't take categorical input
+like this directly. For example you can't take your color feature
+whether it's red, yellow, and green values and
+use it directly with linear regression or
+logistic regression or support vector machines. Some methods can take
+categorical variables directly like decision trees and
+decision tree-based predictors. But you may be faced with a situation where you
+have to figure out what you need to do to
+use categorical variables with prediction method that can't deal with them directly. By the way, some of
+these categories are encoded as numbers. Even though they're
+not numerical data, the categories might
+get mapped to numbers. Red might equal 1, yellow might equal
+2, for example. Even if a column in your dataset looks like
+it's a numerical feature, it may actually be
+a category feature encoded using numbers. Just be aware of that. One
+very widely used solution to deal with
+categorical variables is called one-hot encoding. What that does is it takes a single categorical
+value and turns it into a vector of binary values. The way the encoding
+works is you look at your categorical feature, and you make a list of all the possible values
+that it could take. In this example, I've pretended that there are only three possible
+color values, red, yellow, and green. To get the one-hot
+encoding of the value red, we simply go through all the possible
+categories and we store one in the column that represents red and zero for
+all the other categories. It's called a one-hot
+encoding because exactly one column is a one and that's the
+selected category. The rest of the
+columns are zero. Let's take another example. Let's say we want to encode the value green for this row, and that's the fourth row. You can see that in the
+one-hot encoding version of green, we have zero for red, zero for yellow, and
+a one for green. Very simple idea. It's very widely
+used in statistics. For example it's called a dummy encoding or one of k encoding, or an indicator variable. That's how you
+convert categorical values into a vector of 01 values that something like linear regression
+can actually handle now. Transforming
+categorical values into one-hot encodings
+is really easy in Python whether you use
+pandas or scikit-learn. In pandas, we have this
+function called get_dummies. Again, it's named that because one-hot encodings are called dummy variables in statistics. Get_dummies can convert
+these categorical variables to dummy indicator variables. You can see in this
+example we created a list of values abca. When we ask pandas to create the one-hot encoding
+for each of these. What it does first is
+it goes through and makes list of all
+the possible values, so a, b, and c. Then for
+each of the entries, it will go through
+and mark the entry a. It'll make a equal one and then set the rest
+to zero and so forth. Super easy to do in Pandas. In sklearn, It's also
+very easy now there are two cases in sklearn
+to think about. One of them is if your categorical
+variable is a feature. In other words,
+it's the X matrix. In that case, you would use
+sklearn pre-processing, one-hot encoder to create the one-hot encoding vectors for each row for that feature, you do that using
+the fit method, which will go through and
+look to find what are all the unique values
+in that feature column. Then once the one-hot
+encoder has been fit and has found all the
+possible unique values in that feature column then you
+call transform to actually create the one-hot
+encoding vectors for that feature column. Those one-hot encoding vectors, by the way, by
+default, are sparse. This method uses a sparse
+matrix by default. You can change that if you want. You can set sparse
+equal to false. But by default it's a
+sparse implementation. The second case in Scikit-learn is where the thing that you're predicting the label is
+a categorical variable. It might be that you want to
+convert a multi-class label, like suppose you're trying
+to predict a color. You might want to
+predict binary labels. Convert that multiclass problem into a series of
+binary problems. To do that, you use label binariser as the class
+that you apply that to. It's similar to
+one-hot encoder in the way that you
+fit and transform. Actually just a detail you
+should be aware of is that by default that it
+actually produces a dense matrix in the current
+implementation of sklearn. You can also of course
+turn that off and select sparse output if you need a
+sparse set of binary labels. But those are the two cases in Scikit-learn
+where you want to use one-hot encoding either
+as a feature or as a label. Here's a coding example
+that shows how fit and transform are used with the
+one-hot encoder object. As usual, in scikit-learn, the first step is to
+create the object. In this case, I'm
+also passing it the handle unknown option. I'll talk about what
+that does in a minute. But right now let's
+assume that we have some initial data which consists of three
+rows and two columns. The first column is, they're male or female
+and the second column is an integer 1, 3, or 2. When we call the fit method scikit-learn one-hot
+encoder object will analyze that and it will find the unique values
+in the first column and the unique values
+in the second column. The unique values in
+the first column would be female or male, and the unique values in the second column
+would be 1,2 or 3. We can see that when we look at the categories under
+score variable that is set as a result of
+calling the fit method, we ask it, What
+categories did you find in our data
+that we use for fit? Scikit-learn returns that.
+In the first column, it found female and
+male as the categories. The second column it
+found unique values, 1,2, and 3. Now with this knowledge about the unique values
+in each category, we can do a transform. We can ask scikit-learn to create a one-hot encoding
+vector for the first column, followed by the one-hot encoding vector for
+the second column. If you have two successive
+columns that are categorical values and you ask scikit-learn to
+do the transform. It will transform
+the first value into a one-hot encoding and then concatenate the one-hot encoding vector for the second value. Let's ask it to transform a new little table
+which has female and the Number 1 in the
+first row and male and Number 4 in the second row. Let's look at what
+the output is. First, it'll create the
+one-hot encoding for female. You'll notice that
+the categories that it found originally
+were female and male. There only two
+possible columns in the one-hot encoding the female column and the male column. You'll see that because we have the categorical
+value female, it correctly sets
+the female column to one and the male
+column to zero. You can see for
+the second row in this dataset that male got mapped to the one-hot
+encoding vector of 0, 1. It's setting the
+male category to one in the second column. You can see what it did for the one-hot encoding of
+the numerical column. It's treating the numerical
+column here as if it were a set of numbered classes. When the second
+column's value is one, that gets converted to a one-hot encoding
+corresponding to this array. It should create a one-hot
+encoded vector of 1, 0, 0. You can see indeed it does. But the second example
+is an interesting one. It's asking it to create
+a one-hot encoding vector for a class or an integer
+representing a class. It's never seen before. You can see that there's no four in the set of unique values that it
+found for those numbers. This is where the handle
+unknown setting comes in. If you set handle
+unknown to ignore, what it will do is when it sees the value four
+and it tries to create a one-hot encoding for a value that it never saw
+during the fit method, it will put a zero
+in that entry. What it did here is it
+converted the number four to a one-hot encoding vector that actually didn't have a one, so was all zeros. That's what happens if you
+see a class in your test set, for example, that was never
+seen during training. Using the handle unknown
+option of ignore, it will create the one-hot encoded vector that's all zeros. The other option for the
+handle unknown setting, you could also specify
+handle unknown equals error. If you do that, then instead
+of silently creating an all zeros vector for
+an unknown class value, an unknown category value. It will actually create
+an error in the code, throw an error in the
+code, and halt the code. But that's the basic
+operation of one-hot encoder. Finally, here's some rules to make sure that you apply this one-hot encoding step properly. First, like many other types of transformations
+in scikit-learn, you always split the
+training and test sets first before fitting the
+one-hot encoder object. You fit the one-hot
+encoder object using the training data, you don't pass in the entire dataset,
+including the test set. You must only do it
+after you split so that the one-hot encoder doesn't get any knowledge of what
+is in the test set. Then once you've fit the one-hot encoder
+using the training data, you can use the transform
+function to apply the same one-hot
+encoder you just fit to both the training
+data and the test data. You need to make sure
+you use the same one-hot encoder for
+training and test and you need to make sure that you've only trained at
+using the training data. That makes sure that
+dummy variables match across the training
+and test data and that all categories
+are represented. A question that comes up is what happens if the test set has extra categories we didn't
+see during training? This corresponds to the case I just showed you
+of where we are asked to create a one-hot
+encoder for the Number 4. When the data that
+was used to fit the one-hot encoder
+only had values 1-3. You have two options
+in that case. One of them is you can create
+a special other category to map any extra categories
+in the test set to other or you can
+ignore them and allow an all-zero one-hot vector
+for that particular category, for that item in the test set.

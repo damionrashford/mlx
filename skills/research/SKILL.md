@@ -3,8 +3,10 @@ name: research
 description: >
   Search, fetch, download, and extract ML/AI research papers from 7 free academic sources.
   Find and download ML datasets from 5 free sources (HuggingFace, OpenML, UCI, Papers with Code, Kaggle).
+  Review a paper, critique methodology, assess reproducibility, evaluate experimental design, paper review, peer review.
   Use when the user wants to find papers, look up research,
-  search arxiv, get citations, download a PDF, extract text from a paper, or find/download datasets.
+  search arxiv, get citations, download a PDF, extract text from a paper, find/download datasets,
+  or review/critique a research paper.
 allowed-tools: Bash, Read, Write, WebFetch, Glob, Grep
 argument-hint: search query or paper ID (e.g. "transformer attention" or "2401.12345")
 ---
@@ -128,3 +130,98 @@ arXiv: 3s, Semantic Scholar: 4s, Papers with Code: 3s, JMLR: 3s per volume, Open
 ## Reference
 
 - [references/sources.md](references/sources.md) — API details, endpoints, rate limits for all sources
+
+## Paper Review
+
+Structured framework for reviewing ML/AI research papers. Produces fair, constructive, conference-quality reviews.
+
+### Obtain the paper
+
+Use the research scripts to get the paper content:
+
+```bash
+# Download by arXiv ID
+python3 ${CLAUDE_SKILL_DIR}/scripts/download.py 2401.12345 --output ./papers
+
+# Extract text from PDF
+python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py ./papers/2401.12345.pdf --max-pages 30
+
+# Fetch metadata
+python3 ${CLAUDE_SKILL_DIR}/scripts/fetch.py 2401.12345
+```
+
+If the user provides only a topic, search first, then review the selected paper.
+
+### Review template
+
+#### Summary
+2-3 sentences: What is the paper about? What is the key contribution?
+
+#### Strengths
+Evaluate each dimension:
+- **Novelty**: Is the approach new? Does it advance the field?
+- **Experiments**: Well-designed? Sufficient baselines?
+- **Clarity**: Well-written? Easy to follow?
+- **Significance**: Would this matter if results hold?
+
+#### Weaknesses
+Identify specific issues:
+- Missing baselines or comparisons
+- Claims not supported by evidence
+- Methodology gaps or questionable choices
+- Limited evaluation scope
+- Scalability concerns
+
+### Methodology assessment
+
+| Dimension | Assessment | Notes |
+|-----------|-----------|-------|
+| Splits | proper / questionable / missing | Train/val/test separation |
+| Baselines | fair / unfair / missing | SOTA included? |
+| Metrics | appropriate / limited / wrong | Multiple metrics? |
+| Significance | reported / missing | Error bars, CIs, p-values |
+| Ablations | thorough / partial / none | Component contributions |
+
+### Reproducibility checklist
+
+- [ ] Code available (or promised)?
+- [ ] Dataset available or described sufficiently?
+- [ ] Hyperparameters fully specified?
+- [ ] Compute requirements stated (GPU type, hours)?
+- [ ] Random seeds reported?
+- [ ] Training details sufficient to reproduce?
+- [ ] Preprocessing steps documented?
+
+### Questions for authors
+3-5 specific questions that would strengthen the paper or clarify ambiguities.
+
+### Overall assessment
+
+| | Rating |
+|---|---|
+| **Recommendation** | Accept / Weak Accept / Borderline / Weak Reject / Reject |
+| **Confidence** | High / Medium / Low |
+| **Impact** | What would this enable if results hold? |
+
+### Review ethics
+
+- Be constructive — suggest improvements, don't just criticize
+- Separate factual issues from opinions
+- Acknowledge uncertainty in your assessment
+- Evaluate what was claimed, not what wasn't attempted
+- Consider the target venue and its standards
+- Give credit where due — acknowledge genuine contributions
+
+### Comparative review (multiple papers)
+
+When reviewing multiple papers on the same topic:
+
+| Dimension | Paper A | Paper B | Paper C |
+|-----------|---------|---------|---------|
+| Method | | | |
+| Dataset | | | |
+| Best metric | | | |
+| Reproducibility | | | |
+| Novelty | | | |
+
+Rank by overall contribution, noting complementary strengths.

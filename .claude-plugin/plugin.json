@@ -1,7 +1,7 @@
 {
   "name": "mlx",
   "version": "1.0.0",
-  "description": "ML Workbench for Claude Code. A unified system covering the full ML lifecycle: search papers across 7 academic sources, discover and download datasets from 5 free repositories, explore data, clean and prepare datasets, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models with containers and CI/CD, generate podcasts and content from papers, and manage notebooks. 6 specialized agents, 15 skills.",
+  "description": "ML Workbench for Claude Code. A unified system covering the full ML lifecycle: search papers across 7 academic sources, discover and download datasets from 5 free repositories, explore data, clean and prepare datasets, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models with containers and CI/CD, generate podcasts and content from papers, manage notebooks, extract YouTube video content, and learn ML interactively with 3 university-grade courses (CS229, Applied ML, ML Engineering). 7 specialized agents, 13 skills.",
   "author": {
     "name": "Damion Rashford",
     "url": "https://github.com/damionrashford"
@@ -80,6 +80,20 @@
     "quiz-generation",
     "slide-deck",
     "infographic",
-    "content-generation"
+    "content-generation",
+    "youtube",
+    "transcript",
+    "video-extraction",
+    "yt-dlp",
+    "tutor",
+    "education",
+    "curriculum",
+    "cs229",
+    "stanford",
+    "applied-ml",
+    "learning-path",
+    "interview-prep",
+    "decision-frameworks",
+    "ml-tutor"
   ]
 }
