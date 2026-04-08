@@ -1,0 +1,19 @@
+{
+  "name": "mlx",
+  "owner": {
+    "name": "Damion Rashford",
+    "url": "https://github.com/damionrashford"
+  },
+  "plugins": [
+    {
+      "name": "mlx",
+      "source": "./",
+      "version": "1.0.0",
+      "description": "Full-lifecycle ML workbench \u2014 research papers, datasets, data prep, train, evaluate, deploy. 7 agents, 13 skills.",
+      "author": {
+        "name": "Damion Rashford",
+        "url": "https://github.com/damionrashford"
+      }
+    }
+  ]
+}
