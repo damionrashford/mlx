@@ -8,6 +8,7 @@ description: >
   or check their learning progress and next steps.
 tools: Bash, Read, Write, Glob, Grep
 model: sonnet
+effort: low
 maxTurns: 30
 permissionMode: default
 memory: user

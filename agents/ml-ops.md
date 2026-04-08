@@ -8,6 +8,7 @@ description: >
   reproducibility.
 tools: Bash, Read, Write, Edit, Glob, Grep
 model: opus
+effort: medium
 maxTurns: 35
 permissionMode: acceptEdits
 memory: user
@@ -15,6 +16,8 @@ skills:
   - train
   - serve
   - notebook
+  - compress
+  - drift-detect
 hooks:
   Stop:
     - hooks:

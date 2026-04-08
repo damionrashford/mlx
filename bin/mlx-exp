@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# mlx-exp — results.tsv CLI utility
+# Usage: mlx-exp best | list | compare <id1> <id2> | status
+
+set -euo pipefail
+
+TSV="${PWD}/results.tsv"
+CMD="${1:-help}"
+
+usage() {
+  echo "Usage: mlx-exp <command>"
+  echo "  best              — highest val_score KEEP row"
+  echo "  list              — aligned table of all experiments"
+  echo "  compare <id1> <id2> — side-by-side comparison"
+  echo "  status            — KEEP/DISCARD/CRASH counts"
+  exit 1
+}
+
+check_tsv() {
+  if [ ! -f "$TSV" ]; then
+    echo "No results.tsv found in ${PWD}" >&2
+    exit 1
+  fi
+}
+
+case "$CMD" in
+  best)
+    check_tsv
+    awk -F'\t' '
+      NR==1 { next }
+      $6=="KEEP" {
+        if ($3 > best_val) { best_val=$3; best_line=$0 }
+      }
+      END {
+        if (best_line) print best_line
+        else print "No KEEP experiments found"
+      }
+    ' "$TSV" | awk -F'\t' '{
+      printf "id=%-12s metric=%-12s val=%-10s test=%-10s mem=%-8s %s\n", $1,$2,$3,$4,$5,$7
+    }'
+    ;;
+
+  list)
+    check_tsv
+    printf "%-12s %-12s %-10s %-10s %-8s %-8s %s\n" \
+      "ID" "METRIC" "VAL" "TEST" "MEM_MB" "STATUS" "DESCRIPTION"
+    printf "%s\n" "$(printf '%.0s-' {1..80})"
+    awk -F'\t' 'NR>1 {
+      printf "%-12s %-12s %-10s %-10s %-8s %-8s %s\n", $1,$2,$3,$4,$5,$6,$7
+    }' "$TSV"
+    ;;
+
+  compare)
+    check_tsv
+    if [ $# -lt 3 ]; then
+      echo "Usage: mlx-exp compare <id1> <id2>" >&2
+      exit 1
+    fi
+    ID1="$2"
+    ID2="$3"
+    ROW1=$(awk -F'\t' -v id="$ID1" '$1==id' "$TSV")
+    ROW2=$(awk -F'\t' -v id="$ID2" '$1==id' "$TSV")
+    if [ -z "$ROW1" ]; then echo "Experiment '$ID1' not found" >&2; exit 1; fi
+    if [ -z "$ROW2" ]; then echo "Experiment '$ID2' not found" >&2; exit 1; fi
+
+    COLS=(id metric val_score test_score memory_mb status description)
+    printf "%-15s %-20s %-20s\n" "FIELD" "$ID1" "$ID2"
+    printf "%s\n" "$(printf '%.0s-' {1..60})"
+    for i in "${!COLS[@]}"; do
+      COL="${COLS[$i]}"
+      V1=$(echo "$ROW1" | awk -F'\t' -v n="$((i+1))" '{print $n}')
+      V2=$(echo "$ROW2" | awk -F'\t' -v n="$((i+1))" '{print $n}')
+      printf "%-15s %-20s %-20s\n" "$COL" "$V1" "$V2"
+    done
+    ;;
+
+  status)
+    check_tsv
+    awk -F'\t' '
+      NR==1 { next }
+      { total++ }
+      $6=="KEEP"    { keep++ }
+      $6=="DISCARD" { discard++ }
+      $6=="CRASH"   { crash++ }
+      END {
+        printf "Total: %d | KEEP: %d | DISCARD: %d | CRASH: %d\n",
+          total+0, keep+0, discard+0, crash+0
+      }
+    ' "$TSV"
+    ;;
+
+  help|--help|-h|*)
+    usage
+    ;;
+esac

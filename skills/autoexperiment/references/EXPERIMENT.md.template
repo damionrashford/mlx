@@ -1,0 +1,19 @@
+# Experiment Intent
+
+## Current goal
+<what you are trying to improve>
+
+## Baseline
+exp000: val_score=X.XXXX, description=<baseline>
+
+## Hypothesis
+<what you think will help and why>
+
+## Constraints
+- Time budget per run: 300 seconds
+- Metric to optimize: <accuracy|f1|rmse|val_bpb>
+- Do NOT change: <list frozen components>
+
+## Next to try
+1. <first idea>
+2. <second idea>

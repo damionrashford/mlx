@@ -7,6 +7,8 @@ description: >
   ablation studies.
 tools: Bash, Read, Write, Edit, Glob, Grep, NotebookEdit
 model: opus
+effort: high
+isolation: "worktree"
 maxTurns: 40
 permissionMode: acceptEdits
 memory: user
@@ -15,6 +17,7 @@ skills:
   - train
   - evaluate
   - notebook
+  - autoexperiment
 hooks:
   PreCompact:
     - hooks:
@@ -87,6 +90,14 @@ Stop iterating when ANY is true:
 - Validation score within 0.1% of last 3 KEEP results
 - Each improvement < 0.05% over the last 5 experiments
 - Time or compute budget exhausted
+
+## Circuit breaker
+
+If the same experiment crashes 3 times consecutively with the same error:
+1. Stop the experiment loop immediately
+2. Report the error to the user with a diagnosis
+3. Include: error message, stack trace excerpt, likely cause, and suggested fix
+4. Do NOT continue retrying — escalate and wait for user guidance
 
 ## Memory
 

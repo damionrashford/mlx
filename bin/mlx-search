@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# mlx-search — Quick paper search via the research skill
+# Usage: mlx-search "query" [--source arxiv|semantic|pwc]
+
+set -euo pipefail
+
+if [ $# -lt 1 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+  echo "Usage: mlx-search \"query\" [--source arxiv|semantic|pwc]"
+  echo "Sources: arxiv, semantic, pwc (papers with code), biorxiv, medrxiv, ssrn"
+  exit 1
+fi
+
+QUERY="$1"
+shift
+
+SOURCE="arxiv"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --source) SOURCE="$2"; shift 2 ;;
+    *) break ;;
+  esac
+done
+
+# Locate research skill search.py
+SEARCH_SCRIPT=""
+
+if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+  SEARCH_SCRIPT="${CLAUDE_PLUGIN_ROOT}/skills/research/scripts/search.py"
+fi
+
+# Fallback: search relative to this script's location
+if [ -z "$SEARCH_SCRIPT" ] || [ ! -f "$SEARCH_SCRIPT" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  SEARCH_SCRIPT="${SCRIPT_DIR}/../skills/research/scripts/search.py"
+fi
+
+if [ ! -f "$SEARCH_SCRIPT" ]; then
+  echo "Error: research skill search.py not found" >&2
+  echo "Expected: \${CLAUDE_PLUGIN_ROOT}/skills/research/scripts/search.py" >&2
+  exit 1
+fi
+
+exec python3 "$SEARCH_SCRIPT" "$QUERY" --source "$SOURCE"

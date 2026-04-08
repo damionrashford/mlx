@@ -1,6 +1,6 @@
 {
   "name": "mlx",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ML Workbench for Claude Code. A unified system covering the full ML lifecycle: search papers across 7 academic sources, discover and download datasets from 5 free repositories, explore data, clean and prepare datasets, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models with containers and CI/CD, generate podcasts and content from papers, manage notebooks, extract YouTube video content, and learn ML interactively with 3 university-grade courses (CS229, Applied ML, ML Engineering). 7 specialized agents, 13 skills.",
   "author": {
     "name": "Damion Rashford",
@@ -9,6 +9,28 @@
   "homepage": "https://github.com/damionrashford/mlx",
   "repository": "https://github.com/damionrashford/mlx",
   "license": "MIT",
+  "userConfig": {
+    "hf_token": {
+      "description": "HuggingFace API token (optional, enables private model/dataset access)",
+      "sensitive": true
+    },
+    "wandb_key": {
+      "description": "Weights & Biases API key (optional, enables W&B experiment logging)",
+      "sensitive": true
+    },
+    "kaggle_username": {
+      "description": "Kaggle username (optional, enables Kaggle dataset downloads)",
+      "sensitive": false
+    },
+    "preferred_framework": {
+      "description": "Preferred ML framework: sklearn, pytorch, or tensorflow",
+      "sensitive": false
+    },
+    "experiment_dir": {
+      "description": "Directory for results.tsv experiment log (default: current project root)",
+      "sensitive": false
+    }
+  },
   "keywords": [
     "machine-learning",
     "data-science",

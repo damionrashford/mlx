@@ -8,6 +8,7 @@ description: >
   calculate KPIs, or build data reports for stakeholders.
 tools: Bash, Read, Write, Edit, Glob, Grep, NotebookEdit
 model: sonnet
+effort: medium
 maxTurns: 40
 permissionMode: acceptEdits
 memory: user

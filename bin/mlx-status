@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# mlx-status — ML project health check
+# Usage: mlx-status [directory]
+
+set -euo pipefail
+
+TARGET="${1:-${PWD}}"
+TSV="${TARGET}/results.tsv"
+
+echo "=== ML Project Status: ${TARGET} ==="
+echo ""
+
+# Data files
+DATA_DIR="${TARGET}/data"
+if [ -d "$DATA_DIR" ]; then
+  DATA_COUNT=$(find "$DATA_DIR" -maxdepth 2 -type f 2>/dev/null | wc -l | tr -d ' ')
+  DATA_SIZE=$(du -sh "$DATA_DIR" 2>/dev/null | awk '{print $1}' || echo "?")
+  echo "Data (data/): ${DATA_COUNT} files, ${DATA_SIZE}"
+else
+  # Check for CSV files in root
+  CSV_COUNT=$(ls "${TARGET}"/*.csv 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$CSV_COUNT" -gt 0 ]; then
+    echo "Data (root): ${CSV_COUNT} .csv file(s)"
+  else
+    echo "Data: none found"
+  fi
+fi
+
+# Model artifacts
+MODELS=$(ls "${TARGET}"/*.joblib "${TARGET}"/*.pt "${TARGET}"/*.xgb "${TARGET}"/*.onnx 2>/dev/null || true)
+if [ -n "$MODELS" ]; then
+  MODEL_COUNT=$(echo "$MODELS" | wc -l | tr -d ' ')
+  echo "Models: ${MODEL_COUNT} artifact(s)"
+  echo "$MODELS" | while read -r m; do
+    SIZE=$(du -sh "$m" 2>/dev/null | awk '{print $1}')
+    echo "  $(basename "$m") (${SIZE})"
+  done
+else
+  echo "Models: none found"
+fi
+
+# Experiments
+if [ -f "$TSV" ]; then
+  TOTAL=$(awk -F'\t' 'NR>1{c++} END{print c+0}' "$TSV")
+  KEEP=$(awk -F'\t' 'NR>1 && $6=="KEEP"{c++} END{print c+0}' "$TSV")
+  BEST=$(awk -F'\t' 'NR>1 && $6=="KEEP"{if($3>b) b=$3} END{print b+0}' "$TSV")
+  BEST_ID=$(awk -F'\t' 'NR>1 && $6=="KEEP"{if($3>b){b=$3; id=$1}} END{print id}' "$TSV")
+  echo "Experiments: ${TOTAL} total, ${KEEP} KEEP, best=${BEST_ID} val=${BEST}"
+else
+  echo "Experiments: no results.tsv"
+fi
+
+# Notebooks
+NOTEBOOKS=$(ls "${TARGET}"/*.ipynb 2>/dev/null || true)
+if [ -n "$NOTEBOOKS" ]; then
+  NB_COUNT=$(echo "$NOTEBOOKS" | wc -l | tr -d ' ')
+  echo "Notebooks: ${NB_COUNT} .ipynb file(s)"
+  echo "$NOTEBOOKS" | while read -r nb; do echo "  $(basename "$nb")"; done
+else
+  echo "Notebooks: none"
+fi
+
+# EXPERIMENT.md
+if [ -f "${TARGET}/EXPERIMENT.md" ]; then
+  echo "EXPERIMENT.md: present"
+fi

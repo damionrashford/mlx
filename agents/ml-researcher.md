@@ -9,6 +9,7 @@ description: >
   download datasets, generate a podcast from a paper, extract a YouTube transcript,
   or create audio/video summaries of research.
 tools: Bash, Read, Write, Glob, Grep
+disallowedTools: Write,Edit
 model: sonnet
 maxTurns: 30
 permissionMode: default

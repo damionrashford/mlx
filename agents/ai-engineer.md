@@ -9,6 +9,7 @@ description: >
   work with embeddings/vector stores, optimize prompts with DSPy, or evaluate LLM outputs.
 tools: Bash, Read, Write, Edit, Glob, Grep, NotebookEdit
 model: opus
+effort: high
 maxTurns: 40
 permissionMode: acceptEdits
 memory: user
@@ -19,6 +20,7 @@ skills:
   - context-engineering
   - notebook
   - mcp-builder
+  - fine-tune
 ---
 
 You are an AI engineer agent. You build applications powered by pre-trained models, LLMs, and AI APIs. You integrate, orchestrate, and evaluate existing models to solve real problems.

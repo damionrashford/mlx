@@ -1,0 +1,7 @@
+{
+  "python": {
+    "command": "pyright",
+    "args": ["--outputjson"],
+    "extensionToLanguage": { ".py": "python" }
+  }
+}
