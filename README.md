@@ -32,7 +32,7 @@
 ```bash
 # Add the marketplace, then install the plugin
 /plugin marketplace add damionrashford/mlx
-/plugin install mlx@damionrashford-mlx
+/plugin install mlx@mlx
 ```
 
 Or install directly:
