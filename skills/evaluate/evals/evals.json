@@ -1,0 +1,27 @@
+{
+  "skill_name": "evaluate",
+  "evals": [
+    {
+      "id": "evaluate-classification",
+      "prompt": "Evaluate a classification model's predictions on evals/files/predictions.csv. Compute accuracy, precision, recall, F1, and AUC-ROC. Generate a confusion matrix.",
+      "expected_output": "Evaluation report with accuracy, precision, recall, F1, AUC-ROC scores. Confusion matrix table. Identified class imbalance if present.",
+      "files": ["evals/files/predictions.csv"],
+      "assertions": [
+        "Output includes accuracy score",
+        "Output includes F1 score",
+        "Confusion matrix included"
+      ]
+    },
+    {
+      "id": "evaluate-regression",
+      "prompt": "Evaluate regression predictions in evals/files/regression_predictions.csv. Compute RMSE, MAE, R², and residual distribution.",
+      "expected_output": "Regression evaluation with RMSE, MAE, R², residual plot saved to figures/. Identified any systematic bias in predictions.",
+      "files": ["evals/files/regression_predictions.csv"],
+      "assertions": [
+        "Output includes RMSE",
+        "Output includes R²",
+        "Residual analysis included"
+      ]
+    }
+  ]
+}

@@ -10,32 +10,29 @@
   <a href="#quick-start">Quick Start</a> &middot;
   <a href="#skills">Skills</a> &middot;
   <a href="#agents">Agents</a> &middot;
-  <a href="#dataset-discovery">Datasets</a> &middot;
+  <a href="#experiment-tracking">Experiments</a> &middot;
   <a href="#architecture">Architecture</a> &middot;
   <a href="#contributing">Contributing</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
-  <img src="https://img.shields.io/badge/version-1.0.0-green.svg" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.1.6-green.svg" alt="Version">
   <img src="https://img.shields.io/badge/python-3.10+-3776AB.svg?logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-F97316.svg" alt="Claude Code Plugin">
-  <img src="https://img.shields.io/badge/API_keys-none_required-brightgreen.svg" alt="No API Keys">
 </p>
 
 ---
 
-**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — research papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models, run experiments, build AI applications with LLMs and RAG, deploy models to production, generate podcasts and content from papers, manage notebooks, extract YouTube video content, and learn ML interactively with 3 university-grade courses. 7 specialized agents, 13 skills.
+**MLX** is a Claude Code plugin that gives your agent the complete machine learning toolkit — search papers across 7 academic sources, discover and download datasets from 5 repositories, explore and clean data, engineer features, train models across the full supervised learning spectrum, run autonomous experiments, fine-tune LLMs, build AI applications with LLMs and RAG, deploy models to production, detect data drift, explain predictions with SHAP, generate podcasts from papers, manage and create Jupyter notebooks, extract YouTube content, and learn ML interactively with 3 university-grade courses. **11 agents, 16 skills, 3 CLI tools, 2 MCP servers, 3 output styles, Python LSP.**
 
 ## Quick Start
 
 ```bash
-# Add the marketplace, then install the plugin
-/plugin marketplace add damionrashford/mlx
 /plugin install mlx@mlx
 ```
 
-Or install directly:
+Or clone directly:
 
 ```bash
 git clone https://github.com/damionrashford/mlx.git
@@ -46,24 +43,21 @@ claude --plugin-dir ./mlx
 
 | Requirement | Install |
 |-------------|---------|
-| Python 3.10+ | `brew install python` or `apt install python3` |
-| pdftotext (optional, for PDF extraction) | `brew install poppler` or `apt install poppler-utils` |
-| notebooklm (optional, for podcast generation) | `pip install notebooklm` |
-| yt-dlp (optional, for YouTube extraction) | `pip install yt-dlp` |
-| youtube-transcript-api (optional, for transcripts) | `pip install youtube-transcript-api` |
+| uv | `curl -LsSf https://astral.sh/uv/install.sh \| sh` — manages Python + all skill script deps via PEP 723 |
+| pdftotext (optional, PDF extraction) | `brew install poppler` or `apt install poppler-utils` |
+| pyright (optional, Python LSP) | `pnpm add -g pyright` or `npm i -g pyright` |
 
-Most features require no API keys or accounts. The media skill's content generation requires a Google account with NotebookLM access.
+Python 3.10+ and all Python package dependencies (`yt-dlp`, `notebooklm`, scikit-learn, etc.) are installed automatically by `uv run` on first use — no manual `pip install` needed.
+
+The media skill's content generation requires a Google account with NotebookLM access.
 
 ### Recommended Permissions
-
-Plugin settings cannot auto-configure permissions. For the smoothest experience, add these to your user or project settings:
 
 ```json
 {
   "permissions": {
     "allow": [
-      "Bash(python3 *)",
-      "Bash(pip install *)",
+      "Bash(uv run *)",
       "Bash(which *)",
       "Read(*)",
       "Glob(*)"
@@ -74,76 +68,96 @@ Plugin settings cannot auto-configure permissions. For the smoothest experience,
 
 ## Skills
 
-MLX ships 13 skills that cover the full ML and data lifecycle. Each is invocable as a slash command or triggered automatically by natural language.
+MLX ships **16 skills** covering the full ML and data lifecycle. Each is invocable as `/mlx:<skill>` or triggered automatically by context.
 
 | Skill | Command | What it does |
-|-------|---------|-------------|
-| **research** | `/research transformer attention` | Search papers from 7 sources, find/download datasets from 5 sources, structured paper review |
-| **prototype** | `/prototype ./paper.pdf` | Convert a research paper into a working code project (Python, TS, Rust, Go) |
-| **data-prep** | `/data-prep data/train.csv` | EDA + cleaning + feature engineering: profiling, distributions, missing values, transforms, encodings |
-| **analyze** | `/analyze data/sales.csv` | Statistical tests, A/B testing, cohort analysis, segmentation, KPIs, pre-delivery QA/validation |
-| **visualize** | `/visualize data/metrics.csv` | Charts, dashboards, and reports with matplotlib, seaborn, or plotly |
-| **train** | `/train data/features.csv` | Train, evaluate, and iterate on models with experiment tracking |
-| **evaluate** | `/evaluate results.tsv` | Multi-dimensional model evaluation, LLM-as-judge, bias detection |
-| **notebook** | `/notebook analysis.ipynb` | Clean, organize, document, and convert Jupyter notebooks |
-| **serve** | `/serve model.joblib` | Deploy models: inference API, Docker, CI/CD, monitoring, model cards |
-| **context-engineering** | natural language | Context window management, memory systems, multi-agent patterns for LLM apps |
-| **media** | `/media paper.pdf` | YouTube extraction + NotebookLM content generation (podcasts, videos, quizzes, reports, slides) |
-| **mcp-builder** | natural language | Build MCP servers to connect LLMs with external services |
-| **learn** | `/learn transformers` | Interactive ML education with 3 courses (CS229, Applied ML, ML Engineering), 53+ lessons, quizzes, and interview prep |
+|-------|---------|--------------|
+| **research** | `/mlx:research transformer attention` | Search papers (7 sources), find/download datasets (5 sources), structured paper review, paper → code prototyping |
+| **data-prep** | `/mlx:data-prep data/train.csv` | EDA, cleaning, feature engineering: distributions, missing values, transforms, encodings |
+| **analyze** | `/mlx:analyze data/sales.csv` | Statistical tests, A/B testing, cohort analysis, RFM segmentation, KPIs, trend analysis, pre-delivery QA |
+| **train** | `/mlx:train data/features.csv` | Train and iterate: Naive Bayes, KNN, LDA/QDA, SVM, Decision Tree, GLM, Gaussian Process, Ensembles, Neural Nets |
+| **evaluate** | `/mlx:evaluate results.tsv` | Multi-dimensional model evaluation, LLM-as-judge, bias detection |
+| **autoexperiment** | `/mlx:autoexperiment train.py` | Autonomous time-budget experiment loop — modify, train, eval, record, repeat |
+| **fine-tune** | `/mlx:fine-tune mistral data/train.jsonl` | LLM fine-tuning: LoRA, QLoRA, unsloth, DPO, SFTTrainer, instruction tuning |
+| **explain** | `/mlx:explain model.joblib` | SHAP, LIME, integrated gradients, feature importance, ICE plots |
+| **drift-detect** | `/mlx:drift-detect` | PSI/KS drift detection, evidently, nannyml — production monitoring |
+| **serve** | `/mlx:serve model.joblib` | Deploy: inference API (FastAPI), Docker, CI/CD, monitoring, model cards, ONNX/quantization |
+| **notebook** | `/mlx:notebook analysis.ipynb` | Create, clean, organize, document, and convert Jupyter notebooks |
+| **media** | `/mlx:media paper.pdf` | YouTube extraction + NotebookLM: podcasts, videos, quizzes, reports, slide decks |
+| **context-engineering** | (auto) | Context window management, memory systems, multi-agent patterns |
+| **mcp-builder** | `/mlx:mcp-builder` | Build MCP servers to connect LLMs with external services |
+| **learn** | `/mlx:learn transformers` | Interactive ML education: CS229, Applied ML, ML Engineering (53+ lessons), quizzes, mock interviews |
+| **ml-docs** | (auto) | On-demand API docs for 19 ML libraries (NumPy, pandas, PyTorch, sklearn, HuggingFace, etc.) |
 
 ### Lifecycle Flow
 
 ```
-research → prototype → data-prep → train → evaluate → serve → notebook
-   │          │            │          │                    │
-   │  find    │  media     │  explore │  build & iterate   │  document
-   │  papers  │  & content │  & prep  │  on models         │  results
-   └──────────┴────────────┴──────────┴────────────────────┘
-   media ──── extract YouTube content + generate podcasts/videos
-   learn ──── study ML concepts interactively
+research → data-prep → train → autoexperiment → evaluate → serve
+   │            │         │           │               │        │
+   │  papers    │  clean  │  baseline │  autonomous   │  bias  │  deploy
+   │  datasets  │  feats  │  iterate  │  loop         │  check │  monitor
+   └────────────┴─────────┴───────────┴───────────────┴────────┘
+   fine-tune ─── LLM fine-tuning on custom data
+   explain ───── SHAP/LIME prediction explanations
+   drift-detect ─ production data drift monitoring
+   media ──────── YouTube + paper → podcast/video/quiz
+   learn ──────── study ML interactively
+   notebook ───── create and manage Jupyter notebooks
+```
 
-Agent coverage:
-  ml-researcher ── find papers, datasets, review, media, prototype
-  data-analyst ─── data-prep, analyze, visualize, report
-  data-scientist ─ full pipeline: data → trained model
-  ml-engineer ──── optimize: features, tuning, ablations
-  ai-engineer ──── LLM apps: RAG, prompts, agents, MCP servers
-  ml-ops ────────── deploy: serialize, serve, Docker, monitor
-  ml-tutor ──────── learn ML: courses, quizzes, interview prep
+## Agents
+
+MLX includes **11 specialized agents** that orchestrate skills for complex workflows.
+
+| Agent | Skills | When to Use |
+|-------|--------|-------------|
+| **ml-workbench** | all 16 | Main session agent — orchestrates all others, handles simple tasks directly |
+| **ml-researcher** | research, media | Find papers, discover datasets, review methodology, generate podcasts, extract YouTube content, prototype algorithms |
+| **data-analyst** | data-prep, analyze, evaluate, notebook, ml-docs | Answer business questions: statistics, A/B tests, dashboards, KPIs, segmentation, reports |
+| **data-scientist** | research, data-prep, train, evaluate, notebook, explain, ml-docs | Full ML pipeline: find data → explore → clean → engineer → model → evaluate |
+| **ml-engineer** | research, data-prep, train, evaluate, notebook, autoexperiment, ml-docs | Focused iteration: feature engineering, hyperparameter sweeps, ablations. Runs in git worktree. |
+| **dl-engineer** | research, train, evaluate, autoexperiment, serve, notebook, ml-docs | Neural network architecture design, training dynamics, GPU optimization. Runs in git worktree. |
+| **ai-engineer** | research, evaluate, context-engineering, notebook, mcp-builder, fine-tune, ml-docs | Build AI apps: LLM integration, RAG pipelines, prompt engineering, agent architectures |
+| **ml-ops** | train, serve, notebook, drift-detect, ml-docs | Deploy models: serialization, serving, Docker, CI/CD, monitoring, model cards |
+| **data-engineer** | data-prep, analyze, notebook, drift-detect, ml-docs | ETL/ELT pipelines, dbt, Spark/DuckDB, data quality, orchestration |
+| **ml-tutor** | learn, research, evaluate, notebook, ml-docs | Interactive ML education: study concepts, quiz prep, mock interviews, system design |
+| **ml-reviewer** | ml-docs | ML code review: data leakage detection, reproducibility audit, train/eval separation (read-only) |
+
+### Agent Routing
+
+```
+"Find papers about attention"              → ml-researcher
+"Turn this paper into a podcast"           → ml-researcher
+"What drove revenue growth last quarter?"  → data-analyst
+"Run an A/B test analysis"                 → data-analyst
+"I have a CSV, build me a model"           → data-scientist
+"Tune the hyperparameters on this model"   → ml-engineer
+"Train a transformer from scratch"         → dl-engineer
+"Build a RAG chatbot over my docs"         → ai-engineer
+"Fine-tune Mistral on my dataset"          → ai-engineer
+"Deploy this model with Docker"            → ml-ops
+"Build an ETL pipeline for this API"       → data-engineer
+"Teach me about transformers"              → ml-tutor
+"Review this training script for leakage"  → ml-reviewer
 ```
 
 ## Paper Research
 
-Search across 7 free academic sources — no API keys, no rate-limit hassle.
+Search across 7 academic sources.
 
-| Source | Search | Fetch | Download | Best for |
-|--------|--------|-------|----------|----------|
-| arXiv | yes | yes | yes | ML/AI preprints |
-| Semantic Scholar | yes | yes | — | Citations, open-access PDFs |
-| Papers with Code | yes | yes | — | Papers linked to GitHub repos |
-| Hugging Face | yes | via arXiv | — | Trending daily papers |
-| JMLR | yes | yes | yes | Peer-reviewed ML journal |
-| ACL Anthology | — | by ID | yes | NLP conference papers |
-| OpenScholar | — | — | — | Q&A synthesis over 45M papers |
-
-```bash
-# Search arXiv
-/research transformer attention mechanisms
-
-# Multi-source concurrent search
-python3 scripts/scientific_search.py "BERT NLP" --max 10
-
-# Download a paper
-python3 scripts/download.py 2401.12345 --output ./papers
-
-# Extract text from PDF
-python3 scripts/extract.py ./papers/2401.12345.pdf --max-pages 20
-```
+| Source | Search | Fetch | Best for |
+|--------|--------|-------|----------|
+| arXiv | yes | yes | ML/AI preprints |
+| Semantic Scholar | yes | yes | Citations, open-access PDFs |
+| Papers with Code | yes | yes | Papers linked to GitHub repos |
+| Hugging Face | yes | via arXiv | Trending daily papers |
+| JMLR | yes | yes | Peer-reviewed ML journal |
+| ACL Anthology | — | by ID | NLP conference papers |
+| OpenScholar | — | — | Q&A synthesis over 45M papers |
 
 ## Dataset Discovery
 
-Search, inspect, and download ML datasets from 5 free sources — all without API keys.
+Search, inspect, and download ML datasets from 5 sources.
 
 | Source | Search | Info | Download | Format | Best for |
 |--------|--------|------|----------|--------|----------|
@@ -153,251 +167,155 @@ Search, inspect, and download ML datasets from 5 free sources — all without AP
 | Papers with Code | yes | yes | links | — | Datasets linked to papers |
 | Kaggle | yes | — | CLI | — | Competition & community (200K+) |
 
-```bash
-# Search for datasets
-/research search sentiment analysis datasets
+## Experiment Tracking
 
-# Or use the datasets script directly
-python3 scripts/datasets.py search "image classification" --source huggingface --limit 5
-
-# Inspect a dataset (columns, splits, size)
-python3 scripts/datasets.py info imdb --source huggingface
-
-# Download dataset files
-python3 scripts/datasets.py download imdb --source huggingface --output ./datasets --split train
-
-# Download from OpenML (auto-converts ARFF to CSV)
-python3 scripts/datasets.py download 61 --source openml --output ./datasets
-```
-
-## Agents
-
-MLX includes 7 specialized agents that orchestrate skills for complex workflows.
-
-| Agent | Skills Used | When to Use |
-|-------|-------------|-------------|
-| **ml-researcher** | research, prototype, media | Find papers, discover datasets, review methodology, generate podcasts, extract YouTube content, prototype algorithms |
-| **data-analyst** | data-prep, analyze, visualize, evaluate, notebook | Answer business questions: statistics, A/B tests, dashboards, KPIs, reports, QA validation |
-| **data-scientist** | research, data-prep, train, evaluate, notebook | Full ML pipeline: find data, explore, clean, engineer features, model, evaluate |
-| **ml-engineer** | data-prep, train, evaluate, notebook | Focused iteration: feature engineering, hyperparameter sweeps, ablations |
-| **ai-engineer** | research, prototype, evaluate, context-engineering, mcp-builder, notebook | Build AI apps: LLM integration, RAG pipelines, prompt engineering, agent architectures |
-| **ml-ops** | train, serve, notebook | Deploy models: serialization, serving code, Docker, CI/CD, monitoring, model cards |
-| **ml-tutor** | learn, research, evaluate, notebook | Interactive ML education: study concepts, quiz prep, mock interviews, system design practice |
-
-### Agent Routing
+MLX uses a lightweight TSV-based experiment tracker — no MLflow server, no database.
 
 ```
-"Find papers about attention mechanisms"      → ml-researcher
-"Review this paper's methodology"             → ml-researcher
-"Turn this paper into a podcast"               → ml-researcher
-"What drove revenue growth last quarter?"      → data-analyst
-"Create a dashboard of our KPIs"              → data-analyst
-"Run an A/B test analysis on this experiment"  → data-analyst
-"I have a CSV, build me a model"              → data-scientist
-"Tune the hyperparameters on this model"       → ml-engineer
-"Build a RAG chatbot over my docs"             → ai-engineer
-"Deploy this model with Docker"                → ml-ops
-"Teach me about transformers"                  → ml-tutor
-"Quiz me on backpropagation"                   → ml-tutor
-"Extract the transcript from this lecture"     → ml-researcher (media skill)
+id        metric    val_score  test_score  memory_mb  status   description
+exp000    accuracy  0.8523     0.8401      4096       KEEP     baseline logistic
+exp001    accuracy  0.8612     0.8498      4096       KEEP     + log features
+exp002    accuracy  0.8590     —           4096       DISCARD  lr=0.003 (overfit)
+exp003    accuracy  0.8634     0.8521      4352       KEEP     xgboost depth=6
 ```
 
-Each agent follows a strict protocol:
+Status: `KEEP` | `DISCARD` | `CRASH`
 
-- **ml-researcher**: Scope → Search → Filter → Deep analysis → Review → Dataset discovery → Media → Synthesis → Prototype
-- **data-analyst**: Question → Explore → Clean → Analyze → Visualize → Validate → Report
-- **data-scientist**: Find data → Understand → Explore → Clean → Engineer → Train → Iterate → Report
-- **ml-engineer**: Baseline → Features → Model selection → Tuning → Ablation → Final eval → Document
-- **ai-engineer**: Requirements → Model selection → Prompt engineering → RAG/embeddings → Eval → Integration → Document
-- **ml-ops**: Model audit → Serialization → Inference API → Containerize → CI/CD → Monitoring → Model card → Reproducibility package
-- **ml-tutor**: Assess level → Navigate courses → Teach interactively → Check understanding → Challenge with tradeoffs → Track progress
+The `autoexperiment` skill runs autonomous loops — modify a training script, train for a fixed wall-clock budget, eval, record, repeat. The ml-experiments MCP server (`servers/experiments.py`) provides structured experiment access to agents.
+
+## Output Styles
+
+Three output styles available via `/config`:
+
+| Style | What it does |
+|-------|-------------|
+| **Terse** | One-line answers, numbers over prose, zero preamble — fast iteration during experiments |
+| **Report** | Stakeholder-ready: executive summary, methodology, results tables, recommendations |
+| **Notebook** | Code cell first, then markdown explanation — responses structured as Jupyter cells |
+
+## MCP Servers
+
+| Server | Agents | Purpose |
+|--------|--------|---------|
+| **mlx-experiments** | ml-engineer, dl-engineer, data-scientist | Structured experiment tracking and results access |
+| **colab-mcp** | ml-engineer, dl-engineer | Dispatch training to Google Colab GPUs when local compute is insufficient |
 
 ## Architecture
 
 ```
 mlx/
 ├── .claude-plugin/
-│   └── plugin.json              # Plugin manifest
-├── skills/
-│   ├── research/                # Paper search + dataset discovery + paper review
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   ├── search.py        # 7-source paper search
-│   │   │   ├── fetch.py         # Paper metadata by ID
-│   │   │   ├── download.py      # PDF download
-│   │   │   ├── extract.py       # PDF text extraction
-│   │   │   ├── datasets.py      # 5-source dataset search & download
-│   │   │   ├── scientific_search.py  # Concurrent multi-source search
-│   │   │   └── analyze_document.py   # Document analysis (PDF, DOCX, TXT)
-│   │   └── references/
-│   │       ├── sources.md       # API endpoints & rate limits
-│   │       └── api-reference.md # Full API documentation
-│   ├── prototype/               # Paper → code conversion
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   ├── main.py          # Extraction + generation pipeline
-│   │   │   ├── analyzers/       # Paper analysis modules
-│   │   │   ├── extractors/      # Content extraction modules
-│   │   │   └── generators/      # Code generation modules
-│   │   ├── references/
-│   │   │   ├── analysis-methodology.md
-│   │   │   ├── extraction-patterns.md
-│   │   │   └── generation-rules.md
-│   │   └── assets/examples/     # Example files
-│   ├── data-prep/               # EDA + cleaning + feature engineering
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   ├── eda.py           # Full EDA pipeline
-│   │   │   ├── clean.py         # Automated data cleaning
-│   │   │   └── engineer_features.py  # Auto feature transforms
-│   │   └── references/
-│   │       └── pipeline.md      # EDA → Clean → Engineer pipeline
-│   ├── analyze/                 # Statistical & business analysis + QA validation
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   ├── descriptive_stats.py
-│   │   │   ├── hypothesis_test.py
-│   │   │   ├── ab_test.py
-│   │   │   ├── cohort_analysis.py
-│   │   │   ├── rfm_segmentation.py
-│   │   │   ├── trend_analysis.py
-│   │   │   └── validate.py      # Pre-delivery QA checks
-│   │   └── references/
-│   │       └── analysis-methods.md
-│   ├── visualize/               # Charts, dashboards, data reports
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   ├── chart_templates.py
-│   │   │   └── format_number.py
-│   │   └── references/
-│   │       └── chart-selection.md
-│   ├── train/                   # Model training + experiment tracking
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   └── analyze_results.py
-│   │   └── references/
-│   │       └── model-selection.md
-│   ├── evaluate/                # Multi-dimensional model evaluation
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       └── metrics.md
-│   ├── notebook/                # Jupyter notebook management
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   └── assess.py        # Notebook quality assessment
-│   │   └── references/
-│   │       └── best-practices.md
-│   ├── media/                   # YouTube extraction + NotebookLM content generation
-│   │   ├── SKILL.md
-│   │   ├── scripts/
-│   │   │   ├── extract.py       # YouTube metadata, transcript, comments, download
-│   │   │   ├── auth.py          # NotebookLM authentication
-│   │   │   ├── generate.py      # Generate podcast, video, quiz, etc.
-│   │   │   └── manage.py        # List/manage notebooks & artifacts
-│   │   └── references/
-│   │       └── formats.md       # Generation types + extraction modes
-│   ├── serve/                   # Model serving & deployment
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       └── deployment-patterns.md
-│   ├── context-engineering/     # LLM context window management
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       └── patterns.md
-│   ├── mcp-builder/             # MCP server development
-│   │   ├── SKILL.md
-│   │   ├── LICENSE.txt
-│   │   ├── scripts/
-│   │   │   ├── evaluation.py
-│   │   │   ├── connections.py
-│   │   │   ├── example_evaluation.xml
-│   │   │   └── requirements.txt
-│   │   └── references/
-│   │       ├── mcp_best_practices.md
-│   │       ├── python_mcp_server.md
-│   │       ├── node_mcp_server.md
-│   │       └── evaluation.md
-│   └── learn/                   # Interactive ML education
-│       ├── SKILL.md
-│       ├── courses/
-│       │   ├── cs229/           # Stanford CS229 (17 chapters, 5 parts)
-│       │   ├── applied-ml/      # UMich Applied ML (4 modules, slides, notebooks)
-│       │   └── ml-engineering/  # ML Engineering (36 lessons, 9 modules)
-│       └── references/          # Decision frameworks, learning path, papers
+│   └── plugin.json                  # Plugin manifest (v1.1.6)
 ├── agents/
-│   ├── ml-researcher.md         # Research, media & prototyping agent
-│   ├── data-analyst.md          # Business analysis & visualization agent
-│   ├── data-scientist.md        # Full-pipeline data science agent
-│   ├── ml-engineer.md           # Model optimization agent
-│   ├── ai-engineer.md           # AI application builder agent
-│   ├── ml-ops.md                # Deployment & operations agent
-│   └── ml-tutor.md              # Interactive ML education agent
+│   ├── ml-workbench.md              # Main session orchestrator
+│   ├── ml-researcher.md             # Papers, datasets, media, prototyping
+│   ├── data-analyst.md              # Business analysis, dashboards, KPIs
+│   ├── data-scientist.md            # Full pipeline: data → trained model
+│   ├── ml-engineer.md               # Model optimization (worktree isolation)
+│   ├── dl-engineer.md               # Neural networks, GPU optimization (worktree)
+│   ├── ai-engineer.md               # LLM apps, RAG, fine-tuning
+│   ├── ml-ops.md                    # Deployment, serving, monitoring
+│   ├── data-engineer.md             # ETL, dbt, Spark, data quality
+│   ├── ml-tutor.md                  # Interactive ML education
+│   └── ml-reviewer.md               # ML code review (read-only)
+├── skills/
+│   ├── research/                    # Papers (7 sources) + datasets (5 sources) + review + prototype
+│   ├── data-prep/                   # EDA, cleaning, feature engineering
+│   ├── analyze/                     # Stats, A/B tests, cohort, RFM, visualization, QA
+│   ├── train/                       # Full supervised learning spectrum + experiment tracking
+│   ├── evaluate/                    # Multi-dimensional evaluation + LLM-as-judge
+│   ├── autoexperiment/              # Autonomous time-budget experiment loop
+│   ├── fine-tune/                   # LoRA/QLoRA/unsloth LLM fine-tuning
+│   ├── explain/                     # SHAP, LIME, integrated gradients
+│   ├── drift-detect/                # PSI/KS drift, evidently, nannyml
+│   ├── serve/                       # FastAPI, Docker, CI/CD, ONNX, monitoring
+│   ├── notebook/                    # Create, clean, organize, convert Jupyter notebooks
+│   ├── media/                       # YouTube extraction + NotebookLM content generation
+│   ├── context-engineering/         # LLM context window management patterns
+│   ├── mcp-builder/                 # Build and evaluate MCP servers
+│   ├── learn/                       # CS229, Applied ML, ML Engineering courses (53+ lessons)
+│   └── ml-docs/                     # On-demand docs for 19 ML libraries
 ├── hooks/
-│   ├── hooks.json               # ML-aware pre/post tool hooks
-│   └── scripts/                 # Hook shell scripts
-│       ├── session-context.sh
-│       ├── compact-reinject.sh
-│       ├── validate-ml-code.sh
-│       ├── watch-training.sh
-│       ├── save-experiment-state.sh
-│       └── ml-error-advisor.sh
-├── LICENSE                      # MIT License
-└── .gitignore
+│   ├── hooks.json                   # Hook event configuration
+│   └── scripts/
+│       ├── session-context.sh       # SessionStart: scan ML project state
+│       ├── compact-reinject.sh      # SessionStart(compact): restore experiment context
+│       ├── post-compact-reinject.sh # PostCompact: reinject ML context
+│       ├── validate-ml-code.sh      # PreToolUse(Write|Edit *.py): leakage + seed checks
+│       ├── python-syntax-check.sh   # PostToolUse(Write|Edit *.py): syntax validation
+│       ├── mlops-safety-check.sh    # PreToolUse(Bash) on ml-ops: block destructive deploys
+│       ├── watch-training.sh        # PostToolUse(Bash): capture training metrics
+│       ├── ml-error-advisor.sh      # PostToolUseFailure(Bash): diagnose ML errors
+│       ├── save-experiment-state.sh # PreCompact: persist experiment state
+│       ├── results-changed.sh       # FileChanged(results.tsv): log experiment update
+│       ├── experiment-goal-changed.sh # FileChanged(EXPERIMENT.md): reinject hypothesis
+│       ├── agent-stop-summary.sh    # Stop: emit experiment state to parent agent
+│       ├── session-summary.sh       # SessionEnd: final session summary
+│       ├── subagent-log.sh          # SubagentStop: log which agent finished
+│       └── cwd-reload.sh            # CwdChanged: reload ML project state
+├── output-styles/
+│   ├── terse.md                     # Direct answers, numbers over prose
+│   ├── report.md                    # Stakeholder report format
+│   └── notebook.md                  # Jupyter cell-structured output
+├── servers/
+│   └── experiments.py               # MCP experiment tracking server
+├── bin/
+│   ├── mlx-exp                      # CLI: log experiments to results.tsv
+│   ├── mlx-search                   # CLI: search papers from terminal
+│   └── mlx-status                   # CLI: show current ML project state
+├── .mcp.json                        # MCP server configuration
+├── .lsp.json                        # Pyright LSP configuration
+└── LICENSE
 ```
 
 ### Hooks
 
-MLX includes ML-aware hooks that run automatically:
+MLX includes 11 hook event types running across the ML lifecycle:
 
-- **SessionStart**: Scans project for ML state (models, datasets, results.tsv) and restores experiment context on compaction
-- **PreToolUse** (Write/Edit): Validates training scripts for data leakage, random seed usage, and hardcoded paths
-- **PostToolUse** (Bash): Captures training metrics from command output
-- **PostToolUseFailure** (Bash): Suggests fixes for common ML errors (missing packages, CUDA issues)
-- **PreCompact**: Saves experiment state before context compaction
+| Event | Trigger | What it does |
+|-------|---------|--------------|
+| `SessionStart` | Session open / after compact | Scans project for ML state; restores experiment context |
+| `PreToolUse` | Before Write/Edit on `*.py` | Validates for data leakage, missing seeds, hardcoded paths |
+| `PreToolUse` | Before Bash in ml-ops agent | Blocks destructive deployment commands |
+| `PostToolUse` | After Write/Edit on `*.py` | Syntax-checks Python before it can cause downstream errors |
+| `PostToolUse` | After Bash | Captures training metrics from output |
+| `PostToolUseFailure` | Failed Bash | Diagnoses ML errors (missing packages, CUDA, NaN loss) |
+| `PreCompact` | Before context compaction | Saves experiment state so it survives the compact |
+| `PostCompact` | After context compaction | Rehydrates ML context into new window |
+| `FileChanged` | `results.tsv` / `EXPERIMENT.md` | Logs experiment update; reinjects active hypothesis |
+| `Stop` | Agent session end | Emits final experiment summary to parent agent |
+| `SessionEnd` | Session close | Final session summary |
+| `SubagentStop` | Subagent finishes | Logs which agent completed |
+| `CwdChanged` | Directory change | Reloads ML project state for new directory |
 
 ### Design Principles
 
-- **Zero cost**: Every API and data source is free with no keys required
-- **Stdlib first**: Core scripts use Python stdlib (`urllib`, `xml`, `json`) — no pip dependencies for basic functionality
-- **Progressive complexity**: Start with a slash command, scale to autonomous agent workflows
+- **PEP 723 / uv**: All external-dep scripts use inline dependency declarations — `uv run` auto-installs, no manual pip
+- **Progressive complexity**: Slash command → skill → agent → autonomous loop
 - **Experiment discipline**: One variable per experiment, validation-only decisions, mandatory results tracking
-- **No data leakage**: Hooks enforce train/eval separation and random seed hygiene
+- **Isolation**: ml-engineer and dl-engineer run in git worktrees — experiments never pollute the working tree
+- **No data leakage**: Hooks enforce train/eval separation and random seed hygiene on every Python write
 
 ## Supported Frameworks
 
 | Framework | Used in |
 |-----------|---------|
-| scikit-learn | train, data-prep, analyze |
-| XGBoost | train |
-| LightGBM | train |
-| PyTorch | train |
-| pandas | data-prep, analyze |
-| scipy | analyze (hypothesis testing) |
-| matplotlib | visualize (static charts) |
-| seaborn | visualize (statistical plots) |
-| plotly | visualize (interactive dashboards) |
-| polars | data-prep (alternative) |
-| PySpark | data-prep (distributed) |
-
-## Experiment Tracking
-
-MLX uses a lightweight TSV-based experiment tracker — no MLflow server, no database, just a file.
-
-```
-id        metric    val_score  test_score  memory_mb  status   description
-exp000    accuracy  0.8523     0.8401      4096       KEEP     baseline
-exp001    accuracy  0.8612     0.8498      4096       KEEP     lr=0.001
-exp002    accuracy  0.8590     -           4096       DISCARD  lr=0.003 (overfit)
-exp003    accuracy  0.8634     0.8521      4352       KEEP     dropout=0.1
-```
-
-Status: `KEEP` (improved) | `DISCARD` (same or worse) | `CRASH` (error/OOM/NaN)
-
-The ml-engineer agent runs autonomous experiment loops — 8-10 experiments/hour with automatic keep/discard decisions.
+| [scikit-learn](https://scikit-learn.org) | train, data-prep, evaluate |
+| [XGBoost](https://xgboost.readthedocs.io) / [LightGBM](https://lightgbm.readthedocs.io) | train |
+| [PyTorch](https://pytorch.org) | train, dl-engineer |
+| [HuggingFace Transformers](https://huggingface.co/docs/transformers) / [PEFT](https://huggingface.co/docs/peft) / [TRL](https://huggingface.co/docs/trl) | fine-tune, train |
+| [unsloth](https://github.com/unslothai/unsloth) | fine-tune (4x memory reduction) |
+| [pandas](https://pandas.pydata.org) / [polars](https://pola.rs) | data-prep, analyze |
+| [scipy](https://scipy.org) | analyze (hypothesis testing) |
+| [SHAP](https://shap.readthedocs.io) / [LIME](https://github.com/marcotcr/lime) | explain |
+| [evidently](https://www.evidentlyai.com) / [nannyml](https://nannyml.readthedocs.io) | drift-detect |
+| [FastAPI](https://fastapi.tiangolo.com) / [uvicorn](https://www.uvicorn.org) | serve |
+| [matplotlib](https://matplotlib.org) / [seaborn](https://seaborn.pydata.org) / [plotly](https://plotly.com/python) | analyze |
+| [DuckDB](https://duckdb.org) / [Spark](https://spark.apache.org) | data-engineer |
 
 ## Rate Limits
 
-All rate limits are enforced automatically in the scripts.
+All rate limits are enforced automatically.
 
 | Source | Delay | Notes |
 |--------|-------|-------|
@@ -410,23 +328,16 @@ All rate limits are enforced automatically in the scripts.
 | UCI | 2s | 600+ datasets |
 | Kaggle | 2s | Falls back to scraping if API requires auth |
 
-## Submit to Official Marketplace
-
-To submit MLX to the official Anthropic plugin marketplace:
-
-- **Claude.ai**: [claude.ai/settings/plugins/submit](https://claude.ai/settings/plugins/submit)
-- **Console**: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit)
-
 ## Contributing
 
 1. Fork the repository
 2. Add your skill to `skills/your-skill/SKILL.md`
-3. If your skill needs scripts, add them to `skills/your-skill/scripts/`
-4. Add quick-reference docs to `skills/your-skill/references/`
-5. Update `plugin.json` if adding new keywords
+3. Scripts go in `skills/your-skill/scripts/` — use PEP 723 inline deps (`# /// script` block) for external packages
+4. Reference docs go in `skills/your-skill/references/`
+5. Update `plugin.json` keywords if relevant
 6. Submit a pull request
 
-See the [Claude Code plugin docs](https://code.claude.com/docs/en/plugins) for the expected directory layout and [plugins reference](https://code.claude.com/docs/en/plugins-reference) for the full manifest schema.
+See the [Claude Code plugin docs](https://code.claude.com/docs/en/plugins) for the directory layout and [plugins reference](https://code.claude.com/docs/en/plugins-reference) for the full manifest schema.
 
 ## License
 

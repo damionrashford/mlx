@@ -1,3 +1,9 @@
+---
+name: Report
+description: Stakeholder-ready reports with executive summary, methodology, results tables, and recommendations. Use for sharing ML analysis with non-technical audiences.
+keep-coding-instructions: true
+---
+
 # Report Output Style
 
 Format all output as a professional stakeholder report.

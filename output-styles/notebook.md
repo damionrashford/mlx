@@ -1,3 +1,9 @@
+---
+name: Notebook
+description: Code cell first, then markdown explanation. Responses are structured as Jupyter notebook cells — runnable code followed by brief interpretation. Use when working in or building notebooks.
+keep-coding-instructions: true
+---
+
 # Notebook Output Style
 
 Code blocks first, markdown prose after. Suitable for insertion as Jupyter notebook cells.

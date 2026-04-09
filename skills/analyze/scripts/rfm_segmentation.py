@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+# ]
+# requires-python = ">=3.10"
+# ///
 """RFM segmentation — Recency, Frequency, Monetary customer segmentation.
 
 Usage:
-    python3 rfm_segmentation.py data.csv --customer customer_id --date order_date --value revenue
-    python3 rfm_segmentation.py data.csv --customer customer_id --date order_date --value revenue --segments 5
+    uv run rfm_segmentation.py data.csv --customer customer_id --date order_date --value revenue
+    uv run rfm_segmentation.py data.csv --customer customer_id --date order_date --value revenue --segments 5
 """
 
 import argparse
@@ -23,10 +29,17 @@ def rfm_segmentation(df: pd.DataFrame, customer_col: str, date_col: str, value_c
         monetary=(value_col, "sum"),
     )
 
+    def _qcut_score(series: pd.Series, n: int, ascending: bool = True) -> pd.Series:
+        """Quantile-cut with safe label count (handles duplicates reducing bin count)."""
+        _, bins = pd.qcut(series, n, retbins=True, duplicates="drop")
+        n_bins = len(bins) - 1
+        labels = list(range(1, n_bins + 1)) if ascending else list(range(n_bins, 0, -1))
+        return pd.cut(series, bins=bins, labels=labels, include_lowest=True)
+
     # Score each dimension (1=worst, n_segments=best)
     for col in ["frequency", "monetary"]:
-        rfm[f"{col}_score"] = pd.qcut(rfm[col], n_segments, labels=range(1, n_segments + 1), duplicates="drop")
-    rfm["recency_score"] = pd.qcut(rfm["recency"], n_segments, labels=range(n_segments, 0, -1), duplicates="drop")
+        rfm[f"{col}_score"] = _qcut_score(rfm[col], n_segments, ascending=True)
+    rfm["recency_score"] = _qcut_score(rfm["recency"], n_segments, ascending=False)
 
     rfm["rfm_score"] = (
         rfm["recency_score"].astype(int) + rfm["frequency_score"].astype(int) + rfm["monetary_score"].astype(int)

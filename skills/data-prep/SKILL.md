@@ -9,8 +9,20 @@ description: >
   columns, understand a dataset, clean data, handle missing values, remove duplicates, fix
   data types, preprocess a dataset before modeling, create features, encode categories,
   transform columns, add rolling windows, build interaction terms, or do feature engineering.
-allowed-tools: Bash, Read, Write, Glob, Grep
+allowed-tools: >
+  Bash(uv run * scripts/eda.py *)
+  Bash(uv run * scripts/clean.py *)
+  Bash(uv run * scripts/engineer_features.py *)
+  Read Write Glob Grep
 argument-hint: path to dataset (e.g. "data/train.csv")
+model: sonnet
+effort: medium
+paths: "**/*.csv,**/*.tsv,**/*.parquet,**/*.xlsx"
+compatibility: ">=1.0"
+metadata:
+  category: data-preparation
+  tags: [eda, cleaning, feature-engineering, missing-values, encoding, pandas, polars, pyspark]
+  phase: prepare
 ---
 
 # Data Preparation: Explore & Clean
@@ -21,9 +33,9 @@ Two-phase workflow for systematic data preparation. Always run EDA first — fin
 
 | Script | Usage |
 |--------|-------|
-| [eda.py](scripts/eda.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/eda.py data.csv --target price` |
-| [clean.py](scripts/clean.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv` |
-| [engineer_features.py](scripts/engineer_features.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv -o data/features.csv` |
+| [eda.py](scripts/eda.py) | `uv run ${CLAUDE_SKILL_DIR}/scripts/eda.py data.csv --target price` |
+| [clean.py](scripts/clean.py) | `uv run ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv` |
+| [engineer_features.py](scripts/engineer_features.py) | `uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv -o data/features.csv` |
 
 ---
 
@@ -32,8 +44,8 @@ Two-phase workflow for systematic data preparation. Always run EDA first — fin
 ### Quick start
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/eda.py $ARGUMENTS
-python3 ${CLAUDE_SKILL_DIR}/scripts/eda.py data/train.csv --target price
+uv run ${CLAUDE_SKILL_DIR}/scripts/eda.py $ARGUMENTS
+uv run ${CLAUDE_SKILL_DIR}/scripts/eda.py data/train.csv --target price
 ```
 
 The [eda.py](scripts/eda.py) script runs all 9 checks below in order and prints a complete report.
@@ -111,16 +123,16 @@ Recommendations:
 
 ```bash
 # Full cleaning pipeline
-python3 ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv
 
 # Clean without outlier removal
-python3 ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv --no-outliers -o clean.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv --no-outliers -o clean.csv
 
 # Save cleaning report as JSON
-python3 ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv --report report.json
+uv run ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv -o clean.csv --report report.json
 
 # Quality check only (no cleaning)
-python3 ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv --check-only
+uv run ${CLAUDE_SKILL_DIR}/scripts/clean.py data.csv --check-only
 ```
 
 The [clean.py](scripts/clean.py) script runs the full cleaning pipeline: deduplication, type fixing, missing value handling, outlier removal, and validation. It prints a report to stderr and outputs the cleaned CSV.
@@ -217,22 +229,22 @@ Transforms clean data into model-ready features. Run the script for automated en
 
 ```bash
 # Auto-engineer all columns
-python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv -o data/features.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv -o data/features.csv
 
 # Engineer specific columns with target encoding
-python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --cols age income category --target price -o features.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --cols age income category --target price -o features.csv
 
 # Generate interaction features
-python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --interactions -o features.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --interactions -o features.csv
 
 # Time series features
-python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --cols revenue --types timeseries -o features.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --cols revenue --types timeseries -o features.csv
 
 # Group aggregations
-python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --group segment revenue -o features.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --group segment revenue -o features.csv
 
 # Summary as JSON
-python3 ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --json
+uv run ${CLAUDE_SKILL_DIR}/scripts/engineer_features.py data/clean.csv --json
 ```
 
 Flags: `--cols` (specific columns), `--types` (numeric, categorical, datetime, text, timeseries), `--target` (target column for encoding), `--interactions`, `--group GROUP_COL AGG_COL`, `--json`, `-o OUTPUT`

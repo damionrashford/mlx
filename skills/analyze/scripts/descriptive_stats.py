@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Descriptive statistics — aggregations, group-bys, percentiles.
 
 Usage:
-    python3 descriptive_stats.py data.csv
-    python3 descriptive_stats.py data.csv --group segment --value revenue
+    uv run descriptive_stats.py data.csv
+    uv run descriptive_stats.py data.csv --group segment --value revenue
 """
 
 import argparse

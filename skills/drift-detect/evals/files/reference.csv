@@ -1,0 +1,21 @@
+date,customer_id,segment,product,revenue,quantity,converted,variant
+2024-01-01,c001,Enterprise,Widget A,1200.00,3,1,A
+2024-01-02,c002,SMB,Widget B,450.00,2,0,B
+2024-01-03,c003,Enterprise,Widget A,980.00,2,1,A
+2024-01-04,c004,SMB,Widget C,200.00,1,1,B
+2024-01-05,c005,Enterprise,Widget B,2100.00,5,1,A
+2024-01-06,c006,SMB,Widget A,350.00,1,0,B
+2024-01-07,c007,Enterprise,Widget C,800.00,2,1,A
+2024-01-08,c008,SMB,Widget B,675.00,3,1,B
+2024-01-09,c001,Enterprise,Widget A,1100.00,2,1,A
+2024-01-10,c002,SMB,Widget C,220.00,1,0,B
+2024-01-11,c003,Enterprise,Widget B,1850.00,4,1,A
+2024-01-12,c009,Enterprise,Widget A,950.00,2,1,B
+2024-01-13,c010,SMB,Widget B,400.00,2,1,A
+2024-01-14,c011,Enterprise,Widget C,1500.00,3,0,B
+2024-01-15,c012,SMB,Widget A,300.00,1,1,A
+2024-02-01,c001,Enterprise,Widget A,1300.00,3,1,B
+2024-02-02,c002,SMB,Widget B,500.00,2,1,A
+2024-02-03,c003,Enterprise,Widget A,1050.00,2,1,B
+2024-02-04,c004,SMB,Widget C,250.00,1,0,A
+2024-02-05,c005,Enterprise,Widget B,2200.00,5,1,B

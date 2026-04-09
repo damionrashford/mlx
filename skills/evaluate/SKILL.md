@@ -9,6 +9,14 @@ description: >
   model comparison, or quality assessment.
 allowed-tools: Bash, Read, Write, Glob, Grep
 argument-hint: path to predictions, results.tsv, or model outputs (e.g. "results.tsv" or "predictions.csv")
+model: sonnet
+effort: medium
+paths: "**/results.tsv,**/predictions*.csv,**/metrics*.json"
+compatibility: ">=1.0"
+metadata:
+  category: model-evaluation
+  tags: [evaluation, llm-as-judge, bias-detection, metrics, model-comparison, rubrics]
+  phase: evaluate
 ---
 
 # Model & System Evaluation

@@ -5,8 +5,20 @@ description: >
   fixed wall-clock budget, evaluate, record, repeat. Inspired by karpathy/autoresearch.
   Use for overnight architecture search, systematic hyperparameter sweeps, or any
   iterative model improvement workflow.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: >
+  Bash(uv run * scripts/time_budget_train.py *)
+  Bash, Read, Write, Edit, Glob, Grep
 argument-hint: path to train.py or description of experiment goal
+model: opus
+effort: max
+disable-model-invocation: true
+context: fork
+agent: mlx:ml-engineer
+compatibility: ">=1.0"
+metadata:
+  category: model-training
+  tags: [experiment-tracking, hyperparameter-search, autonomous, time-budget, iteration]
+  phase: train
 ---
 
 # Autoexperiment Skill
@@ -29,7 +41,7 @@ trains for a fixed wall-clock budget, evaluates, records in `results.tsv`, and r
 
 ### Iteration loop
 1. Edit `train.py` with the single change
-2. Run with TIME_BUDGET: `timeout $BUDGET python3 train.py`
+2. Run with TIME_BUDGET: `timeout $BUDGET uv run train.py`
 3. Capture exit code and metrics
 4. Record in `results.tsv`: KEEP / DISCARD / CRASH
 5. If CRASH 3× in a row on the same error → stop, report diagnosis

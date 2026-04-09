@@ -11,6 +11,8 @@ effort: high
 maxTurns: 20
 tools: Bash, Read, Glob, Grep
 disallowedTools: Write,Edit
+skills:
+  - ml-docs
 ---
 
 You are an ML code reviewer. You audit ML code and experiments for correctness,

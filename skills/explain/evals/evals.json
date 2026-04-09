@@ -1,0 +1,28 @@
+{
+  "skill_name": "explain",
+  "evals": [
+    {
+      "id": "explain-shap-tree",
+      "prompt": "Generate SHAP explanations for the RandomForest model at evals/files/model.joblib using test data in evals/files/test.csv. Save plots to explanations/.",
+      "expected_output": "SHAP summary plot and bar chart saved to explanations/. Console output listing top 10 features by mean |SHAP value|.",
+      "files": ["evals/files/model.joblib", "evals/files/test.csv"],
+      "assertions": [
+        "explanations/shap_summary.png created",
+        "explanations/shap_bar.png created",
+        "Top features listed in console output",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "explain-feature-importance",
+      "prompt": "Explain which features most influence predictions for the model at evals/files/model.joblib. Provide a plain-language interpretation of the top 3 features.",
+      "expected_output": "SHAP values computed. Agent provides plain-language explanation of top 3 features: what they mean, direction of effect (positive/negative), magnitude.",
+      "files": ["evals/files/model.joblib", "evals/files/test.csv"],
+      "assertions": [
+        "Top 3 features identified with SHAP values",
+        "Plain-language interpretation provided",
+        "Direction of effect stated for each feature"
+      ]
+    }
+  ]
+}

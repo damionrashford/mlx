@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+#   "scipy>=1.10",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Hypothesis testing — compare two groups with automatic test selection.
 
 Usage:
-    python3 hypothesis_test.py data.csv --col value --group segment --a control --b treatment
+    uv run hypothesis_test.py data.csv --col value --group segment --a control --b treatment
 """
 
 import argparse

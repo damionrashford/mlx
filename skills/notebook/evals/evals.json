@@ -1,0 +1,29 @@
+{
+  "skill_name": "notebook",
+  "evals": [
+    {
+      "id": "notebook-assess-quality",
+      "prompt": "Assess the quality of evals/files/sample.ipynb. Report structure, documentation ratio, issues, and score out of 10.",
+      "expected_output": "Assessment with: total cells, code/markdown split, empty cells, cells with stale outputs, detected issues list, and score 0-10.",
+      "files": ["evals/files/sample.ipynb"],
+      "assertions": [
+        "Output includes cell count breakdown",
+        "Output includes score /10",
+        "Issues list provided (empty or populated)",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "notebook-json-output",
+      "prompt": "Run notebook assessment on evals/files/sample.ipynb with JSON output format.",
+      "expected_output": "Valid JSON with score, issues, code_cells, markdown_cells, imports, and headers fields.",
+      "files": ["evals/files/sample.ipynb"],
+      "assertions": [
+        "Output is valid JSON",
+        "JSON has 'score' field (0-10)",
+        "JSON has 'issues' array",
+        "Script exits with code 0"
+      ]
+    }
+  ]
+}

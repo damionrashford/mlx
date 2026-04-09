@@ -5,8 +5,30 @@ description: >
   (4x memory reduction), PEFT, trl SFTTrainer, DPO, instruction tuning with chat
   templates, dataset preparation, and evaluation. Use when fine-tuning any HuggingFace
   model on custom data.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: >
+  Bash(uv run * scripts/prepare_dataset.py *)
+  Bash, Read, Write, Edit, Glob, Grep
 argument-hint: base model name or path, dataset path (e.g. "mistralai/Mistral-7B-v0.1 data/train.jsonl")
+model: opus
+effort: high
+disable-model-invocation: true
+paths: "**/*.jsonl,**/*.json"
+compatibility: ">=1.0"
+metadata:
+  category: model-training
+  tags:
+    [
+      fine-tuning,
+      lora,
+      qlora,
+      unsloth,
+      peft,
+      dpo,
+      llm,
+      huggingface,
+      instruction-tuning,
+    ]
+  phase: train
 ---
 
 # Fine-Tune Skill
@@ -17,7 +39,7 @@ Fine-tune language models efficiently with LoRA, QLoRA, or unsloth.
 
 ```bash
 # Prepare dataset
-python3 scripts/prepare_dataset.py data/raw.csv --format alpaca --output data/train.jsonl
+uv run ${CLAUDE_SKILL_DIR}/scripts/prepare_dataset.py data/raw.csv --format alpaca --output data/train.jsonl
 
 # Fine-tune with LoRA (unsloth)
 python3 -c "

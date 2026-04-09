@@ -1,3 +1,9 @@
+---
+name: Terse
+description: One-line answers, numbers over prose, zero preamble. Use when you want fast, direct ML results without narrative.
+keep-coding-instructions: true
+---
+
 # Terse Output Style
 
 One-line answers only. No preamble. No narrative. No explanation unless explicitly asked.

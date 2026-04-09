@@ -13,7 +13,8 @@ AGENT=$(echo "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
-    print(d.get('agent_name', d.get('name', 'unknown')))
+    # docs common field is agent_type, not agent_name
+    print(d.get('agent_type', 'unknown'))
 except Exception:
     print('unknown')
 " 2>/dev/null || echo "unknown")

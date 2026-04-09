@@ -1,0 +1,29 @@
+{
+  "skill_name": "context-engineering",
+  "evals": [
+    {
+      "id": "context-eng-prompt-design",
+      "prompt": "Design a system prompt for a customer support agent that handles refund requests. Include persona, constraints, and output format.",
+      "expected_output": "System prompt with: clear persona (role, tone), explicit constraints (what it can/cannot do), structured output format for responses, few-shot examples.",
+      "files": [],
+      "assertions": [
+        "System prompt includes persona/role",
+        "Constraints explicitly stated",
+        "Output format specified",
+        "At least 1 few-shot example included"
+      ]
+    },
+    {
+      "id": "context-eng-rag-pipeline",
+      "prompt": "Design a RAG pipeline for a company knowledge base. Specify chunking strategy, embedding model, retrieval method, and prompt template.",
+      "expected_output": "RAG design with: chunking strategy (size, overlap), embedding model recommendation, vector store choice, retrieval method (similarity/MMR), prompt template with {context} and {question} placeholders.",
+      "files": [],
+      "assertions": [
+        "Chunking strategy specified",
+        "Embedding model recommended",
+        "Prompt template includes context and question",
+        "Retrieval method specified"
+      ]
+    }
+  ]
+}

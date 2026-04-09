@@ -1,0 +1,5 @@
+{"instruction": "Summarize the main idea", "input": "Machine learning is a subset of AI that enables systems to learn from data.", "output": "ML enables systems to learn from data without explicit programming."}
+{"instruction": "Translate to French", "input": "Hello, how are you?", "output": "Bonjour, comment allez-vous?"}
+{"instruction": "Write a haiku", "input": "about autumn leaves", "output": "Red leaves gently fall\nCrisp air carries their whisper\nWinter waits below"}
+{"instruction": "Explain simply", "input": "What is gradient descent?", "output": "Gradient descent is an optimization algorithm that finds the minimum of a function by iteratively moving in the direction of steepest descent."}
+{"instruction": "Classify sentiment", "input": "This product exceeded my expectations!", "output": "Positive"}

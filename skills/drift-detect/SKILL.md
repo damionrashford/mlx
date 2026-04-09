@@ -5,8 +5,17 @@ description: >
   Uses PSI, KS-test, and chi-squared for statistical drift, plus evidently and
   nannyml for automated reports. Use when monitoring a deployed model or comparing
   training vs production data distributions.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: >
+  Bash(uv run * scripts/detect_drift.py *)
+  Bash, Read, Write, Edit, Glob, Grep
 argument-hint: reference dataset and current dataset paths (e.g. "data/train.csv data/production.csv")
+model: sonnet
+effort: medium
+compatibility: ">=1.0"
+metadata:
+  category: mlops
+  tags: [drift-detection, monitoring, psi, ks-test, evidently, nannyml, production]
+  phase: monitor
 ---
 
 # Drift Detect Skill
@@ -17,7 +26,7 @@ Detect data drift, concept drift, and model degradation in production.
 
 ```bash
 # Run full drift analysis
-python3 scripts/detect_drift.py data/train.csv data/production.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/detect_drift.py data/train.csv data/production.csv
 # Output: stdout report + drift_report.html
 ```
 

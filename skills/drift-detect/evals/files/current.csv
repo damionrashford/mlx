@@ -1,0 +1,11 @@
+date,customer_id,segment,product,revenue,quantity,converted,variant
+2024-03-01,c013,Enterprise,Widget A,1400.00,3,1,A
+2024-03-02,c014,SMB,Widget B,520.00,2,1,B
+2024-03-03,c015,Enterprise,Widget A,1100.00,2,1,A
+2024-03-04,c016,SMB,Widget C,280.00,1,1,B
+2024-03-05,c017,Enterprise,Widget B,2300.00,5,1,A
+2024-03-06,c018,SMB,Widget A,380.00,1,0,B
+2024-03-07,c019,Enterprise,Widget C,900.00,2,1,A
+2024-03-08,c020,SMB,Widget B,700.00,3,1,B
+2024-03-09,c013,Enterprise,Widget A,1250.00,2,1,A
+2024-03-10,c014,SMB,Widget C,240.00,1,0,B

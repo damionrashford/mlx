@@ -1,0 +1,7 @@
+id	metric	val_score	test_score	memory_mb	status	description
+exp000	val_loss	0.450000	0.460000	128.0	KEEP	baseline: hidden=64 lr=1e-3
+exp001	val_loss	0.420000	0.432000	145.0	KEEP	hidden=128 lr=1e-3
+exp002	val_loss	0.380000	0.395000	162.0	KEEP	hidden=256 lr=1e-3
+exp003	val_loss	0.502000		98.0	DISCARD	smaller model: hidden=32
+exp004	val_loss	0.370000	0.382000	180.0	KEEP	hidden=256 lr=5e-4 warmup
+exp005	val_loss	inf		200.0	CRASH	hidden=512 exploding gradients

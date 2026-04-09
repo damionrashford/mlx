@@ -1,19 +1,70 @@
 ---
 name: serve
 description: >
-  Deploy and serve trained ML models in production: inference APIs, containerization,
-  CI/CD pipelines, monitoring, health endpoints, model versioning, and reproducibility
-  packaging. Use when the user has a trained model and wants to deploy it, serve it,
-  containerize it, build an inference API, set up monitoring, write a model card, create
-  a CI/CD pipeline, or package for reproducibility.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+  Compress, deploy, and serve trained ML models in production. Covers model
+  compression (quantization, pruning, distillation, ONNX export), inference APIs,
+  containerization, CI/CD pipelines, monitoring, health endpoints, model versioning,
+  and reproducibility packaging. Use when the user has a trained model and wants to
+  reduce its size, deploy it, serve it, containerize it, build an inference API,
+  set up monitoring, write a model card, create a CI/CD pipeline, or package for
+  reproducibility.
+allowed-tools: >
+  Bash(uv run * scripts/benchmark_model.py *)
+  Bash, Read, Write, Edit, Glob, Grep
 disable-model-invocation: true
 argument-hint: path to model file or project root (e.g. "model.joblib" or ".")
+model: opus
+effort: high
+compatibility: ">=1.0"
+metadata:
+  category: mlops
+  tags: [deployment, serving, docker, fastapi, ci-cd, monitoring, model-card, onnx, quantization, compression]
+  phase: deploy
 ---
 
 # Model Serving & Deployment
 
 Reference for taking trained models to production. Follow phases in order.
+
+---
+
+## Phase 0: Compression (before deploying)
+
+Reduce model size and latency before serving. Run benchmarks to confirm tradeoff is acceptable.
+
+```bash
+uv run ${CLAUDE_SKILL_DIR}/scripts/benchmark_model.py model.joblib model_compressed.joblib data/test.csv
+```
+
+### Quantization
+- **Dynamic** (no calibration): `torch.quantization.quantize_dynamic` — easiest, CPU
+- **Static** (calibration required): `torch.quantization.prepare` + `convert` — faster inference
+- **4-bit** (LLMs): `bitsandbytes load_in_4bit=True` — 4× memory reduction
+- **GPTQ**: `AutoGPTQ` — accurate 4-bit for LLMs
+
+### Export
+- **ONNX**: `skl2onnx` for sklearn, `torch.onnx.export` for PyTorch
+- **ONNX Runtime**: `InferenceSession` — cross-platform optimized inference
+- **GGUF**: `convert_hf_to_gguf.py` for local LLM inference
+
+### Pruning
+- `torch.nn.utils.prune.l1_unstructured` — remove smallest weights
+- Structured pruning: remove entire filters/heads for real speedup
+
+### Knowledge distillation
+- Student model learns from teacher's soft labels
+- Loss = α × CE(hard labels) + (1−α) × KD(soft labels, τ)
+
+### Benchmark targets
+
+| Metric | Goal |
+|--------|------|
+| Latency p50/p95 | < 2× original |
+| Throughput | > 1.5× original |
+| Accuracy delta | < 1% absolute |
+| Memory RSS | < 50% original |
+
+See [`references/compression-guide.md`](references/compression-guide.md) for full code examples.
 
 ---
 

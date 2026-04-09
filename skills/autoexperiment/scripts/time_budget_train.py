@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "numpy>=1.24",
+# ]
+# requires-python = ">=3.10"
+# ///
 # time_budget_train.py — Template training script with autoexperiment patterns.
 # All patterns from karpathy/autoresearch encoded here.
 # Customize: replace the model definition and data loading sections.

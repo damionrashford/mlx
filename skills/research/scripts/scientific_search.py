@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "requests>=2.28",
+# ]
+# requires-python = ">=3.10"
+# ///
 """
 Multi-source academic paper search and dataset discovery.
 Searches arXiv, Semantic Scholar, PubMed concurrently with deduplication.
@@ -6,10 +12,10 @@ Discovers datasets from Kaggle and HuggingFace.
 Extracted from RivalSearchMCP scientific_research tool.
 
 Usage:
-    python3 scientific_search.py "transformer attention" --max 10
-    python3 scientific_search.py "BERT NLP" --source arxiv,semantic_scholar
-    python3 scientific_search.py "image classification" --datasets
-    python3 scientific_search.py "tabular data" --datasets --source kaggle
+    uv run scientific_search.py "transformer attention" --max 10
+    uv run scientific_search.py "BERT NLP" --source arxiv,semantic_scholar
+    uv run scientific_search.py "image classification" --datasets
+    uv run scientific_search.py "tabular data" --datasets --source kaggle
 """
 
 import argparse

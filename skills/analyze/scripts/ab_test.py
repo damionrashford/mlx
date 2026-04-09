@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+#   "scipy>=1.10",
+# ]
+# requires-python = ">=3.10"
+# ///
 """A/B test analysis — compare control vs treatment with statistical rigor.
 
 Usage:
-    python3 ab_test.py data.csv --col converted --group variant --control A --treatment B
-    python3 ab_test.py data.csv --col revenue --group variant --control A --treatment B --metric continuous
+    uv run ab_test.py data.csv --col converted --group variant --control A --treatment B
+    uv run ab_test.py data.csv --col revenue --group variant --control A --treatment B --metric continuous
 """
 
 import argparse

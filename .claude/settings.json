@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp -r *)",
+      "Bash(rm -rf *)",
+      "Bash(chmod +x *)",
+      "Bash(ls -1 skills/*/references/)",
+      "Bash(ls -d skills/*/)",
+      "Bash(ls agents/*.md)",
+      "Bash(grep -n * agents/*.md)",
+      "Bash(grep -l * agents/*.md)",
+      "Bash(grep -rn * agents/)",
+      "Bash(grep -r * skills/)",
+      "Bash(find skills/* -name '*.py' -exec python3 -m py_compile '{}' ';')",
+      "Bash(sed -i * skills/**/*.md)",
+      "Bash(xargs -I{} basename {} .md)",
+      "Bash(xargs sed:*)",
+      "Bash(awk * agents/*.md)",
+      "Bash(pip3 list:*)",
+      "Bash(pip3 show:*)",
+      "Bash(npm list:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pyright-langserver --version)",
+      "Read(**)"
+    ]
+  }
+}

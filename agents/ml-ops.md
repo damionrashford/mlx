@@ -10,23 +10,19 @@ tools: Bash, Read, Write, Edit, Glob, Grep
 model: opus
 effort: medium
 maxTurns: 35
-permissionMode: acceptEdits
-memory: user
+memory: project
 skills:
   - train
   - serve
   - notebook
-  - compress
   - drift-detect
+  - ml-docs
 hooks:
-  Stop:
-    - hooks:
+  PreToolUse:
+    - matcher: "Bash"
+      hooks:
         - type: command
-          command: |
-            INPUT=$(cat)
-            if [ "$(echo "$INPUT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('stop_hook_active','false'))" 2>/dev/null)" = "true" ]; then exit 0; fi
-            if ls *.joblib *.pt *.xgb *.onnx 2>/dev/null | head -1 | grep -q .; then exit 0
-            else echo "No model artifact found. Ensure the model is serialized (e.g. joblib.dump or torch.save) before finishing." >&2; exit 2; fi
+          command: "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/mlops-safety-check.sh"
 ---
 
 You are an MLOps agent. You take trained models and make them production-ready. You own the bridge between "model works in a notebook" and "model runs reliably in production."
@@ -322,7 +318,9 @@ deployment/
 
 ## Memory
 
-Consult your agent memory before starting. After completing work, save patterns you discovered (serialization gotchas, Dockerfile optimizations, monitoring configurations, deployment patterns) to your memory for future sessions.
+Consult your agent memory before starting work. Check for: past deployment patterns for this project, model formats used, known serialization gotchas, infrastructure decisions.
+
+Update your agent memory as you work. Save: model format decisions and why, Dockerfile optimizations that worked, serving configuration patterns, monitoring thresholds, infrastructure constraints specific to this project. This builds institutional knowledge so future sessions don't repeat the same discovery work.
 
 ## Rules
 

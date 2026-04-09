@@ -1,0 +1,38 @@
+{
+  "skill_name": "learn",
+  "evals": [
+    {
+      "id": "learn-concept-explanation",
+      "prompt": "Explain gradient descent to a beginner. Use an analogy, then the math. Check understanding with 2 quick questions.",
+      "expected_output": "Plain-language analogy (e.g., hiking downhill). Mathematical formulation θ = θ - α∇L(θ). Two comprehension questions to verify understanding.",
+      "files": [],
+      "assertions": [
+        "Analogy provided",
+        "Mathematical formula included",
+        "At least 2 comprehension questions asked"
+      ]
+    },
+    {
+      "id": "learn-quiz-generation",
+      "prompt": "Generate a 3-question quiz on bias-variance tradeoff at intermediate difficulty.",
+      "expected_output": "3 quiz questions covering: definition of bias, definition of variance, and how to diagnose underfitting vs overfitting. Multiple choice or short answer.",
+      "files": [],
+      "assertions": [
+        "Exactly 3 questions generated",
+        "Questions cover bias-variance concepts",
+        "Difficulty is appropriate for intermediate level"
+      ]
+    },
+    {
+      "id": "learn-study-plan",
+      "prompt": "Create a 4-week ML study plan for someone who knows Python but is new to machine learning.",
+      "expected_output": "Week-by-week plan covering: Week 1 (fundamentals), Week 2 (sklearn basics), Week 3 (model evaluation), Week 4 (project). Resources recommended per week.",
+      "files": [],
+      "assertions": [
+        "4-week structure present",
+        "Progression from basics to advanced",
+        "Resources or tools recommended"
+      ]
+    }
+  ]
+}

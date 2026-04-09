@@ -1,0 +1,28 @@
+{
+  "skill_name": "fine-tune",
+  "evals": [
+    {
+      "id": "fine-tune-alpaca-prep",
+      "prompt": "Prepare the dataset at evals/files/raw_data.jsonl for fine-tuning in alpaca format. Validate quality and report statistics.",
+      "expected_output": "JSONL file in alpaca format with instruction/input/output/text fields. Deduplication report. Quality warnings for short outputs. Average text length reported.",
+      "files": ["evals/files/raw_data.jsonl"],
+      "assertions": [
+        "Output JSONL has instruction, input, output, text fields",
+        "Deduplication count reported",
+        "Average text length reported",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "fine-tune-sharegpt-prep",
+      "prompt": "Convert evals/files/raw_data.jsonl to sharegpt format using 'instruction' as human and 'output' as assistant columns.",
+      "expected_output": "JSONL file with conversations field containing [{from: human, value: ...}, {from: gpt, value: ...}] pairs.",
+      "files": ["evals/files/raw_data.jsonl"],
+      "assertions": [
+        "Output JSONL has conversations field",
+        "Conversations have human and gpt turns",
+        "Script exits with code 0"
+      ]
+    }
+  ]
+}

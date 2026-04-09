@@ -8,17 +8,30 @@
     {
       "name": "mlx",
       "source": "./",
-      "version": "1.1.0",
-      "description": "Full-lifecycle ML workbench \u2014 research papers, datasets, data prep, train, evaluate, deploy. 9 agents, 18 skills.",
+      "version": "1.1.6",
+      "description": "Full ML lifecycle workbench — research papers, datasets, data prep, train (full supervised learning coverage), evaluate, explain, deploy, drift detection, LLM fine-tuning, MCP server builder, context engineering, and interactive ML courses. 11 agents, 16 skills, 3 CLI tools, Python LSP.",
       "author": {
         "name": "Damion Rashford",
         "url": "https://github.com/damionrashford"
       },
       "category": "data-science",
       "tags": [
-        "ml-lifecycle", "experiment-tracking", "llm-finetuning",
-        "model-explainability", "drift-detection", "model-compression",
-        "autonomous-experiments", "research-papers", "dataset-discovery"
+        "ml-lifecycle",
+        "experiment-tracking",
+        "supervised-learning",
+        "llm-finetuning",
+        "model-explainability",
+        "drift-detection",
+        "model-deployment",
+        "autonomous-experiments",
+        "research-papers",
+        "dataset-discovery",
+        "context-engineering",
+        "mcp-builder",
+        "deep-learning",
+        "data-engineering",
+        "ml-education",
+        "pyright-lsp"
       ]
     }
   ]

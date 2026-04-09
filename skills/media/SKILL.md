@@ -6,8 +6,20 @@ description: >
   Use when the user wants to extract a YouTube transcript, analyze a video, turn a paper
   into a podcast, generate an audio summary, create a quiz from a paper, make slides
   from research, or automate any NotebookLM workflow.
-allowed-tools: Bash, Read, Write, Glob, Grep
+allowed-tools: >
+  Bash(uv run * scripts/auth.py *)
+  Bash(uv run * scripts/extract.py *)
+  Bash(uv run * scripts/generate.py *)
+  Bash(uv run * scripts/manage.py *)
+  Read Write Glob Grep
 argument-hint: YouTube URL, paper PDF path, or notebook ID (e.g. "https://youtube.com/watch?v=..." or "papers/attention.pdf")
+model: haiku
+effort: low
+compatibility: ">=1.0"
+metadata:
+  category: research
+  tags: [youtube, transcript, podcast, notebooklm, paper-to-audio, quiz, flashcards, slide-deck]
+  phase: research
 ---
 
 # Media: Extraction & Generation
@@ -26,52 +38,60 @@ pip install yt-dlp youtube-transcript-api youtube-comment-downloader
 
 All three packages are pip-installable. No API keys required.
 
-| Dependency | Used for |
-|---|---|
-| yt-dlp | Metadata, video/audio download |
-| youtube-transcript-api | Captions and transcripts |
-| youtube-comment-downloader | Comment scraping |
+| Dependency                 | Used for                       |
+| -------------------------- | ------------------------------ |
+| yt-dlp                     | Metadata, video/audio download |
+| youtube-transcript-api     | Captions and transcripts       |
+| youtube-comment-downloader | Comment scraping               |
 
 ### Commands
 
 #### Extract everything (metadata + transcript + comments)
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py all "$ARGUMENTS" --max-comments 20 --lang en
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py all "$ARGUMENTS" --max-comments 20 --lang en
 ```
 
 #### Extract metadata only
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py metadata "$ARGUMENTS"
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py metadata "$ARGUMENTS"
 ```
 
 #### Extract transcript only
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py transcript "$ARGUMENTS" --lang en
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py transcript "$ARGUMENTS" --lang en
 ```
 
 #### Extract comments
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py comments "$ARGUMENTS" --max 20
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py comments "$ARGUMENTS" --max 20
 ```
 
 #### Extract for research (compact summary with style hints)
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py research "$ARGUMENTS" --lang en
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py research "$ARGUMENTS" --lang en
 ```
 
 #### Download video
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py download-video "$ARGUMENTS" --quality 720p --output ./cache/downloads
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py download-video "$ARGUMENTS" --quality 720p --output ./cache/downloads
 ```
 
 #### Download audio (WAV)
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py download-audio "$ARGUMENTS" --output ./cache/downloads
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py download-audio "$ARGUMENTS" --output ./cache/downloads
 ```
 
 #### Extract chapters as scenes
+
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/extract.py chapters "$ARGUMENTS" --lang en
+uv run ${CLAUDE_SKILL_DIR}/scripts/extract.py chapters "$ARGUMENTS" --lang en
 ```
 
 ### Output
@@ -96,13 +116,13 @@ Generate podcasts, videos, quizzes, reports, and more from research papers using
 NotebookLM requires a one-time browser login to Google. Check auth status before generating:
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/auth.py check
+uv run ${CLAUDE_SKILL_DIR}/scripts/auth.py check
 ```
 
 If not authenticated, guide the user to run:
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/auth.py login
+uv run ${CLAUDE_SKILL_DIR}/scripts/auth.py login
 ```
 
 This opens a browser for Google SSO. Credentials are cached at `~/.notebooklm/storage_state.json`.
@@ -121,10 +141,10 @@ Before starting workflows, verify the CLI is ready:
 
 For automated environments, multiple accounts, or parallel agent workflows:
 
-| Variable | Purpose |
-|----------|---------|
-| `NOTEBOOKLM_HOME` | Custom config directory (default: `~/.notebooklm`) |
-| `NOTEBOOKLM_AUTH_JSON` | Inline auth JSON - no file writes needed |
+| Variable               | Purpose                                            |
+| ---------------------- | -------------------------------------------------- |
+| `NOTEBOOKLM_HOME`      | Custom config directory (default: `~/.notebooklm`) |
+| `NOTEBOOKLM_AUTH_JSON` | Inline auth JSON - no file writes needed           |
 
 **CI/CD setup:** Set `NOTEBOOKLM_AUTH_JSON` from a secret containing your `storage_state.json` contents.
 
@@ -133,76 +153,77 @@ For automated environments, multiple accounts, or parallel agent workflows:
 **Parallel agents:** The CLI stores notebook context in a shared file (`~/.notebooklm/context.json`). Multiple concurrent agents using `notebooklm use` can overwrite each other's context.
 
 **Solutions for parallel workflows:**
+
 1. **Always use explicit notebook ID** (recommended): Pass `-n <notebook_id>` (for `wait`/`download` commands) or `--notebook <notebook_id>` (for others) instead of relying on `use`
 2. **Per-agent isolation:** Set unique `NOTEBOOKLM_HOME` per agent: `export NOTEBOOKLM_HOME=/tmp/agent-$ID`
 3. **Use full UUIDs:** Avoid partial IDs in automation (they can become ambiguous)
 
 ### Available scripts
 
-| Script | Usage |
-|--------|-------|
-| [auth.py](scripts/auth.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/auth.py check` |
-| [generate.py](scripts/generate.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o podcast.mp3` |
-| [manage.py](scripts/manage.py) | `python3 ${CLAUDE_SKILL_DIR}/scripts/manage.py list` |
+| Script                             | Usage                                                                              |
+| ---------------------------------- | ---------------------------------------------------------------------------------- |
+| [auth.py](scripts/auth.py)         | `uv run ${CLAUDE_SKILL_DIR}/scripts/auth.py check`                                |
+| [generate.py](scripts/generate.py) | `uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o podcast.mp3` |
+| [manage.py](scripts/manage.py)     | `uv run ${CLAUDE_SKILL_DIR}/scripts/manage.py list`                               |
 
 ### Quick Reference
 
-| Task | Command |
-|------|---------|
-| Authenticate | `notebooklm login` |
-| Diagnose auth issues | `notebooklm auth check` |
-| Diagnose auth (full) | `notebooklm auth check --test` |
-| List notebooks | `notebooklm list` |
-| Create notebook | `notebooklm create "Title"` |
-| Set context | `notebooklm use <notebook_id>` |
-| Show context | `notebooklm status` |
-| Add URL source | `notebooklm source add "https://..."` |
-| Add file | `notebooklm source add ./file.pdf` |
-| Add YouTube | `notebooklm source add "https://youtube.com/..."` |
-| List sources | `notebooklm source list` |
-| Delete source by ID | `notebooklm source delete <source_id>` |
-| Delete source by exact title | `notebooklm source delete-by-title "Exact Title"` |
-| Wait for source processing | `notebooklm source wait <source_id>` |
-| Web research (fast) | `notebooklm source add-research "query"` |
-| Web research (deep) | `notebooklm source add-research "query" --mode deep --no-wait` |
-| Check research status | `notebooklm research status` |
-| Wait for research | `notebooklm research wait --import-all` |
-| Chat | `notebooklm ask "question"` |
-| Chat (specific sources) | `notebooklm ask "question" -s src_id1 -s src_id2` |
-| Chat (with references) | `notebooklm ask "question" --json` |
-| Chat (save answer as note) | `notebooklm ask "question" --save-as-note` |
-| Chat (save with title) | `notebooklm ask "question" --save-as-note --note-title "Title"` |
-| Show conversation history | `notebooklm history` |
-| Save all history as note | `notebooklm history --save` |
-| Continue specific conversation | `notebooklm ask "question" -c <conversation_id>` |
-| Save history with title | `notebooklm history --save --note-title "My Research"` |
-| Get source fulltext | `notebooklm source fulltext <source_id>` |
-| Get source guide | `notebooklm source guide <source_id>` |
-| Generate podcast | `notebooklm generate audio "instructions"` |
-| Generate podcast (JSON) | `notebooklm generate audio --json` |
-| Generate podcast (specific sources) | `notebooklm generate audio -s src_id1 -s src_id2` |
-| Generate video | `notebooklm generate video "instructions"` |
-| Generate report | `notebooklm generate report --format briefing-doc` |
+| Task                                  | Command                                                                                 |
+| ------------------------------------- | --------------------------------------------------------------------------------------- |
+| Authenticate                          | `notebooklm login`                                                                      |
+| Diagnose auth issues                  | `notebooklm auth check`                                                                 |
+| Diagnose auth (full)                  | `notebooklm auth check --test`                                                          |
+| List notebooks                        | `notebooklm list`                                                                       |
+| Create notebook                       | `notebooklm create "Title"`                                                             |
+| Set context                           | `notebooklm use <notebook_id>`                                                          |
+| Show context                          | `notebooklm status`                                                                     |
+| Add URL source                        | `notebooklm source add "https://..."`                                                   |
+| Add file                              | `notebooklm source add ./file.pdf`                                                      |
+| Add YouTube                           | `notebooklm source add "https://youtube.com/..."`                                       |
+| List sources                          | `notebooklm source list`                                                                |
+| Delete source by ID                   | `notebooklm source delete <source_id>`                                                  |
+| Delete source by exact title          | `notebooklm source delete-by-title "Exact Title"`                                       |
+| Wait for source processing            | `notebooklm source wait <source_id>`                                                    |
+| Web research (fast)                   | `notebooklm source add-research "query"`                                                |
+| Web research (deep)                   | `notebooklm source add-research "query" --mode deep --no-wait`                          |
+| Check research status                 | `notebooklm research status`                                                            |
+| Wait for research                     | `notebooklm research wait --import-all`                                                 |
+| Chat                                  | `notebooklm ask "question"`                                                             |
+| Chat (specific sources)               | `notebooklm ask "question" -s src_id1 -s src_id2`                                       |
+| Chat (with references)                | `notebooklm ask "question" --json`                                                      |
+| Chat (save answer as note)            | `notebooklm ask "question" --save-as-note`                                              |
+| Chat (save with title)                | `notebooklm ask "question" --save-as-note --note-title "Title"`                         |
+| Show conversation history             | `notebooklm history`                                                                    |
+| Save all history as note              | `notebooklm history --save`                                                             |
+| Continue specific conversation        | `notebooklm ask "question" -c <conversation_id>`                                        |
+| Save history with title               | `notebooklm history --save --note-title "My Research"`                                  |
+| Get source fulltext                   | `notebooklm source fulltext <source_id>`                                                |
+| Get source guide                      | `notebooklm source guide <source_id>`                                                   |
+| Generate podcast                      | `notebooklm generate audio "instructions"`                                              |
+| Generate podcast (JSON)               | `notebooklm generate audio --json`                                                      |
+| Generate podcast (specific sources)   | `notebooklm generate audio -s src_id1 -s src_id2`                                       |
+| Generate video                        | `notebooklm generate video "instructions"`                                              |
+| Generate report                       | `notebooklm generate report --format briefing-doc`                                      |
 | Generate report (append instructions) | `notebooklm generate report --format study-guide --append "Target audience: beginners"` |
-| Generate quiz | `notebooklm generate quiz` |
-| Revise a slide | `notebooklm generate revise-slide "prompt" --artifact <id> --slide 0` |
-| Check artifact status | `notebooklm artifact list` |
-| Wait for completion | `notebooklm artifact wait <artifact_id>` |
-| Download audio | `notebooklm download audio ./output.mp3` |
-| Download video | `notebooklm download video ./output.mp4` |
-| Download slide deck (PDF) | `notebooklm download slide-deck ./slides.pdf` |
-| Download slide deck (PPTX) | `notebooklm download slide-deck ./slides.pptx --format pptx` |
-| Download report | `notebooklm download report ./report.md` |
-| Download mind map | `notebooklm download mind-map ./map.json` |
-| Download data table | `notebooklm download data-table ./data.csv` |
-| Download quiz | `notebooklm download quiz quiz.json` |
-| Download quiz (markdown) | `notebooklm download quiz --format markdown quiz.md` |
-| Download flashcards | `notebooklm download flashcards cards.json` |
-| Download flashcards (markdown) | `notebooklm download flashcards --format markdown cards.md` |
-| Delete notebook | `notebooklm notebook delete <id>` |
-| List languages | `notebooklm language list` |
-| Get language | `notebooklm language get` |
-| Set language | `notebooklm language set zh_Hans` |
+| Generate quiz                         | `notebooklm generate quiz`                                                              |
+| Revise a slide                        | `notebooklm generate revise-slide "prompt" --artifact <id> --slide 0`                   |
+| Check artifact status                 | `notebooklm artifact list`                                                              |
+| Wait for completion                   | `notebooklm artifact wait <artifact_id>`                                                |
+| Download audio                        | `notebooklm download audio ./output.mp3`                                                |
+| Download video                        | `notebooklm download video ./output.mp4`                                                |
+| Download slide deck (PDF)             | `notebooklm download slide-deck ./slides.pdf`                                           |
+| Download slide deck (PPTX)            | `notebooklm download slide-deck ./slides.pptx --format pptx`                            |
+| Download report                       | `notebooklm download report ./report.md`                                                |
+| Download mind map                     | `notebooklm download mind-map ./map.json`                                               |
+| Download data table                   | `notebooklm download data-table ./data.csv`                                             |
+| Download quiz                         | `notebooklm download quiz quiz.json`                                                    |
+| Download quiz (markdown)              | `notebooklm download quiz --format markdown quiz.md`                                    |
+| Download flashcards                   | `notebooklm download flashcards cards.json`                                             |
+| Download flashcards (markdown)        | `notebooklm download flashcards --format markdown cards.md`                             |
+| Delete notebook                       | `notebooklm notebook delete <id>`                                                       |
+| List languages                        | `notebooklm language list`                                                              |
+| Get language                          | `notebooklm language get`                                                               |
+| Set language                          | `notebooklm language set zh_Hans`                                                       |
 
 **Parallel safety:** Use explicit notebook IDs in parallel workflows. Commands supporting `-n` shorthand: `artifact wait`, `source wait`, `research wait/status`, `download *`. Download commands also support `-a/--artifact`. Other commands use `--notebook`. For chat, use `-c <conversation_id>` to target a specific conversation.
 
@@ -214,68 +235,68 @@ For automated environments, multiple accounts, or parallel agent workflows:
 
 ```bash
 # From a local PDF
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast ./papers/attention.pdf -o podcast.mp3
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast ./papers/attention.pdf -o podcast.mp3
 
 # From a URL (arXiv, web page, etc.)
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast https://arxiv.org/abs/2401.12345 -o podcast.mp3
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast https://arxiv.org/abs/2401.12345 -o podcast.mp3
 
 # Debate format (two speakers arguing perspectives)
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o debate.mp3 --format debate
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o debate.mp3 --format debate
 
 # Deep dive (20-30 min detailed analysis)
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o deep.mp3 --format deep-dive --length long
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o deep.mp3 --format deep-dive --length long
 
 # With custom focus instructions
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o podcast.mp3 \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o podcast.mp3 \
   --instructions "Focus on the methodology and experimental results, skip the related work"
 
 # In another language
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o podcast.mp3 --language ja
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast paper.pdf -o podcast.mp3 --language ja
 ```
 
 #### 2. Generate other content types
 
 ```bash
 # Video overview (MP4 with AI visuals)
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py video paper.pdf -o overview.mp4 --style cinematic
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py video paper.pdf -o overview.mp4 --style cinematic
 
 # Quiz from paper content
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py quiz paper.pdf -o quiz.json --difficulty hard
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py quiz paper.pdf -o quiz.json --difficulty hard
 
 # Flashcards for study
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py flashcards paper.pdf -o cards.json
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py flashcards paper.pdf -o cards.json
 
 # Report (study guide, briefing doc, or blog post)
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py report paper.pdf -o guide.md --format study-guide
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py report paper.pdf -o guide.md --format study-guide
 
 # Slide deck
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py slides paper.pdf -o slides.pdf
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py slides paper.pdf -o slides.pdf
 
 # Infographic
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py infographic paper.pdf -o infographic.png
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py infographic paper.pdf -o infographic.png
 ```
 
 #### 3. Manage notebooks and artifacts
 
 ```bash
 # List all notebooks
-python3 ${CLAUDE_SKILL_DIR}/scripts/manage.py list
+uv run ${CLAUDE_SKILL_DIR}/scripts/manage.py list
 
 # List artifacts in a notebook
-python3 ${CLAUDE_SKILL_DIR}/scripts/manage.py artifacts <notebook_id>
+uv run ${CLAUDE_SKILL_DIR}/scripts/manage.py artifacts <notebook_id>
 
 # Download an existing artifact
-python3 ${CLAUDE_SKILL_DIR}/scripts/manage.py download <notebook_id> --artifact <artifact_id> -o output.mp3
+uv run ${CLAUDE_SKILL_DIR}/scripts/manage.py download <notebook_id> --artifact <artifact_id> -o output.mp3
 
 # Delete a notebook
-python3 ${CLAUDE_SKILL_DIR}/scripts/manage.py delete <notebook_id>
+uv run ${CLAUDE_SKILL_DIR}/scripts/manage.py delete <notebook_id>
 ```
 
 #### 4. Multi-source notebooks (combine papers)
 
 ```bash
 # Create a notebook, add multiple papers, then generate
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast \
   paper1.pdf paper2.pdf paper3.pdf \
   -o combined_podcast.mp3 \
   --title "Survey of Attention Mechanisms" \
@@ -302,6 +323,7 @@ When the user wants full automation (generate and download when ready):
 5. Main conversation continues while agent waits
 
 **Error handling in subagent:**
+
 - If `artifact wait` returns exit code 2 (timeout): Report timeout, suggest checking `artifact list`
 - If download fails: Check if artifact status is COMPLETED first
 
@@ -350,117 +372,126 @@ Deep research finds and analyzes web sources on a topic:
 5. When agent completes, sources are imported automatically
 
 **Alternative (blocking):** For simple cases, omit `--no-wait`:
+
 ```bash
 notebooklm source add-research "topic" --mode deep --import-all
 # Blocks for up to 5 minutes
 ```
 
 **When to use each mode:**
+
 - `--mode fast`: Specific topic, quick overview needed (5-10 sources, seconds)
 - `--mode deep`: Broad topic, comprehensive analysis needed (20+ sources, 2-5 min)
 
 **Research sources:**
+
 - `--from web`: Search the web (default)
 - `--from drive`: Search Google Drive
 
 ### Generation Types
 
 All generate commands support:
+
 - `-s, --source` to use specific source(s) instead of all sources
 - `--language` to set output language (defaults to configured language or 'en')
 - `--json` for machine-readable output (returns `task_id` and `status`)
 - `--retry N` to automatically retry on rate limits with exponential backoff
 
-| Type | Command | Options | Download |
-|------|---------|---------|----------|
-| Podcast | `generate audio` | `--format [deep-dive\|brief\|critique\|debate]`, `--length [short\|default\|long]` | .mp3 |
-| Video | `generate video` | `--format [explainer\|brief]`, `--style [auto\|classic\|whiteboard\|kawaii\|anime\|watercolor\|retro-print\|heritage\|paper-craft]` | .mp4 |
-| Slide Deck | `generate slide-deck` | `--format [detailed\|presenter]`, `--length [default\|short]` | .pdf / .pptx |
-| Slide Revision | `generate revise-slide "prompt" --artifact <id> --slide N` | `--wait`, `--notebook` | *(re-downloads parent deck)* |
-| Infographic | `generate infographic` | `--orientation [landscape\|portrait\|square]`, `--detail [concise\|standard\|detailed]`, `--style [auto\|sketch-note\|professional\|bento-grid\|editorial\|instructional\|bricks\|clay\|anime\|kawaii\|scientific]` | .png |
-| Report | `generate report` | `--format [briefing-doc\|study-guide\|blog-post\|custom]`, `--append "extra instructions"` | .md |
-| Mind Map | `generate mind-map` | *(sync, instant)* | .json |
-| Data Table | `generate data-table` | description required | .csv |
-| Quiz | `generate quiz` | `--difficulty [easy\|medium\|hard]`, `--quantity [fewer\|standard\|more]` | .json/.md/.html |
-| Flashcards | `generate flashcards` | `--difficulty [easy\|medium\|hard]`, `--quantity [fewer\|standard\|more]` | .json/.md/.html |
+| Type           | Command                                                    | Options                                                                                                                                                                                                             | Download                     |
+| -------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Podcast        | `generate audio`                                           | `--format [deep-dive\|brief\|critique\|debate]`, `--length [short\|default\|long]`                                                                                                                                  | .mp3                         |
+| Video          | `generate video`                                           | `--format [explainer\|brief]`, `--style [auto\|classic\|whiteboard\|kawaii\|anime\|watercolor\|retro-print\|heritage\|paper-craft]`                                                                                 | .mp4                         |
+| Slide Deck     | `generate slide-deck`                                      | `--format [detailed\|presenter]`, `--length [default\|short]`                                                                                                                                                       | .pdf / .pptx                 |
+| Slide Revision | `generate revise-slide "prompt" --artifact <id> --slide N` | `--wait`, `--notebook`                                                                                                                                                                                              | _(re-downloads parent deck)_ |
+| Infographic    | `generate infographic`                                     | `--orientation [landscape\|portrait\|square]`, `--detail [concise\|standard\|detailed]`, `--style [auto\|sketch-note\|professional\|bento-grid\|editorial\|instructional\|bricks\|clay\|anime\|kawaii\|scientific]` | .png                         |
+| Report         | `generate report`                                          | `--format [briefing-doc\|study-guide\|blog-post\|custom]`, `--append "extra instructions"`                                                                                                                          | .md                          |
+| Mind Map       | `generate mind-map`                                        | _(sync, instant)_                                                                                                                                                                                                   | .json                        |
+| Data Table     | `generate data-table`                                      | description required                                                                                                                                                                                                | .csv                         |
+| Quiz           | `generate quiz`                                            | `--difficulty [easy\|medium\|hard]`, `--quantity [fewer\|standard\|more]`                                                                                                                                           | .json/.md/.html              |
+| Flashcards     | `generate flashcards`                                      | `--difficulty [easy\|medium\|hard]`, `--quantity [fewer\|standard\|more]`                                                                                                                                           | .json/.md/.html              |
 
 ### Audio format reference
 
-| Format | Description | Best for |
-|--------|-------------|----------|
-| `brief` | Quick 5-10 min overview (default) | Getting the gist of a paper |
-| `deep-dive` | Detailed 20-30 min analysis | Thorough understanding |
-| `critique` | Critical examination of methodology | Paper review prep |
-| `debate` | Two-speaker debate format | Exploring multiple perspectives |
+| Format      | Description                         | Best for                        |
+| ----------- | ----------------------------------- | ------------------------------- |
+| `brief`     | Quick 5-10 min overview (default)   | Getting the gist of a paper     |
+| `deep-dive` | Detailed 20-30 min analysis         | Thorough understanding          |
+| `critique`  | Critical examination of methodology | Paper review prep               |
+| `debate`    | Two-speaker debate format           | Exploring multiple perspectives |
 
-| Length | Duration |
-|--------|----------|
-| `short` | 5-10 minutes |
-| `default` | 10-20 minutes |
-| `long` | 20-30+ minutes |
+| Length    | Duration       |
+| --------- | -------------- |
+| `short`   | 5-10 minutes   |
+| `default` | 10-20 minutes  |
+| `long`    | 20-30+ minutes |
 
 ### Video style reference
 
-| Style | Description |
-|-------|-------------|
-| `auto` | AI selects best style (default) |
-| `classic` | Clean, professional |
-| `whiteboard` | Hand-drawn whiteboard aesthetic |
-| `cinematic` | AI-generated documentary footage |
-| `anime` | Anime-inspired visuals |
-| `watercolor` | Watercolor painting style |
-| `retro` | Vintage aesthetic |
-| `kawaii` | Cute, Japanese-inspired style |
-| `heritage` | Traditional, historical aesthetic |
-| `paper-craft` | Paper cutout style |
-| `retro-print` | Retro print aesthetic |
+| Style         | Description                       |
+| ------------- | --------------------------------- |
+| `auto`        | AI selects best style (default)   |
+| `classic`     | Clean, professional               |
+| `whiteboard`  | Hand-drawn whiteboard aesthetic   |
+| `cinematic`   | AI-generated documentary footage  |
+| `anime`       | Anime-inspired visuals            |
+| `watercolor`  | Watercolor painting style         |
+| `retro`       | Vintage aesthetic                 |
+| `kawaii`      | Cute, Japanese-inspired style     |
+| `heritage`    | Traditional, historical aesthetic |
+| `paper-craft` | Paper cutout style                |
+| `retro-print` | Retro print aesthetic             |
 
 ### Features Beyond the Web UI
 
 These capabilities are available via CLI but not in NotebookLM's web interface:
 
-| Feature | Command | Description |
-|---------|---------|-------------|
-| **Batch downloads** | `download <type> --all` | Download all artifacts of a type at once |
-| **Quiz/Flashcard export** | `download quiz --format json` | Export as JSON, Markdown, or HTML (web UI only shows interactive view) |
-| **Mind map extraction** | `download mind-map` | Export hierarchical JSON for visualization tools |
-| **Data table export** | `download data-table` | Download structured tables as CSV |
-| **Slide deck as PPTX** | `download slide-deck --format pptx` | Download slide deck as editable .pptx (web UI only offers PDF) |
-| **Slide revision** | `generate revise-slide "prompt" --artifact <id> --slide N` | Modify individual slides with a natural-language prompt |
-| **Report template append** | `generate report --format study-guide --append "..."` | Append custom instructions to built-in format templates without losing the format type |
-| **Source fulltext** | `source fulltext <id>` | Retrieve the indexed text content of any source |
-| **Save chat to note** | `ask "..." --save-as-note` / `history --save` | Save Q&A answers or conversation history as notebook notes |
-| **Programmatic sharing** | `share` commands | Manage sharing permissions without the UI |
+| Feature                    | Command                                                    | Description                                                                            |
+| -------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Batch downloads**        | `download <type> --all`                                    | Download all artifacts of a type at once                                               |
+| **Quiz/Flashcard export**  | `download quiz --format json`                              | Export as JSON, Markdown, or HTML (web UI only shows interactive view)                 |
+| **Mind map extraction**    | `download mind-map`                                        | Export hierarchical JSON for visualization tools                                       |
+| **Data table export**      | `download data-table`                                      | Download structured tables as CSV                                                      |
+| **Slide deck as PPTX**     | `download slide-deck --format pptx`                        | Download slide deck as editable .pptx (web UI only offers PDF)                         |
+| **Slide revision**         | `generate revise-slide "prompt" --artifact <id> --slide N` | Modify individual slides with a natural-language prompt                                |
+| **Report template append** | `generate report --format study-guide --append "..."`      | Append custom instructions to built-in format templates without losing the format type |
+| **Source fulltext**        | `source fulltext <id>`                                     | Retrieve the indexed text content of any source                                        |
+| **Save chat to note**      | `ask "..." --save-as-note` / `history --save`              | Save Q&A answers or conversation history as notebook notes                             |
+| **Programmatic sharing**   | `share` commands                                           | Manage sharing permissions without the UI                                              |
 
 ### Command Output Formats
 
 Commands with `--json` return structured data for parsing:
 
 **Create notebook:**
+
 ```
 $ notebooklm create "Research" --json
 {"id": "abc123de-...", "title": "Research"}
 ```
 
 **Add source:**
+
 ```
 $ notebooklm source add "https://example.com" --json
 {"source_id": "def456...", "title": "Example", "status": "processing"}
 ```
 
 **Generate artifact:**
+
 ```
 $ notebooklm generate audio "Focus on key points" --json
 {"task_id": "xyz789...", "status": "pending"}
 ```
 
 **Chat with references:**
+
 ```
 $ notebooklm ask "What is X?" --json
 {"answer": "X is... [1] [2]", "conversation_id": "...", "turn_number": 1, "is_follow_up": false, "references": [{"source_id": "abc123...", "citation_number": 1, "cited_text": "Relevant passage from source..."}, {"source_id": "def456...", "citation_number": 2, "cited_text": "Another passage..."}]}
 ```
 
 **Source fulltext (get indexed content):**
+
 ```
 $ notebooklm source fulltext <source_id> --json
 {"source_id": "...", "title": "...", "char_count": 12345, "content": "Full indexed text..."}
@@ -469,6 +500,7 @@ $ notebooklm source fulltext <source_id> --json
 **Extract IDs:** Parse the `id`, `source_id`, or `task_id` field from JSON output.
 
 **Status values:**
+
 - Sources: `processing` -> `ready` (or `error`)
 - Artifacts: `pending` or `in_progress` -> `completed` (or `unknown`)
 
@@ -493,25 +525,27 @@ notebooklm language set en       # English (default)
 
 **Common language codes:**
 
-| Code | Language |
-|------|----------|
-| `en` | English |
-| `zh_Hans` | Simplified Chinese |
+| Code      | Language            |
+| --------- | ------------------- |
+| `en`      | English             |
+| `zh_Hans` | Simplified Chinese  |
 | `zh_Hant` | Traditional Chinese |
-| `ja` | Japanese |
-| `ko` | Korean |
-| `es` | Spanish |
-| `fr` | French |
-| `de` | German |
-| `pt_BR` | Portuguese (Brasil) |
+| `ja`      | Japanese            |
+| `ko`      | Korean              |
+| `es`      | Spanish             |
+| `fr`      | French              |
+| `de`      | German              |
+| `pt_BR`   | Portuguese (Brasil) |
 
 **Override per command:** Use `--language` flag on generate commands:
+
 ```bash
 notebooklm generate audio --language ja   # Japanese podcast
 notebooklm generate video --language zh_Hans  # Chinese video
 ```
 
 **Offline mode:** Use `--local` flag to skip server sync:
+
 ```bash
 notebooklm language set zh_Hans --local  # Save locally only
 notebooklm language get --local  # Read local config only
@@ -523,41 +557,42 @@ The research skill downloads papers to `./papers/`. Feed them directly:
 
 ```bash
 # Step 1: Download paper (research skill)
-python3 ${CLAUDE_SKILL_DIR}/../research/scripts/download.py 2401.12345 -o ./papers/
+uv run ${CLAUDE_SKILL_DIR}/../research/scripts/download.py 2401.12345 -o ./papers/
 
 # Step 2: Generate podcast
-python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast ./papers/2401.12345.pdf -o podcast.mp3
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast ./papers/2401.12345.pdf -o podcast.mp3
 ```
 
 ### Processing Times
 
-| Operation | Typical time | Suggested timeout |
-|-----------|--------------|-------------------|
-| Source processing | 30s - 10 min | 600s |
-| Research (fast) | 30s - 2 min | 180s |
-| Research (deep) | 15 - 30+ min | 1800s |
-| Notes | instant | n/a |
-| Mind-map | instant (sync) | n/a |
-| Quiz, flashcards | 5 - 15 min | 900s |
-| Report, data-table | 5 - 15 min | 900s |
-| Audio generation | 10 - 20 min | 1200s |
-| Video generation | 15 - 45 min | 2700s |
+| Operation          | Typical time   | Suggested timeout |
+| ------------------ | -------------- | ----------------- |
+| Source processing  | 30s - 10 min   | 600s              |
+| Research (fast)    | 30s - 2 min    | 180s              |
+| Research (deep)    | 15 - 30+ min   | 1800s             |
+| Notes              | instant        | n/a               |
+| Mind-map           | instant (sync) | n/a               |
+| Quiz, flashcards   | 5 - 15 min     | 900s              |
+| Report, data-table | 5 - 15 min     | 900s              |
+| Audio generation   | 10 - 20 min    | 1200s             |
+| Video generation   | 15 - 45 min    | 2700s             |
 
 **Polling intervals:** When checking status manually, poll every 15-30 seconds to avoid excessive API calls.
 
 ### Error Handling
 
-| Error | Cause | Action |
-|-------|-------|--------|
-| Auth/cookie error | Session expired | Run `notebooklm auth check` then `notebooklm login` |
-| "No notebook context" | Context not set | Use `-n <id>` or `--notebook <id>` flag (parallel), or `notebooklm use <id>` (single-agent) |
-| "No result found for RPC ID" | Rate limiting | Wait 5-10 min, retry |
-| `GENERATION_FAILED` | Google rate limit | Wait and retry later |
-| Download fails | Generation incomplete | Check `artifact list` for status |
-| Invalid notebook/source ID | Wrong ID | Run `notebooklm list` to verify |
-| RPC protocol error | Google changed APIs | May need CLI update |
+| Error                        | Cause                 | Action                                                                                      |
+| ---------------------------- | --------------------- | ------------------------------------------------------------------------------------------- |
+| Auth/cookie error            | Session expired       | Run `notebooklm auth check` then `notebooklm login`                                         |
+| "No notebook context"        | Context not set       | Use `-n <id>` or `--notebook <id>` flag (parallel), or `notebooklm use <id>` (single-agent) |
+| "No result found for RPC ID" | Rate limiting         | Wait 5-10 min, retry                                                                        |
+| `GENERATION_FAILED`          | Google rate limit     | Wait and retry later                                                                        |
+| Download fails               | Generation incomplete | Check `artifact list` for status                                                            |
+| Invalid notebook/source ID   | Wrong ID              | Run `notebooklm list` to verify                                                             |
+| RPC protocol error           | Google changed APIs   | May need CLI update                                                                         |
 
 **On failure, offer the user a choice:**
+
 1. Retry the operation
 2. Skip and continue with something else
 3. Investigate the error
@@ -566,13 +601,14 @@ python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py podcast ./papers/2401.12345.pdf 
 
 All commands use consistent exit codes:
 
-| Code | Meaning | Action |
-|------|---------|--------|
-| 0 | Success | Continue |
-| 1 | Error (not found, processing failed) | Check stderr, see Error Handling |
-| 2 | Timeout (wait commands only) | Extend timeout or check status manually |
+| Code | Meaning                              | Action                                  |
+| ---- | ------------------------------------ | --------------------------------------- |
+| 0    | Success                              | Continue                                |
+| 1    | Error (not found, processing failed) | Check stderr, see Error Handling        |
+| 2    | Timeout (wait commands only)         | Extend timeout or check status manually |
 
 **Examples:**
+
 - `source wait` returns 1 if source not found or processing failed
 - `artifact wait` returns 2 if timeout reached before completion
 - `generate` returns 1 if rate limited (check stderr for details)
@@ -582,6 +618,7 @@ All commands use consistent exit codes:
 #### Autonomy rules
 
 **Run automatically (no confirmation):**
+
 - `notebooklm status` - check context
 - `notebooklm auth check` - diagnose auth issues
 - `notebooklm list` - list notebooks
@@ -601,6 +638,7 @@ All commands use consistent exit codes:
 - `notebooklm source add` - add sources
 
 **Ask before running:**
+
 - `notebooklm delete` - destructive
 - `notebooklm generate *` - long-running, may fail
 - `notebooklm download *` - writes to filesystem

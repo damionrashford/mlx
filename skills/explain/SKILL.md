@@ -5,8 +5,18 @@ description: >
   importance. Generates summary plots, waterfall charts, and force plots. Use when
   debugging predictions, auditing for bias, or communicating model behavior to
   stakeholders.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: >
+  Bash(uv run * scripts/shap_explain.py *)
+  Bash, Read, Write, Edit, Glob, Grep
 argument-hint: model file and dataset path (e.g. "model.joblib data/test.csv")
+model: sonnet
+effort: medium
+paths: "**/*.joblib,**/*.pkl,**/*.pt,**/*.pth,**/*.onnx"
+compatibility: ">=1.0"
+metadata:
+  category: model-evaluation
+  tags: [shap, lime, explainability, interpretability, feature-importance, bias-audit]
+  phase: evaluate
 ---
 
 # Explain Skill
@@ -17,7 +27,7 @@ Generate model explanations with SHAP, LIME, integrated gradients, and permutati
 
 ```bash
 # Auto-detect model type and run SHAP
-python3 scripts/shap_explain.py model.joblib data/test.csv
+uv run ${CLAUDE_SKILL_DIR}/scripts/shap_explain.py model.joblib data/test.csv
 # Output: explanations/shap_summary.png
 ```
 

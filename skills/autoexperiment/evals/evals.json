@@ -1,0 +1,27 @@
+{
+  "skill_name": "autoexperiment",
+  "evals": [
+    {
+      "id": "autoexperiment-time-budget",
+      "prompt": "Run a 10-second training experiment using time_budget_train.py with experiment ID exp001. Record to results.tsv.",
+      "expected_output": "Training completes within budget. results.tsv has one row with id=exp001, val_score logged, status=KEEP or DISCARD.",
+      "files": [],
+      "assertions": [
+        "results.tsv created with one row",
+        "row has id=exp001",
+        "status is KEEP, DISCARD, or CRASH",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "autoexperiment-circuit-breaker",
+      "prompt": "Demonstrate the 3-crash circuit breaker: run 3 experiments that all crash and verify the system escalates to the user rather than continuing.",
+      "expected_output": "After 3 consecutive CRASHes, agent outputs escalation message to user explaining the repeated failures and requesting guidance.",
+      "files": [],
+      "assertions": [
+        "Agent escalates after 3 consecutive CRASHes",
+        "Escalation message identifies the error pattern"
+      ]
+    }
+  ]
+}

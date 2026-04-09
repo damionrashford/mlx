@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Cohort analysis — retention-style cohort table from transactional data.
 
 Usage:
-    python3 cohort_analysis.py data.csv --user user_id --date order_date --value revenue
-    python3 cohort_analysis.py data.csv --user user_id --date event_date --freq W
+    uv run cohort_analysis.py data.csv --user user_id --date order_date --value revenue
+    uv run cohort_analysis.py data.csv --user user_id --date event_date --freq W
 """
 
 import argparse

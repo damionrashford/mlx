@@ -1,0 +1,40 @@
+{
+  "skill_name": "ml-docs",
+  "evals": [
+    {
+      "id": "ml-docs-resolve-pandas",
+      "prompt": "Look up documentation for pandas DataFrame.groupby. Return the most relevant URLs to fetch.",
+      "expected_output": "JSON with fetch_in_order list. First URL is a topic-specific groupby page. Includes API reference URL with 'groupby' in path. Includes search URL as fallback.",
+      "files": [],
+      "assertions": [
+        "fetch_in_order has at least 2 URLs",
+        "At least one URL contains 'groupby'",
+        "Search URL included as fallback",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "ml-docs-list-libraries",
+      "prompt": "List all supported ML libraries in the ml-docs skill.",
+      "expected_output": "JSON with 19 libraries including numpy, pandas, sklearn, pytorch, tensorflow, keras, seaborn, scipy, statsmodels, xgboost, lightgbm, transformers, opencv, nltk, spacy, plotly, dask, pyspark, sqlalchemy.",
+      "files": [],
+      "assertions": [
+        "count >= 19",
+        "Libraries include pandas, pytorch, sklearn",
+        "Each library has base_url",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "ml-docs-alias-resolution",
+      "prompt": "Resolve docs for 'torch' (alias for pytorch) querying 'nn.Module'.",
+      "expected_output": "Library resolved as PyTorch. API reference URL includes nn module path. Fetch URLs prioritized correctly.",
+      "files": [],
+      "assertions": [
+        "library field is 'PyTorch'",
+        "fetch_in_order is non-empty",
+        "Script exits with code 0"
+      ]
+    }
+  ]
+}

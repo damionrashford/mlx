@@ -1,7 +1,19 @@
 ---
 name: mcp-builder
 description: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).
+allowed-tools: >
+  Bash(uv run * scripts/connections.py *)
+  Bash(uv run * scripts/evaluation.py *)
+  Bash, Read, Write, Edit, Glob, Grep
+argument-hint: service name or spec to build an MCP server for (e.g. "GitHub REST API" or "my Postgres database")
+model: sonnet
+effort: high
 license: Complete terms in LICENSE.txt
+compatibility: ">=1.0"
+metadata:
+  category: ai-engineering
+  tags: [mcp, model-context-protocol, fastmcp, typescript, tool-design, api-integration]
+  phase: build
 ---
 
 # MCP Server Development Guide

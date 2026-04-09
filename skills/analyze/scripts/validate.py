@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Analysis validation — automated checks for common data analysis pitfalls.
 
 Usage:
-    python3 validate.py data.csv
-    python3 validate.py data.csv --join-check other.csv --join-key user_id
+    uv run validate.py data.csv
+    uv run validate.py data.csv --join-check other.csv --join-key user_id
 """
 
 import argparse

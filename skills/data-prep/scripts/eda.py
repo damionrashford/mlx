@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Exploratory Data Analysis — run a full EDA pipeline on a CSV dataset.
 
 Usage:

@@ -1,0 +1,28 @@
+{
+  "skill_name": "mcp-builder",
+  "evals": [
+    {
+      "id": "mcp-builder-scaffold",
+      "prompt": "Scaffold a new MCP server that exposes a 'get_weather' tool. The tool accepts a city name and returns temperature and conditions.",
+      "expected_output": "Python MCP server file with: server = FastMCP(...), @server.tool() decorated get_weather function, proper type annotations, run_server() call. README with usage instructions.",
+      "files": [],
+      "assertions": [
+        "Server file created with FastMCP or mcp.Server",
+        "Tool function decorated with @server.tool()",
+        "Input validation present",
+        "run() or serve() call present"
+      ]
+    },
+    {
+      "id": "mcp-builder-evaluate",
+      "prompt": "Evaluate an MCP server defined in evals/files/server.py by running 3 test queries against it.",
+      "expected_output": "Evaluation report with: pass/fail per test case, response quality score, latency per call, overall assessment.",
+      "files": ["evals/files/server.py"],
+      "assertions": [
+        "3 test cases evaluated",
+        "Pass/fail status per case",
+        "Overall verdict provided"
+      ]
+    }
+  ]
+}

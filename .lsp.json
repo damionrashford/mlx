@@ -1,7 +1,12 @@
 {
   "python": {
-    "command": "pyright",
-    "args": ["--outputjson"],
-    "extensionToLanguage": { ".py": "python" }
+    "command": "pyright-langserver",
+    "args": ["--stdio"],
+    "extensionToLanguage": {
+      ".py": "python"
+    },
+    "restartOnCrash": true,
+    "maxRestarts": 3,
+    "startupTimeout": 10000
   }
 }

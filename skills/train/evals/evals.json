@@ -1,0 +1,104 @@
+{
+  "skill_name": "train",
+  "evals": [
+    {
+      "id": "train-baseline-sklearn",
+      "prompt": "Train a baseline model on evals/files/train.csv with target column 'target'. Use a RandomForestClassifier. Record results to results.tsv as exp000.",
+      "expected_output": "Trained model saved to models/exp000.joblib. results.tsv has one row with id=exp000, metric=val_accuracy, status=KEEP.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "results.tsv has a row with id=exp000",
+        "val_score is a number between 0 and 1",
+        "status is KEEP"
+      ]
+    },
+    {
+      "id": "train-analyze-results",
+      "prompt": "Analyze the experiment results in evals/files/results.tsv and identify the best experiment.",
+      "expected_output": "Summary showing total experiments, best val_score, improvement over baseline, and top 5 experiments by score.",
+      "files": ["evals/files/results.tsv"],
+      "assertions": [
+        "Output identifies best experiment",
+        "Output shows improvement metric",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "train-naive-bayes",
+      "prompt": "Train a GaussianNB classifier on evals/files/train.csv with target column 'target'. Evaluate on a 20% held-out split. Report accuracy and explain when Naive Bayes is preferred over logistic regression.",
+      "expected_output": "GaussianNB model trained and evaluated. Accuracy reported. Explanation that Naive Bayes is preferred when features are approximately independent, data is small, or fast inference is required.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses GaussianNB from sklearn.naive_bayes",
+        "Accuracy reported as a float",
+        "Explanation mentions feature independence assumption"
+      ]
+    },
+    {
+      "id": "train-knn",
+      "prompt": "Train a KNeighborsClassifier on evals/files/train.csv with target column 'target'. Wrap it in a Pipeline with StandardScaler. Evaluate on a 20% split. Explain why scaling is mandatory for KNN.",
+      "expected_output": "Pipeline(StandardScaler, KNeighborsClassifier) trained and evaluated. Accuracy reported. Explanation that KNN uses distance metrics so unscaled features dominate by magnitude.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses Pipeline with StandardScaler and KNeighborsClassifier",
+        "Accuracy or F1 reported",
+        "Explanation mentions distance-based algorithm and scaling requirement"
+      ]
+    },
+    {
+      "id": "train-lda-qda",
+      "prompt": "Compare LinearDiscriminantAnalysis and QuadraticDiscriminantAnalysis on evals/files/train.csv with target column 'target'. Report accuracy for both. Explain when to prefer LDA vs QDA.",
+      "expected_output": "Both LDA and QDA trained and evaluated. Accuracy comparison provided. LDA preferred when classes share covariance and data is small; QDA when each class has different covariance structure.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses LinearDiscriminantAnalysis and QuadraticDiscriminantAnalysis",
+        "Accuracy reported for both models",
+        "Explanation references covariance assumptions"
+      ]
+    },
+    {
+      "id": "train-svm",
+      "prompt": "Train an SVC with RBF kernel on evals/files/train.csv with target column 'target'. Use Pipeline(StandardScaler, SVC). Evaluate on 20% split. Explain the role of C and gamma hyperparameters.",
+      "expected_output": "SVC with RBF kernel trained in a scaled pipeline. Accuracy reported. C controls margin hardness (high C = low bias, high variance); gamma controls RBF kernel width (high gamma = tight fit).",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses SVC with kernel='rbf' wrapped in Pipeline with StandardScaler",
+        "Accuracy or F1 reported",
+        "Explanation of C (regularization) and gamma (kernel width)"
+      ]
+    },
+    {
+      "id": "train-decision-tree",
+      "prompt": "Train a DecisionTreeClassifier on evals/files/train.csv with target column 'target'. Set max_depth=5. Use export_text() to print the decision rules. Explain how max_depth prevents overfitting.",
+      "expected_output": "DecisionTreeClassifier trained with max_depth=5. Decision rules printed as text. Explanation that limiting depth reduces variance by preventing the tree from memorizing training data.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses DecisionTreeClassifier with max_depth=5",
+        "export_text output shown",
+        "Explanation of max_depth as variance control"
+      ]
+    },
+    {
+      "id": "train-glm",
+      "prompt": "Fit a Poisson GLM using statsmodels on evals/files/train.csv treating the 'target' column as a count outcome. Report coefficients and explain when Poisson regression is preferred over linear regression.",
+      "expected_output": "Poisson GLM fitted with sm.add_constant. Summary with coefficients shown. Explanation: Poisson is preferred when target is non-negative count data (events, transactions, etc.) and OLS would predict negative values.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses statsmodels GLM with Poisson family",
+        "Coefficient table shown",
+        "Explanation of Poisson for count outcomes vs OLS"
+      ]
+    },
+    {
+      "id": "train-gaussian-process",
+      "prompt": "Fit a GaussianProcessRegressor on evals/files/train.csv (use 'target' as the regression target). Use Matern kernel. Return predictions with uncertainty (return_std=True). Explain when GP is preferred over linear regression.",
+      "expected_output": "GPR fitted with Matern kernel. Predictions include mean and std (uncertainty). Explanation: GP preferred when uncertainty quantification is needed, data is small (<5k rows), and capturing complex correlations matters.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Uses GaussianProcessRegressor with Matern kernel",
+        "Predictions include std (uncertainty estimates)",
+        "Explanation references uncertainty quantification and small data use case"
+      ]
+    }
+  ]
+}

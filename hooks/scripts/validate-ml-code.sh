@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # PreToolUse (Write|Edit) — ML code validation for Python files.
-# Only activates on .py files. Exit 2 blocks the write; exit 0 allows it.
+# Blocks via hookSpecificOutput.permissionDecision (exit 0 + JSON).
+# NOTE: exit 2 discards JSON per docs — must exit 0 for JSON to be processed.
 
 set -euo pipefail
 
@@ -57,19 +58,21 @@ if echo "$CONTENT" | grep -qE '\.fit\s*\(\s*(X_test|y_test|test_)'; then
   errors+=("Potential data leakage: .fit() called on test data. Fit only on training data, then transform test.")
 fi
 
-# Output errors
+# Output errors using hookSpecificOutput format required for PreToolUse.
+# Must exit 0 — docs: "JSON is only processed on exit 0. If you exit 2, any JSON is ignored."
 if [ ${#errors[@]} -gt 0 ]; then
-  echo "ML code validation issues found in ${FILE_PATH}:" >&2
-  for err in "${errors[@]}"; do
-    echo "  - ${err}" >&2
-  done
-  # Output JSON decision to block with reason
   python3 -c "
 import json, sys
 errors = sys.argv[1:]
-print(json.dumps({'decision': 'block', 'reason': 'ML code validation: ' + '; '.join(errors)}))
+print(json.dumps({
+    'hookSpecificOutput': {
+        'hookEventName': 'PreToolUse',
+        'permissionDecision': 'deny',
+        'permissionDecisionReason': 'ML code validation: ' + '; '.join(errors)
+    }
+}))
 " "${errors[@]}"
-  exit 2
+  exit 0
 fi
 
 exit 0

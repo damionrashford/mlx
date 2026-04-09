@@ -1,0 +1,40 @@
+{
+  "skill_name": "analyze",
+  "evals": [
+    {
+      "id": "analyze-descriptive-stats",
+      "prompt": "Run descriptive statistics on the sales data in evals/files/sales.csv. Group by segment and show revenue breakdown.",
+      "expected_output": "Descriptive statistics table with count, mean, median, total, and std for revenue grouped by Enterprise vs SMB segments.",
+      "files": ["evals/files/sales.csv"],
+      "assertions": [
+        "Output includes segment breakdown (Enterprise, SMB)",
+        "Output includes mean and median revenue",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "analyze-hypothesis-test",
+      "prompt": "Test whether revenue differs significantly between Enterprise and SMB customers in evals/files/sales.csv.",
+      "expected_output": "Hypothesis test output with p-value, effect size (Cohen's d), confidence interval, and plain-language conclusion about statistical significance.",
+      "files": ["evals/files/sales.csv"],
+      "assertions": [
+        "Output includes p-value",
+        "Output includes effect size",
+        "Output states whether result is significant or not",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "analyze-ab-test",
+      "prompt": "Run an A/B test on evals/files/sales.csv comparing conversion rates between variant A and variant B.",
+      "expected_output": "A/B test results with conversion rates for control and treatment, statistical significance, lift percentage, and recommendation.",
+      "files": ["evals/files/sales.csv"],
+      "assertions": [
+        "Output includes conversion rate for each variant",
+        "Output includes p-value",
+        "Output includes recommendation",
+        "Script exits with code 0"
+      ]
+    }
+  ]
+}

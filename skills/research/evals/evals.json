@@ -1,0 +1,27 @@
+{
+  "skill_name": "research",
+  "evals": [
+    {
+      "id": "research-arxiv-search",
+      "prompt": "Search for papers about 'attention is all you need' transformer architecture on arXiv. Return top 5 results.",
+      "expected_output": "JSON array of papers with title, authors, abstract snippet, arXiv ID, and URL. At least 3 results. Vaswani et al. 2017 paper appears in results.",
+      "files": [],
+      "assertions": [
+        "At least 3 papers returned",
+        "Each paper has title and url fields",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "research-multi-source",
+      "prompt": "Search for 'BERT language model' across arxiv and semantic_scholar. Return up to 10 deduplicated results.",
+      "expected_output": "Deduplicated results from multiple sources. Each result has source field. No duplicate paper IDs.",
+      "files": [],
+      "assertions": [
+        "Results from at least 2 sources",
+        "No duplicate paper IDs",
+        "Script exits with code 0"
+      ]
+    }
+  ]
+}

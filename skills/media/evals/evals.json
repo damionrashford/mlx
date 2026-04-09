@@ -1,0 +1,27 @@
+{
+  "skill_name": "media",
+  "evals": [
+    {
+      "id": "media-youtube-extract",
+      "prompt": "Extract the transcript and metadata from a YouTube video URL. Summarize the key points.",
+      "expected_output": "Video metadata (title, duration, channel). Full transcript text. Bullet-point summary of 5 key takeaways.",
+      "files": [],
+      "assertions": [
+        "Video metadata extracted (title present)",
+        "Transcript text extracted",
+        "Summary with at least 3 key points provided"
+      ]
+    },
+    {
+      "id": "media-podcast-generation",
+      "prompt": "Generate a podcast script from the paper at evals/files/paper.pdf. Format as a 2-person conversation, approximately 5 minutes long.",
+      "expected_output": "Podcast script with HOST and GUEST labeled turns. Covers introduction, main contributions, methodology, results, and implications. Approximately 700-1000 words.",
+      "files": ["evals/files/paper.pdf"],
+      "assertions": [
+        "Script has HOST and GUEST turns",
+        "Introduction, methods, and results covered",
+        "Word count appropriate for 5-minute podcast"
+      ]
+    }
+  ]
+}

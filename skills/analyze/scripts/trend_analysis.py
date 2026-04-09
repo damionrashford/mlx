@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Trend analysis — moving averages, growth rates, and seasonal decomposition.
 
 Usage:
-    python3 trend_analysis.py data.csv --date date --value revenue
-    python3 trend_analysis.py data.csv --date date --value revenue --window 30
+    uv run trend_analysis.py data.csv --date date --value revenue
+    uv run trend_analysis.py data.csv --date date --value revenue --window 30
 """
 
 import argparse

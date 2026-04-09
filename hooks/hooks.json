@@ -29,6 +29,7 @@
         "hooks": [
           {
             "type": "command",
+            "if": "Write(*.py)|Edit(*.py)",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/validate-ml-code.sh\""
           }
         ]
@@ -42,6 +43,16 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/watch-training.sh\"",
             "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Write(*.py)|Edit(*.py)",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/python-syntax-check.sh\""
           }
         ]
       }
@@ -75,6 +86,16 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/results-changed.sh\"",
             "async": true
+          }
+        ]
+      },
+      {
+        "matcher": "EXPERIMENT.md",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/experiment-goal-changed.sh\"",
+            "statusMessage": "Reloading experiment goal..."
           }
         ]
       }

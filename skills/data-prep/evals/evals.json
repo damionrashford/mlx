@@ -1,0 +1,39 @@
+{
+  "skill_name": "data-prep",
+  "evals": [
+    {
+      "id": "data-prep-eda",
+      "prompt": "Run a full EDA on evals/files/train.csv with target column 'target'. Identify any data quality issues.",
+      "expected_output": "EDA report with shape, missing value counts, numeric/categorical summaries, high correlations, target distribution, and any data quality flags.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Output includes shape (rows x columns)",
+        "Output includes task type (Classification or Regression)",
+        "Output includes duplicate check",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "data-prep-clean",
+      "prompt": "Clean evals/files/train.csv and save to /tmp/clean_output.csv. Report all changes made.",
+      "expected_output": "Cleaned CSV file with a JSON report listing: duplicates removed, types fixed, missing values handled. Input row count preserved or reduced with explanation.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Output CSV exists at specified path",
+        "Script exits with code 0",
+        "Output reports changes made"
+      ]
+    },
+    {
+      "id": "data-prep-feature-engineering",
+      "prompt": "Engineer features from evals/files/train.csv targeting the 'target' column. Apply numeric scaling and encode categorical columns.",
+      "expected_output": "CSV with additional engineered features. Log-transformed numeric columns, encoded categoricals, interaction features. Output has more columns than input.",
+      "files": ["evals/files/train.csv"],
+      "assertions": [
+        "Output has more columns than input",
+        "Script exits with code 0",
+        "Output reports features added"
+      ]
+    }
+  ]
+}

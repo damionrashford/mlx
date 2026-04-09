@@ -1,4 +1,13 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#   "shap>=0.44",
+#   "pandas>=2.0",
+#   "numpy>=1.24",
+#   "matplotlib>=3.7",
+# ]
+# requires-python = ">=3.10"
+# ///
 # shap_explain.py — Auto-detect model type, run correct SHAP explainer,
 # save summary plot to explanations/shap_summary.png.
 

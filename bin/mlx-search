@@ -40,4 +40,4 @@ if [ ! -f "$SEARCH_SCRIPT" ]; then
   exit 1
 fi
 
-exec python3 "$SEARCH_SCRIPT" "$QUERY" --source "$SOURCE"
+exec uv run "$SEARCH_SCRIPT" "$QUERY" --source "$SOURCE"

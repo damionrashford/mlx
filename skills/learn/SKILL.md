@@ -7,6 +7,13 @@ description: >
   deeply, or get quizzed on material.
 allowed-tools: Bash, Read, Write, Glob, Grep
 argument-hint: topic, lesson path, or mode (e.g. "transformers", "study neural networks", "quiz me on backpropagation")
+model: sonnet
+effort: medium
+compatibility: ">=1.0"
+metadata:
+  category: education
+  tags: [tutor, cs229, stanford, applied-ml, ml-engineering, quiz, interview-prep, curriculum]
+  phase: learn
 ---
 
 # Interactive ML Learning

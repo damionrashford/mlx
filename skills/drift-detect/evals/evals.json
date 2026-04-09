@@ -1,0 +1,26 @@
+{
+  "skill_name": "drift-detect",
+  "evals": [
+    {
+      "id": "drift-detect-basic",
+      "prompt": "Detect data drift between evals/files/reference.csv (training data) and evals/files/current.csv (production data). Save report to /tmp/drift.html.",
+      "expected_output": "Console summary with ALERT/WARN/OK status per column, overall counts, and HTML report at /tmp/drift.html with color-coded table.",
+      "files": ["evals/files/reference.csv", "evals/files/current.csv"],
+      "assertions": [
+        "Output includes ALERT, WARN, or OK status per column",
+        "HTML report created at output path",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "drift-detect-identical",
+      "prompt": "Run drift detection on evals/files/reference.csv against itself. Expect all columns to show no drift.",
+      "expected_output": "All columns show OK status. Summary shows 0 ALERT, 0 WARN.",
+      "files": ["evals/files/reference.csv"],
+      "assertions": [
+        "Summary shows 0 ALERT columns",
+        "Script exits with code 0"
+      ]
+    }
+  ]
+}

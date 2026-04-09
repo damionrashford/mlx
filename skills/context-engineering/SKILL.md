@@ -8,6 +8,15 @@ description: >
   designing memory, tool APIs, or context strategies for any language model application.
 allowed-tools: Bash, Read, Write, Glob, Grep
 argument-hint: describe the LLM system you are building (e.g. "RAG pipeline" or "multi-agent orchestrator")
+user-invocable: false
+disable-model-invocation: true
+model: sonnet
+effort: low
+compatibility: ">=1.0"
+metadata:
+  category: ai-engineering
+  tags: [llm, context-window, rag, memory, multi-agent, prompt-engineering, tool-design]
+  phase: build
 ---
 
 # Context Engineering for LLM Applications

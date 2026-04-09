@@ -1,0 +1,29 @@
+{
+  "skill_name": "serve",
+  "evals": [
+    {
+      "id": "serve-benchmark-comparison",
+      "prompt": "Benchmark the original model at evals/files/model.joblib against a compressed version at evals/files/model_compressed.joblib using evals/files/test.csv.",
+      "expected_output": "Comparison table with p50/p95/p99 latency, throughput (req/s), memory (MB), and accuracy delta. Summary with speedup factor and memory reduction %.",
+      "files": ["evals/files/model.joblib", "evals/files/model_compressed.joblib", "evals/files/test.csv"],
+      "assertions": [
+        "Output includes latency comparison",
+        "Output includes throughput comparison",
+        "Output includes speedup factor",
+        "Script exits with code 0"
+      ]
+    },
+    {
+      "id": "serve-docker-generation",
+      "prompt": "Generate a Dockerfile and docker-compose.yml for serving the model at evals/files/model.joblib as a FastAPI REST endpoint.",
+      "expected_output": "Dockerfile with Python 3.11 base, FastAPI, uvicorn. docker-compose.yml with service on port 8080. Health check endpoint at /health.",
+      "files": ["evals/files/model.joblib"],
+      "assertions": [
+        "Dockerfile created",
+        "docker-compose.yml created",
+        "Dockerfile exposes a port",
+        "FastAPI or uvicorn in dependencies"
+      ]
+    }
+  ]
+}

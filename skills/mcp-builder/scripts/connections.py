@@ -1,3 +1,9 @@
+# /// script
+# dependencies = [
+#   "mcp>=1.0",
+# ]
+# requires-python = ">=3.10"
+# ///
 """Lightweight connection handling for MCP servers."""
 
 from abc import ABC, abstractmethod
