@@ -1,7 +1,6 @@
 {
-  "description": "MLX ML Workbench hooks — full ML lifecycle automation across all hook events",
+  "description": "MLX ML Workbench hooks \u2014 full ML lifecycle automation across all hook events",
   "hooks": {
-
     "SessionStart": [
       {
         "matcher": "startup",
@@ -29,7 +28,6 @@
         ]
       }
     ],
-
     "UserPromptSubmit": [
       {
         "hooks": [
@@ -40,7 +38,6 @@
         ]
       }
     ],
-
     "PreToolUse": [
       {
         "matcher": "Write|Edit",
@@ -67,7 +64,6 @@
         ]
       }
     ],
-
     "PermissionRequest": [
       {
         "hooks": [
@@ -78,7 +74,6 @@
         ]
       }
     ],
-
     "PermissionDenied": [
       {
         "hooks": [
@@ -89,7 +84,6 @@
         ]
       }
     ],
-
     "PostToolUse": [
       {
         "matcher": "Bash",
@@ -112,7 +106,6 @@
         ]
       }
     ],
-
     "PostToolUseFailure": [
       {
         "matcher": "Bash",
@@ -124,7 +117,6 @@
         ]
       }
     ],
-
     "SubagentStart": [
       {
         "hooks": [
@@ -136,7 +128,6 @@
         ]
       }
     ],
-
     "SubagentStop": [
       {
         "hooks": [
@@ -152,7 +143,6 @@
         ]
       }
     ],
-
     "WorktreeCreate": [
       {
         "hooks": [
@@ -164,7 +154,6 @@
         ]
       }
     ],
-
     "WorktreeRemove": [
       {
         "hooks": [
@@ -176,7 +165,6 @@
         ]
       }
     ],
-
     "InstructionsLoaded": [
       {
         "hooks": [
@@ -188,7 +176,6 @@
         ]
       }
     ],
-
     "TaskCreated": [
       {
         "hooks": [
@@ -200,7 +187,6 @@
         ]
       }
     ],
-
     "TaskCompleted": [
       {
         "hooks": [
@@ -212,7 +198,6 @@
         ]
       }
     ],
-
     "Stop": [
       {
         "hooks": [
@@ -224,7 +209,6 @@
         ]
       }
     ],
-
     "StopFailure": [
       {
         "hooks": [
@@ -235,7 +219,6 @@
         ]
       }
     ],
-
     "PreCompact": [
       {
         "hooks": [
@@ -246,7 +229,6 @@
         ]
       }
     ],
-
     "FileChanged": [
       {
         "matcher": "results.tsv",
@@ -255,11 +237,6 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/results-changed.sh\"",
             "async": true
-          },
-          {
-            "type": "http",
-            "url": "${user_config.webhook_url}",
-            "method": "POST"
           }
         ]
       },
@@ -274,7 +251,6 @@
         ]
       }
     ],
-
     "SessionEnd": [
       {
         "hooks": [
@@ -285,7 +261,6 @@
         ]
       }
     ],
-
     "CwdChanged": [
       {
         "hooks": [
@@ -297,7 +272,6 @@
         ]
       }
     ],
-
     "PostCompact": [
       {
         "hooks": [
@@ -309,6 +283,5 @@
         ]
       }
     ]
-
   }
 }
