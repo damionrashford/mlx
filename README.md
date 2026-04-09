@@ -17,7 +17,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
-  <img src="https://img.shields.io/badge/version-1.1.6-green.svg" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.1.7-green.svg" alt="Version">
   <img src="https://img.shields.io/badge/python-3.10+-3776AB.svg?logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-F97316.svg" alt="Claude Code Plugin">
 </p>
@@ -252,21 +252,30 @@ mlx/
 ├── hooks/
 │   ├── hooks.json                   # Hook event configuration
 │   └── scripts/
-│       ├── session-context.sh       # SessionStart: scan ML project state
-│       ├── compact-reinject.sh      # SessionStart(compact): restore experiment context
-│       ├── post-compact-reinject.sh # PostCompact: reinject ML context
-│       ├── validate-ml-code.sh      # PreToolUse(Write|Edit *.py): leakage + seed checks
-│       ├── python-syntax-check.sh   # PostToolUse(Write|Edit *.py): syntax validation
-│       ├── mlops-safety-check.sh    # PreToolUse(Bash) on ml-ops: block destructive deploys
-│       ├── watch-training.sh        # PostToolUse(Bash): capture training metrics
-│       ├── ml-error-advisor.sh      # PostToolUseFailure(Bash): diagnose ML errors
-│       ├── save-experiment-state.sh # PreCompact: persist experiment state
-│       ├── results-changed.sh       # FileChanged(results.tsv): log experiment update
+│       ├── session-context.sh         # SessionStart: scan ML project state
+│       ├── dep-check.sh               # SessionStart: warm uv cache via CLAUDE_PLUGIN_DATA
+│       ├── compact-reinject.sh        # SessionStart(compact): restore experiment context
+│       ├── prompt-guard.sh            # UserPromptSubmit: ML anti-pattern + routing hints
+│       ├── validate-ml-code.sh        # PreToolUse(Write|Edit *.py): leakage + seed checks
+│       ├── mlops-safety-check.sh      # PreToolUse(Bash): block destructive deploys globally
+│       ├── permission-denied.sh       # PermissionDenied: retry safe ops, hard-stop destructive
+│       ├── python-syntax-check.sh     # PostToolUse(Write|Edit *.py): syntax validation
+│       ├── watch-training.sh          # PostToolUse(Bash): capture training metrics
+│       ├── ml-error-advisor.sh        # PostToolUseFailure(Bash): diagnose ML errors
+│       ├── subagent-start.sh          # SubagentStart: log agent kickoff
+│       ├── subagent-log.sh            # SubagentStop: log which agent finished
+│       ├── agent-stop-summary.sh      # SubagentStop/Stop: emit experiment state to parent
+│       ├── worktree-setup.sh          # WorktreeCreate: init EXPERIMENT.md + results.tsv
+│       ├── worktree-archive.sh        # WorktreeRemove: archive results to .claude/experiments/
+│       ├── task-log.sh                # TaskCreated/Completed: audit trail
+│       ├── stop-failure.sh            # StopFailure: log API error + emit recovery context
+│       ├── instructions-loaded.sh     # InstructionsLoaded: reinject experiment hypothesis
+│       ├── save-experiment-state.sh   # PreCompact: persist experiment state
+│       ├── post-compact-reinject.sh   # PostCompact: reinject ML context
+│       ├── results-changed.sh         # FileChanged(results.tsv): log + webhook
 │       ├── experiment-goal-changed.sh # FileChanged(EXPERIMENT.md): reinject hypothesis
-│       ├── agent-stop-summary.sh    # Stop: emit experiment state to parent agent
-│       ├── session-summary.sh       # SessionEnd: final session summary
-│       ├── subagent-log.sh          # SubagentStop: log which agent finished
-│       └── cwd-reload.sh            # CwdChanged: reload ML project state
+│       ├── session-summary.sh         # SessionEnd: final session summary
+│       └── cwd-reload.sh              # CwdChanged: reload ML project state
 ├── output-styles/
 │   ├── terse.md                     # Direct answers, numbers over prose
 │   ├── report.md                    # Stakeholder report format
@@ -284,22 +293,33 @@ mlx/
 
 ### Hooks
 
-MLX includes 11 hook event types running across the ML lifecycle:
+MLX covers all 20 hook event types across the ML lifecycle:
 
 | Event | Trigger | What it does |
 |-------|---------|--------------|
-| `SessionStart` | Session open / after compact | Scans project for ML state; restores experiment context |
-| `PreToolUse` | Before Write/Edit on `*.py` | Validates for data leakage, missing seeds, hardcoded paths |
-| `PreToolUse` | Before Bash in ml-ops agent | Blocks destructive deployment commands |
-| `PostToolUse` | After Write/Edit on `*.py` | Syntax-checks Python before it can cause downstream errors |
+| `SessionStart` | Session open / after compact | Scans ML project state; warms uv dep cache via `${CLAUDE_PLUGIN_DATA}` |
+| `UserPromptSubmit` | Every user prompt | Fast anti-pattern detection (train-on-test, full-dataset eval) + agent routing hints |
+| `PreToolUse` | Before Write/Edit on `*.py` | Shell regex + LLM `prompt` hook for data leakage detection; seed validation |
+| `PreToolUse` | Before any Bash call | Blocks destructive deployment commands (force push, kubectl delete, docker rm -f) |
+| `PermissionRequest` | Permission dialog | Safety check before any permission is granted |
+| `PermissionDenied` | Tool call blocked | Returns `{retry: true}` for safe read/info-gathering blocks; hard-stops destructive ones |
+| `PostToolUse` | After Write/Edit on `*.py` | Syntax-checks Python immediately after write |
 | `PostToolUse` | After Bash | Captures training metrics from output |
 | `PostToolUseFailure` | Failed Bash | Diagnoses ML errors (missing packages, CUDA, NaN loss) |
+| `SubagentStart` | Subagent spawned | Logs agent start with timestamp |
+| `SubagentStop` | Subagent finishes | Logs completion + emits experiment state to parent agent |
+| `WorktreeCreate` | Worktree created | Initializes EXPERIMENT.md, results.tsv, and data/ in the worktree |
+| `WorktreeRemove` | Worktree torn down | Archives results.tsv, EXPERIMENT.md, and artifact list to `.claude/experiments/` |
+| `TaskCreated` | Task created | Logs task to audit trail in `${CLAUDE_PLUGIN_DATA}/task-log.txt` |
+| `TaskCompleted` | Task marked done | Logs completion to audit trail |
+| `Stop` | Agent session end | Emits final experiment summary |
+| `StopFailure` | API error ends turn | Logs error; emits recovery context for next turn |
+| `InstructionsLoaded` | CLAUDE.md / rules loaded | Reinjects active experiment hypothesis and run count |
 | `PreCompact` | Before context compaction | Saves experiment state so it survives the compact |
 | `PostCompact` | After context compaction | Rehydrates ML context into new window |
-| `FileChanged` | `results.tsv` / `EXPERIMENT.md` | Logs experiment update; reinjects active hypothesis |
-| `Stop` | Agent session end | Emits final experiment summary to parent agent |
+| `FileChanged` | `results.tsv` | Logs update; POSTs to `webhook_url` if configured |
+| `FileChanged` | `EXPERIMENT.md` | Reinjects active hypothesis |
 | `SessionEnd` | Session close | Final session summary |
-| `SubagentStop` | Subagent finishes | Logs which agent completed |
 | `CwdChanged` | Directory change | Reloads ML project state for new directory |
 
 ### Design Principles

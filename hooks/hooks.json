@@ -1,6 +1,7 @@
 {
-  "description": "MLX ML Workbench hooks — ML-aware lifecycle automation",
+  "description": "MLX ML Workbench hooks — full ML lifecycle automation across all hook events",
   "hooks": {
+
     "SessionStart": [
       {
         "matcher": "startup",
@@ -9,6 +10,11 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/session-context.sh\"",
             "statusMessage": "Scanning ML project state..."
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/dep-check.sh\"",
+            "async": true
           }
         ]
       },
@@ -23,6 +29,18 @@
         ]
       }
     ],
+
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/prompt-guard.sh\""
+          }
+        ]
+      }
+    ],
+
     "PreToolUse": [
       {
         "matcher": "Write|Edit",
@@ -31,10 +49,47 @@
             "type": "command",
             "if": "Write(*.py)|Edit(*.py)",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/validate-ml-code.sh\""
+          },
+          {
+            "type": "prompt",
+            "if": "Write(*.py)|Edit(*.py)",
+            "prompt": "You are an ML code safety reviewer. The user is about to write a Python file. Tool input: $ARGUMENTS\n\nCheck ONLY for data leakage: does the code call .fit() on test data (X_test, y_test, or variables named test_*)? If yes, output JSON: {\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"Data leakage: .fit() called on test data. Fit only on training data.\"}}. If clean, output: {\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"approve\"}}"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/mlops-safety-check.sh\""
           }
         ]
       }
     ],
+
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/mlops-safety-check.sh\""
+          }
+        ]
+      }
+    ],
+
+    "PermissionDenied": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/permission-denied.sh\""
+          }
+        ]
+      }
+    ],
+
     "PostToolUse": [
       {
         "matcher": "Bash",
@@ -57,6 +112,7 @@
         ]
       }
     ],
+
     "PostToolUseFailure": [
       {
         "matcher": "Bash",
@@ -68,6 +124,118 @@
         ]
       }
     ],
+
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/subagent-start.sh\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/subagent-log.sh\"",
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/agent-stop-summary.sh\""
+          }
+        ]
+      }
+    ],
+
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/worktree-setup.sh\"",
+            "statusMessage": "Initializing ML experiment workspace..."
+          }
+        ]
+      }
+    ],
+
+    "WorktreeRemove": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/worktree-archive.sh\"",
+            "statusMessage": "Archiving experiment results..."
+          }
+        ]
+      }
+    ],
+
+    "InstructionsLoaded": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/instructions-loaded.sh\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "TaskCreated": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/task-log.sh\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "TaskCompleted": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/task-log.sh\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/agent-stop-summary.sh\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/stop-failure.sh\""
+          }
+        ]
+      }
+    ],
+
     "PreCompact": [
       {
         "hooks": [
@@ -78,6 +246,7 @@
         ]
       }
     ],
+
     "FileChanged": [
       {
         "matcher": "results.tsv",
@@ -86,6 +255,11 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/results-changed.sh\"",
             "async": true
+          },
+          {
+            "type": "http",
+            "url": "${user_config.webhook_url}",
+            "method": "POST"
           }
         ]
       },
@@ -100,6 +274,7 @@
         ]
       }
     ],
+
     "SessionEnd": [
       {
         "hooks": [
@@ -110,17 +285,7 @@
         ]
       }
     ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/subagent-log.sh\"",
-            "async": true
-          }
-        ]
-      }
-    ],
+
     "CwdChanged": [
       {
         "hooks": [
@@ -132,6 +297,7 @@
         ]
       }
     ],
+
     "PostCompact": [
       {
         "hooks": [
@@ -143,5 +309,6 @@
         ]
       }
     ]
+
   }
 }

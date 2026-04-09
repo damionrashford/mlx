@@ -10,14 +10,6 @@ model: opus
 effort: high
 maxTurns: 50
 memory: project
-mcpServers:
-  mlx-experiments:
-    command: uv
-    args:
-      - "run"
-      - "${CLAUDE_PLUGIN_ROOT}/servers/experiments.py"
-    env:
-      MLX_DATA_DIR: "${CLAUDE_PLUGIN_DATA}"
 skills:
   - research
   - data-prep
@@ -26,11 +18,6 @@ skills:
   - notebook
   - explain
   - ml-docs
-hooks:
-  Stop:
-    - hooks:
-        - type: command
-          command: "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/agent-stop-summary.sh"
 ---
 
 You are a data scientist agent. You own the FULL ML pipeline from finding data to trained model. You ALWAYS start with data understanding — never skip to modeling.

@@ -1,7 +1,7 @@
 {
   "name": "mlx",
-  "version": "1.1.6",
-  "description": "ML Workbench for Claude Code. Full ML lifecycle: search papers across 7 academic sources, discover and download datasets from 5 free repositories, explore and clean data, engineer features, train models (Naive Bayes, KNN, LDA/QDA, SVM, Decision Trees, Ensembles, GLM, Gaussian Process, Neural Networks), run autonomous experiments, build AI apps with LLMs and RAG, build MCP servers, deploy models with Docker and CI/CD, detect drift, explain predictions with SHAP, generate podcasts from papers, manage notebooks, extract YouTube content, and learn ML interactively with 3 university-grade courses (CS229, Applied ML, ML Engineering). 11 agents, 16 skills, 3 CLI tools (mlx-exp, mlx-search, mlx-status), 1 MCP server, 3 output styles, Python LSP via pyright.",
+  "version": "1.1.7",
+  "description": "ML Workbench for Claude Code. Full ML lifecycle: search papers across 7 academic sources, discover and download datasets from 5 repositories, explore and clean data, engineer features, train models (Naive Bayes, KNN, LDA/QDA, SVM, Decision Trees, Ensembles, GLM, Gaussian Process, Neural Networks), run autonomous experiments, build AI apps with LLMs and RAG, build MCP servers, deploy models with Docker and CI/CD, detect drift, explain predictions with SHAP, generate podcasts from papers, manage notebooks, extract YouTube content, and learn ML interactively with 3 university-grade courses (CS229, Applied ML, ML Engineering). 11 agents, 16 skills, 3 CLI tools (mlx-exp, mlx-search, mlx-status), 1 MCP server, 3 output styles, Python LSP via pyright.",
   "author": {
     "name": "Damion Rashford",
     "url": "https://github.com/damionrashford"
@@ -29,6 +29,24 @@
     "experiment_dir": {
       "description": "Directory for results.tsv experiment log (default: current project root)",
       "sensitive": false
+    },
+    "webhook_url": {
+      "description": "Webhook URL for experiment event notifications (optional — Slack, Discord, custom endpoint)",
+      "sensitive": false
+    }
+  },
+  "mcpServers": {
+    "mlx-experiments": {
+      "command": "uv",
+      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/servers/experiments.py"],
+      "env": {
+        "MLX_DATA_DIR": "${CLAUDE_PLUGIN_DATA}"
+      }
+    },
+    "colab-mcp": {
+      "command": "uvx",
+      "args": ["git+https://github.com/googlecolab/colab-mcp"],
+      "timeout": 30000
     }
   },
   "outputStyles": "./output-styles/",

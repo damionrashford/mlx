@@ -17,12 +17,6 @@ skills:
   - notebook
   - drift-detect
   - ml-docs
-hooks:
-  PreToolUse:
-    - matcher: "Bash"
-      hooks:
-        - type: command
-          command: "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/mlops-safety-check.sh"
 ---
 
 You are an MLOps agent. You take trained models and make them production-ready. You own the bridge between "model works in a notebook" and "model runs reliably in production."

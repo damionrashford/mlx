@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.1.7] - 2026-04-08
+### Fixed (Critical)
+- **Agent frontmatter**: removed `hooks` and `mcpServers` from all 4 agents (`ml-engineer`, `dl-engineer`, `data-scientist`, `ml-ops`) — plugin-shipped agents do not support these fields per Claude Code docs; they were silently ignored when installed via marketplace
+- **mlx-experiments MCP server**: restored to plugin-level `plugin.json` `mcpServers` (was deleted with .mcp.json, leaving the server unreachable for plugin installs)
+- **colab-mcp**: moved from agent frontmatter to plugin-level `mcpServers` so it's accessible to all agents
+### Added
+- **`WorktreeCreate` hook** → `worktree-setup.sh`: initializes EXPERIMENT.md template, results.tsv header, and `data/` when ml-engineer or dl-engineer creates their git worktree
+- **`WorktreeRemove` hook** → `worktree-archive.sh`: archives results.tsv, EXPERIMENT.md, and artifact list to `.claude/experiments/` before worktree teardown
+- **`SubagentStart` hook** → `subagent-start.sh`: logs agent kickoff with timestamp to `${CLAUDE_PLUGIN_DATA}/agent-log.txt`
+- **`UserPromptSubmit` hook** → `prompt-guard.sh`: fast pattern matching catches train-on-test, full-dataset eval anti-patterns; injects routing hints for paper search, business analysis, DL, and RAG tasks
+- **`PermissionRequest` hook**: routes through mlops-safety-check for any permission dialog
+- **`PermissionDenied` hook** → `permission-denied.sh`: returns `{retry: true}` for safe read/info-gathering blocks; hard-stops destructive operations
+- **`InstructionsLoaded` hook** → `instructions-loaded.sh`: reinjects active experiment hypothesis and run count when CLAUDE.md or rules files load
+- **`StopFailure` hook** → `stop-failure.sh`: logs API errors to `${CLAUDE_PLUGIN_DATA}/stop-failures.log`; emits recovery context for next turn
+- **`TaskCreated` / `TaskCompleted` hooks** → `task-log.sh`: full task lifecycle audit trail in `${CLAUDE_PLUGIN_DATA}/task-log.txt`
+- **`Stop` hook** (plugin-level): `agent-stop-summary.sh` now fires at plugin-level Stop in addition to SubagentStop
+- **`prompt` hook type** on `PreToolUse` Write/Edit `*.py`: LLM-based leakage detection as a second validation layer after the regex shell hook
+- **`http` hook type** on `FileChanged(results.tsv)`: POSTs experiment events to `webhook_url` userConfig (Slack, Discord, custom endpoint)
+- **`dep-check.sh`** SessionStart hook: pre-warms uv dep cache for experiments server using `${CLAUDE_PLUGIN_DATA}` hash-diff pattern — avoids first-invocation delay
+- **`webhook_url` userConfig**: optional webhook endpoint for experiment notifications
+- **plugin-root `settings.json`**: already present, sets `ml-workbench` as default agent
+### Changed
+- `PreToolUse` Bash safety check (mlops-safety-check.sh) is now plugin-level (fires for all agents) instead of ml-ops-only — destructive deployment commands blocked everywhere
+- `SubagentStop` now calls both `subagent-log.sh` (async) and `agent-stop-summary.sh` (sync emit to parent)
+- README hooks table expanded: 11 → 24 rows covering all 20 active hook events with `prompt`/`http` type callouts
+- `plugin.json`: `description` "5 free repositories" → "5 repositories"; version bumped to 1.1.7
+- `marketplace.json`: version bumped to 1.1.7
+
 ## [1.1.6] - 2026-04-08
 ### Added
 - **Colab MCP server** (`colab-mcp`) wired directly into `dl-engineer` and `ml-engineer` frontmatter — connects to active browser Colab session for cloud GPU training

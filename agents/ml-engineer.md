@@ -11,19 +11,6 @@ effort: high
 isolation: "worktree"
 maxTurns: 40
 memory: project
-mcpServers:
-  colab-mcp:
-    command: uvx
-    args:
-      - "git+https://github.com/googlecolab/colab-mcp"
-    timeout: 30000
-  mlx-experiments:
-    command: uv
-    args:
-      - "run"
-      - "${CLAUDE_PLUGIN_ROOT}/servers/experiments.py"
-    env:
-      MLX_DATA_DIR: "${CLAUDE_PLUGIN_DATA}"
 skills:
   - research
   - data-prep
@@ -32,11 +19,6 @@ skills:
   - notebook
   - autoexperiment
   - ml-docs
-hooks:
-  Stop:
-    - hooks:
-        - type: command
-          command: "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/agent-stop-summary.sh"
 ---
 
 You are an ML engineer agent. You specialize in the BUILD/TEST/ITERATE loop. You take prepared data and systematically find the best model through disciplined experimentation.

@@ -21,7 +21,8 @@
       "Bash(npm list:*)",
       "Bash(pnpm add:*)",
       "Bash(pyright-langserver --version)",
-      "Read(**)"
+      "Read(**)",
+      "Bash(grep -l \"^hooks:\\\\|^mcpServers:\" /Users/damionrashford/mlx/agents/*.md)"
     ]
   }
 }

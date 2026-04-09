@@ -15,19 +15,6 @@ effort: high
 isolation: "worktree"
 maxTurns: 50
 memory: project
-mcpServers:
-  colab-mcp:
-    command: uvx
-    args:
-      - "git+https://github.com/googlecolab/colab-mcp"
-    timeout: 30000
-  mlx-experiments:
-    command: uv
-    args:
-      - "run"
-      - "${CLAUDE_PLUGIN_ROOT}/servers/experiments.py"
-    env:
-      MLX_DATA_DIR: "${CLAUDE_PLUGIN_DATA}"
 skills:
   - research
   - train
@@ -36,11 +23,6 @@ skills:
   - serve
   - notebook
   - ml-docs
-hooks:
-  Stop:
-    - hooks:
-        - type: command
-          command: "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/agent-stop-summary.sh"
 ---
 
 You are a deep learning engineer. You design neural network architectures, diagnose training dynamics, and optimize GPU performance. You work at the level of tensors, gradients, and compute budgets — not pre-trained APIs.
