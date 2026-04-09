@@ -28,11 +28,25 @@
 
 ## Quick Start
 
+Installing MLX is a two-step process — add the marketplace, then install the plugin.
+
+**Step 1: Add the marketplace**
+
 ```bash
-/plugin install mlx@mlx
+/plugin marketplace add damionrashford/mlx
 ```
 
-Or clone directly:
+**Step 2: Install the plugin**
+
+```bash
+/plugin install mlx@damionrashford-mlx
+```
+
+Then run `/reload-plugins` to activate. All skills are available as `/mlx:<skill>` and the `ml-workbench` agent starts automatically.
+
+> You can also browse and install interactively: run `/plugin`, go to the **Discover** tab, find MLX, and choose your installation scope (user, project, or local).
+
+**Or clone directly:**
 
 ```bash
 git clone https://github.com/damionrashford/mlx.git
