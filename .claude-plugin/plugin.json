@@ -11,41 +11,58 @@
   "license": "MIT",
   "userConfig": {
     "hf_token": {
+      "title": "HuggingFace Token",
       "description": "HuggingFace API token (optional, enables private model/dataset access)",
+      "type": "string",
       "sensitive": true
     },
     "wandb_key": {
-      "description": "Weights & Biases API key (optional, enables W&B experiment logging)",
+      "title": "Weights & Biases API Key",
+      "description": "W&B API key (optional, enables W&B experiment logging)",
+      "type": "string",
       "sensitive": true
     },
     "kaggle_username": {
+      "title": "Kaggle Username",
       "description": "Kaggle username (optional, enables Kaggle dataset downloads)",
+      "type": "string",
       "sensitive": false
     },
     "preferred_framework": {
+      "title": "Preferred ML Framework",
       "description": "Preferred ML framework: sklearn, pytorch, or tensorflow",
+      "type": "string",
       "sensitive": false
     },
     "experiment_dir": {
-      "description": "Directory for results.tsv experiment log (default: current project root)",
+      "title": "Experiment Directory",
+      "description": "Directory for results.tsv experiment log (default: project root)",
+      "type": "directory",
       "sensitive": false
     },
     "webhook_url": {
-      "description": "Webhook URL for experiment event notifications (optional — Slack, Discord, custom endpoint)",
+      "title": "Webhook URL",
+      "description": "Webhook URL for experiment notifications (optional \u2014 Slack, Discord, custom)",
+      "type": "string",
       "sensitive": false
     }
   },
   "mcpServers": {
     "mlx-experiments": {
       "command": "uv",
-      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/servers/experiments.py"],
+      "args": [
+        "run",
+        "${CLAUDE_PLUGIN_ROOT}/servers/experiments.py"
+      ],
       "env": {
         "MLX_DATA_DIR": "${CLAUDE_PLUGIN_DATA}"
       }
     },
     "colab-mcp": {
       "command": "uvx",
-      "args": ["git+https://github.com/googlecolab/colab-mcp"],
+      "args": [
+        "git+https://github.com/googlecolab/colab-mcp"
+      ],
       "timeout": 30000
     }
   },
@@ -53,7 +70,9 @@
   "lspServers": {
     "python": {
       "command": "pyright-langserver",
-      "args": ["--stdio"],
+      "args": [
+        "--stdio"
+      ],
       "extensionToLanguage": {
         ".py": "python"
       },
